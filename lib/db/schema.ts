@@ -163,6 +163,34 @@ export const communityMembers = mysqlTable("community_members", {
   role: mysqlEnum("role", ["member", "leader"]).notNull(),
 })
 
+// Join requests table
+export const joinRequests = mysqlTable("join_requests", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  communityId: varchar("community_id", { length: 255 }).notNull().references(() => communities.id),
+  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
+  status: mysqlEnum("status", ["pending", "approved", "rejected"]).notNull().default("pending"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  respondedAt: timestamp("responded_at"),
+})
+
+// Chat rooms table
+export const chatRooms = mysqlTable("chat_rooms", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  communityId: varchar("community_id", { length: 255 }).notNull().unique().references(() => communities.id),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+// Chat messages table
+export const chatMessages = mysqlTable("chat_messages", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  chatRoomId: varchar("chat_room_id", { length: 255 }).notNull().references(() => chatRooms.id),
+  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
+  userName: varchar("user_name", { length: 255 }).notNull(),
+  userImage: varchar("user_image", { length: 255 }),
+  message: text("message").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
 export const communityMembersRelations = relations(communityMembers, ({ one }) => ({
   community: one(communities, {
     fields: [communityMembers.communityId],
@@ -200,5 +228,35 @@ export const schedulesRelations = relations(schedules, ({ one }) => ({
   hobby: one(hobbies, {
     fields: [schedules.hobbyId],
     references: [hobbies.id],
+  }),
+}));
+
+export const joinRequestsRelations = relations(joinRequests, ({ one }) => ({
+  community: one(communities, {
+    fields: [joinRequests.communityId],
+    references: [communities.id],
+  }),
+  user: one(users, {
+    fields: [joinRequests.userId],
+    references: [users.id],
+  }),
+}));
+
+export const chatRoomsRelations = relations(chatRooms, ({ one, many }) => ({
+  community: one(communities, {
+    fields: [chatRooms.communityId],
+    references: [communities.id],
+  }),
+  messages: many(chatMessages),
+}));
+
+export const chatMessagesRelations = relations(chatMessages, ({ one }) => ({
+  chatRoom: one(chatRooms, {
+    fields: [chatMessages.chatRoomId],
+    references: [chatRooms.id],
+  }),
+  user: one(users, {
+    fields: [chatMessages.userId],
+    references: [users.id],
   }),
 }));

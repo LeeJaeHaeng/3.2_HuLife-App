@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -26,15 +26,26 @@ import { createCommunity } from "@/lib/actions/community"
 import { getAllHobbies } from "@/lib/actions/hobbies"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
 import type { Hobby } from "@/lib/db/schema"
+import { locationData } from "@/lib/korea-administrative-district"
+
+// Reformat the data for easier lookup
+const processedLocationData: { [key: string]: string[] } = locationData.reduce((acc, item) => {
+  const [key, value] = Object.entries(item)[0]
+  acc[key] = value
+  return acc
+}, {} as { [key: string]: string[] })
+
+const provinces = Object.keys(processedLocationData)
 
 export function CreateCommunityDialog() {
   const [open, setOpen] = useState(false)
   const [name, setName] = useState("")
   const [hobbyId, setHobbyId] = useState("")
   const [description, setDescription] = useState("")
-  const [location, setLocation] = useState("")
+  const [selectedProvince, setSelectedProvince] = useState("")
+  const [selectedCity, setSelectedCity] = useState("")
+  const [cities, setCities] = useState<string[]>([])
   const [schedule, setSchedule] = useState("")
   const [maxMembers, setMaxMembers] = useState("10")
   const [hobbies, setHobbies] = useState<Hobby[]>([])
@@ -49,9 +60,17 @@ export function CreateCommunityDialog() {
     loadHobbies()
   }, [])
 
+  const handleProvinceChange = (province: string) => {
+    setSelectedProvince(province)
+    setCities(processedLocationData[province] || [])
+    setSelectedCity("") // Reset city selection
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+
+    const location = selectedProvince && selectedCity ? `${selectedProvince} ${selectedCity}` : ""
 
     const result = await createCommunity({
       name,
@@ -71,7 +90,8 @@ export function CreateCommunityDialog() {
       setName("")
       setHobbyId("")
       setDescription("")
-      setLocation("")
+      setSelectedProvince("")
+      setSelectedCity("")
       setSchedule("")
       setMaxMembers("10")
       router.refresh()
@@ -137,14 +157,33 @@ export function CreateCommunityDialog() {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="location">활동 지역</Label>
-              <Input
-                id="location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                required
-                placeholder="예: 서울 강남구"
-              />
+              <Label>활동 지역</Label>
+              <div className="grid grid-cols-2 gap-2">
+                <Select onValueChange={handleProvinceChange} value={selectedProvince} required>
+                  <SelectTrigger>
+                    <SelectValue placeholder="시/도 선택" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {provinces.map((province) => (
+                      <SelectItem key={province} value={province}>
+                        {province}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select onValueChange={setSelectedCity} value={selectedCity} disabled={!selectedProvince} required>
+                  <SelectTrigger>
+                    <SelectValue placeholder="시/군/구 선택" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {cities.map((city) => (
+                      <SelectItem key={city} value={city}>
+                        {city}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             <div className="grid gap-2">

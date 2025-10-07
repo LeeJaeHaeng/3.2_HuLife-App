@@ -8,7 +8,8 @@
       "Bash(pnpm install:*)",
       "Bash(tsx scripts/seed.ts:*)",
       "Bash(pnpm tsx:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(pnpm drizzle-kit push:*)"
     ],
     "deny": [],
     "ask": []

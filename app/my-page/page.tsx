@@ -1,7 +1,8 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Heart, Calendar, Award, Users } from "lucide-react"
 import { getCurrentUser } from "@/lib/actions/user"
@@ -28,9 +29,13 @@ export default async function MyPage() {
       <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur">
         <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#FF7A5C]">
-              <span className="text-2xl font-bold text-white">H</span>
-            </div>
+            <Image
+              src="/휴라이프_로고.png"
+              alt="휴라이프"
+              width={48}
+              height={48}
+              className="h-12 w-12"
+            />
             <span className="text-2xl font-bold">휴라이프</span>
           </Link>
           <div className="flex items-center gap-3">
@@ -48,13 +53,17 @@ export default async function MyPage() {
               <Card>
                 <CardContent className="p-6 text-center">
                   <Avatar className="h-24 w-24 mx-auto mb-4">
-                    <AvatarFallback className="text-2xl bg-[#FF7A5C] text-white">{user.name[0]}</AvatarFallback>
+                    {user.profileImage ? (
+                      <AvatarImage src={user.profileImage} alt={user.name} />
+                    ) : (
+                      <AvatarFallback className="text-2xl bg-[#FF7A5C] text-white">{user.name[0]}</AvatarFallback>
+                    )}
                   </Avatar>
                   <h2 className="text-2xl font-bold mb-1">{user.name}</h2>
                   <p className="text-muted-foreground mb-4">
                     {user.age}세 • {user.location}
                   </p>
-                  <ProfileEditDialog user={{ name: user.name, age: user.age, location: user.location }} />
+                  <ProfileEditDialog user={{ name: user.name, age: user.age, location: user.location, profileImage: user.profileImage }} />
                 </CardContent>
               </Card>
 

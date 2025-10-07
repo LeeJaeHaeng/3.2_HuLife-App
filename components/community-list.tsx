@@ -8,7 +8,7 @@ import { Users, MapPin, Calendar } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import type { Community } from "@/lib/db/schema"
-import { joinCommunity } from "@/lib/actions/community"
+import { requestJoinCommunity } from "@/lib/actions/community"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { CommunityFilters } from "./community-filters"
@@ -42,12 +42,12 @@ export function CommunityList({ communities }: CommunityListProps) {
   }, [communities, searchQuery, locationFilter])
 
   const handleJoin = async (communityId: string) => {
-    const result = await joinCommunity(communityId)
+    const result = await requestJoinCommunity(communityId)
 
     if (result.error) {
       toast.error(result.error)
     } else {
-      toast.success("커뮤니티에 가입되었습니다!")
+      toast.success(result.message || "가입 신청이 완료되었습니다!")
       router.refresh()
     }
   }
@@ -101,7 +101,7 @@ export function CommunityList({ communities }: CommunityListProps) {
               onClick={() => handleJoin(community.id)}
               disabled={community.memberCount >= community.maxMembers}
             >
-              가입하기
+              가입 신청
             </Button>
           </CardFooter>
         </Card>

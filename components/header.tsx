@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Menu, User } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { getSession } from "@/lib/auth/session"
 import { LogoutButton } from "./logout-button"
 
@@ -10,9 +11,7 @@ export async function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#FF7A5C]">
-            <span className="text-2xl font-bold text-white">H</span>
-          </div>
+          <Image src="/휴라이프_로고.png" alt="휴라이프 로고" width={48} height={48} className="h-12 w-12" />
           <span className="text-2xl font-bold text-foreground">휴라이프</span>
         </Link>
 

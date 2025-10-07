@@ -49,17 +49,19 @@ export async function GET(request: NextRequest) {
       where: eq(users.email, `kakao_${userData.id}@kakao.com`),
     })
 
+    let isNewUser = false
     if (!user) {
-      // Create new user
+      isNewUser = true
       const userId = randomUUID()
+      
       await db.insert(users).values({
         id: userId,
         email: `kakao_${userData.id}@kakao.com`,
-        password: '', // OAuth users don't need password
+        password: null,
         name: userData.properties?.nickname || '카카오 사용자',
         age: 0,
         location: '미설정',
-        avatar: userData.properties?.profile_image || null,
+        profileImage: userData.properties?.profile_image || null,
       })
 
       user = await db.query.users.findFirst({
@@ -69,6 +71,9 @@ export async function GET(request: NextRequest) {
 
     if (user) {
       await createSession(user.id)
+      if (isNewUser) {
+        return NextResponse.redirect(new URL('/survey', request.url))
+      }
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 

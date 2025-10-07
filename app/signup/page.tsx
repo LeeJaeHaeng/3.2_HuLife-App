@@ -1,6 +1,7 @@
 'use client'
 
 import Link from "next/link"
+import Image from "next/image"
 import { useFormState, useFormStatus } from "react-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -31,9 +32,7 @@ export default function SignupPage() {
       <Card className="w-full max-w-2xl">
         <CardHeader className="space-y-2 text-center">
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-[#FF7A5C] rounded-2xl flex items-center justify-center">
-              <span className="text-3xl font-bold text-white">H</span>
-            </div>
+            <Image src="/휴라이프_로고.png" alt="휴라이프 로고" width={64} height={64} />
           </div>
           <CardTitle className="text-3xl font-bold text-balance">휴라이프 시작하기</CardTitle>
           <CardDescription className="text-lg">새로운 인생 2막을 함께 준비해요</CardDescription>

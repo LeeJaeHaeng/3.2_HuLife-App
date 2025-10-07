@@ -49,17 +49,18 @@ export async function GET(request: NextRequest) {
       where: eq(users.email, userData.email),
     })
 
+    let isNewUser = false
     if (!user) {
-      // Create new user
+      isNewUser = true
       const userId = randomUUID()
       await db.insert(users).values({
         id: userId,
         email: userData.email,
-        password: '',
+        password: null,
         name: userData.name || '구글 사용자',
         age: 0,
         location: '미설정',
-        avatar: userData.picture || null,
+        profileImage: userData.picture || null,
       })
 
       user = await db.query.users.findFirst({
@@ -69,6 +70,9 @@ export async function GET(request: NextRequest) {
 
     if (user) {
       await createSession(user.id)
+      if (isNewUser) {
+        return NextResponse.redirect(new URL('/survey', request.url))
+      }
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 

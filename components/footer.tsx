@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Youtube, Mail } from "lucide-react"
+import Image from "next/image"
 
 export function Footer() {
   return (
@@ -7,9 +8,7 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#FF7A5C]">
-                <span className="text-xl font-bold text-white">H</span>
-              </div>
+              <Image src="/휴라이프_로고.png" alt="휴라이프 로고" width={40} height={40} className="h-10 w-10" />
               <span className="text-xl font-bold text-foreground">휴라이프</span>
             </div>
             <p className="text-base text-muted-foreground leading-relaxed">

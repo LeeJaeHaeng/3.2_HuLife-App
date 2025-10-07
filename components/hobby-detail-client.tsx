@@ -6,9 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Textarea } from "@/components/ui/textarea"
-import { Star, Heart, Users, MapPin, DollarSign, Clock } from "lucide-react"
+import { Star, Heart, Users, MapPin, DollarSign, Clock, Calendar } from "lucide-react"
 import Image from "next/image"
-import type { Hobby, Review } from "@/lib/db/schema"
+import Link from "next/link"
+import type { Hobby, Review, Community } from "@/lib/db/schema"
 import { addHobbyToUser, removeHobbyFromUser, addReview, getUserHobbies } from "@/lib/actions/hobbies"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
@@ -16,9 +17,10 @@ import { toast } from "sonner"
 interface HobbyDetailClientProps {
   hobby: Hobby
   reviews: Review[]
+  communities: (Community & { isUserLocation: boolean })[]
 }
 
-export function HobbyDetailClient({ hobby, reviews: initialReviews }: HobbyDetailClientProps) {
+export function HobbyDetailClient({ hobby, reviews: initialReviews, communities }: HobbyDetailClientProps) {
   const router = useRouter()
   const [reviews, setReviews] = useState(initialReviews)
   const [rating, setRating] = useState(5)
@@ -290,12 +292,64 @@ export function HobbyDetailClient({ hobby, reviews: initialReviews }: HobbyDetai
                 </div>
               </TabsContent>
 
-              <TabsContent value="community">
-                <Card>
-                  <CardContent className="py-8 text-center text-muted-foreground">
-                    커뮤니티 기능은 곧 추가될 예정입니다.
-                  </CardContent>
-                </Card>
+              <TabsContent value="community" className="space-y-6">
+                {communities.length > 0 ? (
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {communities.map((community) => (
+                      <Link key={community.id} href={`/community/${community.id}`}>
+                        <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer relative">
+                          {community.isUserLocation && (
+                            <div className="absolute top-4 right-4">
+                              <Badge variant="secondary" className="bg-primary/10 text-primary">
+                                내 지역
+                              </Badge>
+                            </div>
+                          )}
+                          <CardHeader>
+                            <div className="flex items-start justify-between">
+                              <div className={`flex-1 ${community.isUserLocation ? 'pr-20' : ''}`}>
+                                <CardTitle className="text-xl mb-2">{community.name}</CardTitle>
+                                <p className="text-sm text-muted-foreground line-clamp-2">
+                                  {community.description}
+                                </p>
+                              </div>
+                            </div>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="space-y-3">
+                              <div className="flex items-center gap-2 text-sm">
+                                <MapPin className="h-4 w-4 text-muted-foreground" />
+                                <span className="font-medium">{community.location}</span>
+                              </div>
+                              <div className="flex items-center gap-2 text-sm">
+                                <Calendar className="h-4 w-4 text-muted-foreground" />
+                                <span>{community.schedule}</span>
+                              </div>
+                              <div className="flex items-center gap-2 text-sm">
+                                <Users className="h-4 w-4 text-muted-foreground" />
+                                <span>
+                                  {community.memberCount} / {community.maxMembers}명
+                                </span>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <Card>
+                    <CardContent className="py-12 text-center">
+                      <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                      <p className="text-muted-foreground mb-4">
+                        아직 이 취미와 관련된 커뮤니티가 없습니다.
+                      </p>
+                      <Button asChild>
+                        <Link href="/community">커뮤니티 둘러보기</Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                )}
               </TabsContent>
             </Tabs>
           </div>

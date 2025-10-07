@@ -51,17 +51,22 @@ export async function GET(request: NextRequest) {
       where: eq(users.email, profile.email || `naver_${profile.id}@naver.com`),
     })
 
+    let isNewUser = false
     if (!user) {
-      // Create new user
+      isNewUser = true
       const userId = randomUUID()
+
+      const ageRange = profile.age?.split('-')[0]
+      const age = ageRange ? parseInt(ageRange, 10) : 0
+
       await db.insert(users).values({
         id: userId,
         email: profile.email || `naver_${profile.id}@naver.com`,
-        password: '',
+        password: null,
         name: profile.name || profile.nickname || '네이버 사용자',
-        age: 0,
+        age: age,
         location: '미설정',
-        avatar: profile.profile_image || null,
+        profileImage: profile.profile_image || null,
       })
 
       user = await db.query.users.findFirst({
@@ -71,6 +76,9 @@ export async function GET(request: NextRequest) {
 
     if (user) {
       await createSession(user.id)
+      if (isNewUser) {
+        return NextResponse.redirect(new URL('/survey', request.url))
+      }
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 
