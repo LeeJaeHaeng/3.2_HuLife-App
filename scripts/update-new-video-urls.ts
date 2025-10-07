@@ -64,10 +64,6 @@ const videoUrlMapping: Record<string, string> = {
   '한지공예': 'https://youtu.be/MXCBe8obnUM?si=-cPiopOgisl6y_o4',
   '합창': 'https://youtu.be/KAXxSu_Slyw?si=RsmvoBlByA6KynnS',
   '환경 보호': 'https://youtu.be/qRjbcRuEYBQ?si=Cxo2w9nEgrIGiTBq',
-
-  // ===== 🔴 중복된 URL 사용 중 - 확인 및 개별 링크 입력 필요 =====
-  // 현재 모두 같은 URL (https://youtu.be/nMhL8VUcCeM?si=MreDyWXg3f_x0jYN)을 사용 중입니다
-
   '가죽공예': 'https://youtu.be/g0s61ohm4GA?si=i7x2kCuayGB8VR1j', // 🔴 중복 URL
   '걷기': 'https://youtu.be/kghyht4dBys?si=sqgztWdcSNTW6Gwl', // 🔴 중복 URL
   '게이트볼': 'https://youtu.be/sTBIxlfYAXU?si=m2iJ8rQeVUIN8KgI', // 🔴 중복 URL
