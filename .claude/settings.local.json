@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(dir:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(rm:*)",
+      "Bash(pnpm install:*)",
+      "Bash(tsx scripts/seed.ts:*)",
+      "Bash(pnpm tsx:*)",
+      "Bash(npm install:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
