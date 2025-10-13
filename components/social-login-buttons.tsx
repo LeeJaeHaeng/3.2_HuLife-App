@@ -20,7 +20,7 @@ export function SocialLoginButtons() {
           type="button"
           variant="outline"
           onClick={async () => await loginWithKakao()}
-          className="h-12 bg-[#FEE500] hover:bg-[#FEE500]/90 text-[#000000] border-0"
+          className="h-12 bg-[#FEE500] hover:bg-[#FDD835] dark:bg-[#FEE500] dark:hover:bg-[#FDD835] text-[#000000] dark:text-[#000000] border-0 font-medium"
         >
           <svg className="mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 3C6.477 3 2 6.477 2 10.5c0 2.568 1.684 4.816 4.221 6.163-.171.633-.641 2.367-.733 2.755-.113.485.177.478.372.347.154-.103 2.495-1.671 3.44-2.303.558.088 1.134.138 1.7.138 5.523 0 10-3.477 10-7.5S17.523 3 12 3z"/>
@@ -32,7 +32,7 @@ export function SocialLoginButtons() {
           type="button"
           variant="outline"
           onClick={async () => await loginWithNaver()}
-          className="h-12 bg-[#03C75A] hover:bg-[#03C75A]/90 text-white border-0"
+          className="h-12 bg-[#03C75A] hover:bg-[#02B350] dark:bg-[#03C75A] dark:hover:bg-[#02B350] text-white border-0 font-medium"
         >
           <svg className="mr-2 h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
             <path d="M16.273 12.845L7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845z"/>
@@ -44,7 +44,7 @@ export function SocialLoginButtons() {
           type="button"
           variant="outline"
           onClick={async () => await loginWithGoogle()}
-          className="h-12 col-span-2"
+          className="h-12 col-span-2 font-medium"
         >
           <svg className="mr-2 h-5 w-5" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>

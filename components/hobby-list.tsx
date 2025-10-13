@@ -118,7 +118,7 @@ export function HobbyList({ initialHobbies, searchQuery = "", category = "all" }
         <Card key={hobby.id} className="overflow-hidden hover:shadow-lg transition-shadow">
           <div className="relative h-48 w-full">
             <Image src={hobby.imageUrl || "/placeholder.svg"} alt={hobby.name} fill className="object-cover" />
-            <Badge className="absolute top-4 right-4 bg-primary">{hobby.category}</Badge>
+            <Badge className="absolute top-4 right-4 bg-primary text-primary-foreground">{hobby.category}</Badge>
           </div>
 
           <CardHeader>
@@ -170,13 +170,13 @@ export function HobbyList({ initialHobbies, searchQuery = "", category = "all" }
               onClick={() => handleToggleHobby(hobby.id)}
               className={`transition-all duration-300 ${
                 addedHobbies.has(hobby.id)
-                  ? "bg-red-50 border-red-500 hover:bg-red-100"
+                  ? "bg-red-50 dark:bg-red-950/30 border-red-500 dark:border-red-600 hover:bg-red-100 dark:hover:bg-red-950/50"
                   : ""
               } ${animatingHobbies.has(hobby.id) ? "scale-110" : "scale-100"}`}
             >
               <Heart
                 className={`h-4 w-4 transition-all duration-300 ${
-                  addedHobbies.has(hobby.id) ? "fill-red-500 text-red-500" : ""
+                  addedHobbies.has(hobby.id) ? "fill-red-500 dark:fill-red-400 text-red-500 dark:text-red-400" : ""
                 } ${animatingHobbies.has(hobby.id) ? "animate-pulse" : ""}`}
               />
             </Button>

@@ -10,7 +10,7 @@ import "../styles/globals.css"
 export const metadata: Metadata = {
   title: "휴라이프 - 은퇴 후 새로운 취미 찾기",
   description: "은퇴 후 새로운 삶을 시작하세요. AI 기반 취미 추천으로 당신에게 맞는 활동을 찾아드립니다.",
-  generator: "v0.app",
+  generator: "v1.0.0.app",
 }
 
 export default function RootLayout({

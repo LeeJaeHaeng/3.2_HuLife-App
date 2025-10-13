@@ -17,7 +17,7 @@ const initialState = {
 function SubmitButton() {
   const { pending } = useFormStatus()
   return (
-    <Button type="submit" className="w-full h-12 text-base bg-[#FF7A5C] hover:bg-[#FF6B4A] text-white" aria-disabled={pending}>
+    <Button type="submit" className="w-full h-12 text-base bg-orange-600 hover:bg-orange-700 dark:bg-orange-500 dark:hover:bg-orange-600 text-white" aria-disabled={pending}>
       {pending ? "로그인 중..." : "로그인"}
     </Button>
   )
@@ -27,7 +27,7 @@ export default function LoginPage() {
   const [state, formAction] = useFormState(login, initialState)
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#FFF5F0] to-[#E8F5E9] p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-green-50 dark:from-slate-900 dark:to-slate-800 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-2 text-center">
           <div className="flex justify-center mb-4">
@@ -75,7 +75,7 @@ export default function LoginPage() {
                 <input type="checkbox" className="w-4 h-4 rounded border-gray-300" />
                 <span>로그인 상태 유지</span>
               </label>
-              <Link href="#" className="text-[#FF7A5C] hover:underline">
+              <Link href="#" className="text-orange-600 dark:text-orange-400 hover:underline">
                 비밀번호 찾기
               </Link>
             </div>
@@ -87,7 +87,7 @@ export default function LoginPage() {
         <CardFooter className="flex flex-col gap-4">
           <p className="text-center text-sm text-muted-foreground">
             아직 계정이 없으신가요?{" "}
-            <Link href="/signup" className="text-[#FF7A5C] font-semibold hover:underline">
+            <Link href="/signup" className="text-orange-600 dark:text-orange-400 font-semibold hover:underline">
               회원가입
             </Link>
           </p>

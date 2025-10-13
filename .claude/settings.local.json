@@ -9,7 +9,9 @@
       "Bash(tsx scripts/seed.ts:*)",
       "Bash(pnpm tsx:*)",
       "Bash(npm install:*)",
-      "Bash(pnpm drizzle-kit push:*)"
+      "Bash(pnpm drizzle-kit push:*)",
+      "Bash(ls:*)",
+      "Bash(awk:*)"
     ],
     "deny": [],
     "ask": []

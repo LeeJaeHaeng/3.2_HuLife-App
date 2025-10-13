@@ -4,6 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { getSession } from "@/lib/auth/session"
 import { LogoutButton } from "./logout-button"
+import { ThemeToggle } from "./theme-toggle"
 
 export async function Header() {
   const session = await getSession()
@@ -16,21 +17,22 @@ export async function Header() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          <Link href="/hobbies" className="text-lg font-medium text-foreground hover:text-[#FF7A5C] transition-colors">
+          <Link href="/hobbies" className="text-lg font-medium text-foreground hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
             취미 찾기
           </Link>
           <Link
             href="/community"
-            className="text-lg font-medium text-foreground hover:text-[#FF7A5C] transition-colors"
+            className="text-lg font-medium text-foreground hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
           >
             커뮤니티
           </Link>
-          <Link href="/survey" className="text-lg font-medium text-foreground hover:text-[#FF7A5C] transition-colors">
+          <Link href="/survey" className="text-lg font-medium text-foreground hover:text-orange-600 dark:hover:text-orange-400 transition-colors">
             취미 추천받기
           </Link>
         </nav>
 
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           {session ? (
             <>
               <span className="hidden md:inline text-sm text-muted-foreground">
@@ -52,7 +54,7 @@ export async function Header() {
                   로그인
                 </Link>
               </Button>
-              <Button size="lg" className="hidden md:flex text-base font-semibold bg-[#FF7A5C] hover:bg-[#FF6B4A]" asChild>
+              <Button size="lg" className="hidden md:flex text-base font-semibold bg-orange-600 hover:bg-orange-700 dark:bg-orange-500 dark:hover:bg-orange-600" asChild>
                 <Link href="/signup">시작하기</Link>
               </Button>
             </>
