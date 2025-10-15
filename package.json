@@ -6,7 +6,8 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "start:mobile": "expo start --project-root mobile --clear"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

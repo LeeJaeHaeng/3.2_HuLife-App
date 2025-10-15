@@ -11,7 +11,17 @@
       "Bash(npm install:*)",
       "Bash(pnpm drizzle-kit push:*)",
       "Bash(ls:*)",
-      "Bash(awk:*)"
+      "Bash(awk:*)",
+      "Bash(npx react-native init:*)",
+      "Bash(npx @react-native-community/cli@latest init:*)",
+      "Bash(test:*)",
+      "Bash(mkdir:*)",
+      "Bash(node:*)",
+      "Bash(npm --version)",
+      "Bash(npm start)",
+      "Bash(npx create-expo-app:*)",
+      "Bash(npx expo install:*)",
+      "Bash(npx expo start:*)"
     ],
     "deny": [],
     "ask": []
