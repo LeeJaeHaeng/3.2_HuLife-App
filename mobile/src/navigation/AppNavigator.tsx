@@ -1,5 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Logo from '../components/Logo';
 
 // Import Screens
 import HomeScreen from '../screens/HomeScreen';
@@ -12,6 +13,15 @@ import CommunityDetailScreen from '../screens/CommunityDetailScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SurveyScreen from '../screens/SurveyScreen';
 import RecommendationsScreen from '../screens/RecommendationsScreen';
+import DashboardScreen from '../screens/DashboardScreen';
+import AboutScreen from '../screens/AboutScreen';
+import FAQScreen from '../screens/FAQScreen';
+import ContactScreen from '../screens/ContactScreen';
+import CommunityChatScreen from '../screens/CommunityChatScreen';
+import CommunityPostListScreen from '../screens/CommunityPostListScreen';
+import PostDetailScreen from '../screens/PostDetailScreen';
+import CreatePostScreen from '../screens/CreatePostScreen';
+import JoinRequestsScreen from '../screens/JoinRequestsScreen';
 
 // Type definitions for navigation
 export type RootStackParamList = {
@@ -24,7 +34,16 @@ export type RootStackParamList = {
   CommunityDetail: {communityId: string};
   Profile: undefined;
   Survey: undefined;
-  Recommendations: {surveyResults: {[key: string]: string}};
+  Recommendations: undefined;
+  Dashboard: undefined;
+  About: undefined;
+  FAQ: undefined;
+  Contact: undefined;
+  CommunityChat: {communityId: string; chatRoomId?: string};
+  CommunityPostList: undefined;
+  PostDetail: {postId: string};
+  CreatePost: undefined;
+  JoinRequests: {communityId: string};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -49,8 +68,7 @@ export default function AppNavigator() {
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'HuLife',
-          headerShown: true,
+          headerShown: false, // HomeScreen has its own custom header with logo
         }}
       />
 
@@ -61,6 +79,7 @@ export default function AppNavigator() {
         options={{
           title: '로그인',
           headerShown: true,
+          headerTitle: () => <Logo size="small" showSubtext={false} />,
         }}
       />
       <Stack.Screen
@@ -110,6 +129,61 @@ export default function AppNavigator() {
         name="Recommendations"
         component={RecommendationsScreen}
         options={{title: '추천 결과', headerBackVisible: false}}
+      />
+
+      {/* 대시보드 */}
+      <Stack.Screen
+        name="Dashboard"
+        component={DashboardScreen}
+        options={{title: '대시보드'}}
+      />
+
+      {/* 정보 페이지 */}
+      <Stack.Screen
+        name="About"
+        component={AboutScreen}
+        options={{title: '회사 소개'}}
+      />
+      <Stack.Screen
+        name="FAQ"
+        component={FAQScreen}
+        options={{title: '자주 묻는 질문'}}
+      />
+      <Stack.Screen
+        name="Contact"
+        component={ContactScreen}
+        options={{title: '문의하기'}}
+      />
+
+      {/* 채팅 */}
+      <Stack.Screen
+        name="CommunityChat"
+        component={CommunityChatScreen}
+        options={{title: '모임 채팅'}}
+      />
+
+      {/* 게시판 */}
+      <Stack.Screen
+        name="CommunityPostList"
+        component={CommunityPostListScreen}
+        options={{title: '게시판'}}
+      />
+      <Stack.Screen
+        name="PostDetail"
+        component={PostDetailScreen}
+        options={{title: '게시글'}}
+      />
+      <Stack.Screen
+        name="CreatePost"
+        component={CreatePostScreen}
+        options={{title: '글쓰기'}}
+      />
+
+      {/* 가입 신청 관리 */}
+      <Stack.Screen
+        name="JoinRequests"
+        component={JoinRequestsScreen}
+        options={{title: '가입 신청 관리'}}
       />
     </Stack.Navigator>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, ScrollView, TouchableOpacity} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/AppNavigator';
+import Logo from '../components/Logo';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList>;
@@ -10,6 +11,24 @@ type Props = {
 export default function HomeScreen({navigation}: Props) {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      {/* Header with Login/Register */}
+      <View style={styles.header}>
+        {/* Brand Logo */}
+        <Logo size="large" showSubtext={true} />
+        <View style={styles.headerButtons}>
+          <TouchableOpacity
+            style={styles.headerButton}
+            onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.headerButtonText}>로그인</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.headerButtonPrimary}
+            onPress={() => navigation.navigate('Register')}>
+            <Text style={styles.headerButtonPrimaryText}>회원가입</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
       <View style={styles.heroSection}>
         <View style={styles.badge}>
           <Text style={styles.badgeIcon}>✨</Text>
@@ -86,9 +105,23 @@ export default function HomeScreen({navigation}: Props) {
             <Text style={styles.quickIcon}>👥</Text>
             <Text style={styles.quickText}>모임 찾기</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.quickButton} onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.quickIcon}>🔑</Text>
-            <Text style={styles.quickText}>로그인</Text>
+          <TouchableOpacity style={styles.quickButton} onPress={() => navigation.navigate('Dashboard')}>
+            <Text style={styles.quickIcon}>📊</Text>
+            <Text style={styles.quickText}>대시보드</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.quickActions}>
+          <TouchableOpacity style={styles.quickButton} onPress={() => navigation.navigate('About')}>
+            <Text style={styles.quickIcon}>ℹ️</Text>
+            <Text style={styles.quickText}>회사 소개</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.quickButton} onPress={() => navigation.navigate('FAQ')}>
+            <Text style={styles.quickIcon}>❓</Text>
+            <Text style={styles.quickText}>FAQ</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.quickButton} onPress={() => navigation.navigate('Contact')}>
+            <Text style={styles.quickIcon}>📧</Text>
+            <Text style={styles.quickText}>문의하기</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -99,6 +132,44 @@ export default function HomeScreen({navigation}: Props) {
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: '#FFFFFF'},
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 16,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7EB',
+  },
+  headerButtons: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  headerButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    backgroundColor: 'transparent',
+  },
+  headerButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#374151',
+  },
+  headerButtonPrimary: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+    backgroundColor: '#FF7A5C',
+  },
+  headerButtonPrimaryText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
   heroSection: {backgroundColor: '#FFF5F0', paddingHorizontal: 24, paddingTop: 40, paddingBottom: 48},
   badge: {flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(255,122,92,0.1)', borderWidth: 1, borderColor: 'rgba(255,122,92,0.2)', borderRadius: 20, paddingHorizontal: 16, paddingVertical: 8, alignSelf: 'flex-start', marginBottom: 24},
   badgeIcon: {fontSize: 16, marginRight: 6},
@@ -124,7 +195,7 @@ const styles = StyleSheet.create({
   stepNumberText: {fontSize: 24, fontWeight: 'bold', color: '#FFFFFF'},
   stepTitle: {fontSize: 18, fontWeight: 'bold', color: '#1F2937', marginBottom: 8},
   stepDesc: {fontSize: 15, color: '#6B7280', textAlign: 'center', lineHeight: 22},
-  quickActions: {flexDirection: 'row', justifyContent: 'space-around'},
+  quickActions: {flexDirection: 'row', justifyContent: 'space-around', marginBottom: 12},
   quickButton: {alignItems: 'center', padding: 20, backgroundColor: '#F9FAFB', borderRadius: 16, width: 100},
   quickIcon: {fontSize: 36, marginBottom: 8},
   quickText: {fontSize: 14, fontWeight: '600', color: '#374151'},
