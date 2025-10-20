@@ -28,3 +28,6 @@ next-env.d.ts.env
 
 # uploaded files
 /public/uploads/
+
+# 임시 폴더
+HuLifeExpoApp/

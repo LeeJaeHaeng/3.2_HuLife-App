@@ -109,3 +109,19 @@ export async function hashPassword(password: string): Promise<string> {
 export async function verifyPassword(password: string, hashedPassword: string): Promise<boolean> {
   return bcrypt.compare(password, hashedPassword)
 }
+
+export async function verifyToken(token: string): Promise<Session | null> {
+  try {
+    const decoded = JSON.parse(Buffer.from(token, 'base64').toString('utf-8'));
+
+    // Check if token is expired
+    if (decoded.exp && decoded.exp > Date.now()) {
+      const { exp, ...session } = decoded;
+      return session as Session;
+    }
+
+    return null;
+  } catch (error) {
+    return null;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat \"c:\\HuLifeExpoApp\\api\\userService.js\")",
+      "Read(//c/HuLife_App/**)",
+      "Bash(npm install @react-native-picker/picker)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

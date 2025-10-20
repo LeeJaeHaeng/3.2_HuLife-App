@@ -191,6 +191,17 @@ export const chatMessages = mysqlTable("chat_messages", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
+// Post comments table
+export const postComments = mysqlTable("post_comments", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  postId: varchar("post_id", { length: 255 }).notNull().references(() => posts.id),
+  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
+  userName: varchar("user_name", { length: 255 }).notNull(),
+  userImage: varchar("user_image", { length: 255 }),
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
 export const communityMembersRelations = relations(communityMembers, ({ one }) => ({
   community: one(communities, {
     fields: [communityMembers.communityId],
@@ -202,9 +213,21 @@ export const communityMembersRelations = relations(communityMembers, ({ one }) =
   }),
 }))
 
-export const postsRelations = relations(posts, ({ one }) => ({
+export const postsRelations = relations(posts, ({ one, many }) => ({
   user: one(users, {
     fields: [posts.userId],
+    references: [users.id],
+  }),
+  comments: many(postComments),
+}))
+
+export const postCommentsRelations = relations(postComments, ({ one }) => ({
+  post: one(posts, {
+    fields: [postComments.postId],
+    references: [posts.id],
+  }),
+  user: one(users, {
+    fields: [postComments.userId],
     references: [users.id],
   }),
 }))

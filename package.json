@@ -4,10 +4,13 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "next dev -p 3000",
     "lint": "next lint",
     "start": "next start",
-    "start:mobile": "expo start --project-root mobile --clear"
+    "start:mobile": "expo start --project-root mobile --clear",
+    "migrate:comments": "tsx scripts/add-post-comments-table.ts",
+    "check:tables": "tsx scripts/check-tables.ts",
+    "check:posts": "tsx scripts/check-posts-table.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

@@ -1,60 +1,38 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { createSession, verifyPassword } from "@/lib/auth/session";
 import { db } from '@/lib/db';
 import { users } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
-import bcrypt from 'bcryptjs';
-import { createSession } from '@/lib/auth/session';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { email, password } = body;
+    const { email, password } = await request.json();
 
     if (!email || !password) {
-      return NextResponse.json(
-        { error: '이메일과 비밀번호를 입력해주세요.' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "이메일과 비밀번호를 입력해주세요." }, { status: 400 });
     }
 
-    // Find user by email
     const user = await db.query.users.findFirst({
       where: eq(users.email, email),
     });
 
     if (!user) {
-      return NextResponse.json(
-        { error: '이메일 또는 비밀번호가 일치하지 않습니다.' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "이메일 또는 비밀번호가 올바르지 않습니다." }, { status: 401 });
     }
 
-    // Verify password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      return NextResponse.json(
-        { error: '이메일 또는 비밀번호가 일치하지 않습니다.' },
-        { status: 401 }
-      );
+    const isValid = await verifyPassword(password, user.password);
+    if (!isValid) {
+      return NextResponse.json({ error: "이메일 또는 비밀번호가 올바르지 않습니다." }, { status: 401 });
     }
 
-    // Create session token
-    const token = await createSession(user.id, user.email);
+    // 로그인 성공! createSession을 호출하여 모바일용 토큰을 받습니다.
+    const token = await createSession(user.id, user.email); 
 
-    // Remove password from response
-    const { password: _, ...userWithoutPassword } = user;
+    // 받은 토큰을 JSON 응답으로 모바일 앱에 보내줍니다.
+    return NextResponse.json({ token: token });
 
-    return NextResponse.json({
-      success: true,
-      token,
-      user: userWithoutPassword,
-    });
   } catch (error) {
-    console.error('Login error:', error);
-    return NextResponse.json(
-      { error: '로그인에 실패했습니다.' },
-      { status: 500 }
-    );
+    console.error('Login API error:', error);
+    return NextResponse.json({ error: '로그인 처리 중 오류가 발생했습니다.' }, { status: 500 });
   }
 }

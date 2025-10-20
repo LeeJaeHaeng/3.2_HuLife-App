@@ -1998,10 +1998,180 @@ const [imageLoading, setImageLoading] = useState(true);
 
 ---
 
-**작업 완료일**: 2025-10-16
-**소요 시간**: 약 20분
-**변경 파일 수**: 4개 (신규 1개, 수정 3개)
-**테스트 상태**: ✅ 준비 완료
+# 📱 최신 작업 로그 (2025-10-16 계속)
 
-이제 모바일 앱의 UI가 웹 버전과 더욱 일관되며, 브랜드 아이덴티티가 강화되었습니다!
+## ✅ 완료된 작업들
+
+### 1. 메인 페이지 UI 모바일 상단바 조정
+- SafeAreaView 적용으로 status bar 영역 처리
+- HomeScreen에 적용 완료
+
+### 2. 모든 페이지 브랜드 로고 적용
+- AppNavigator의 defaultScreenOptions에 Logo 컴포넌트 적용
+- 모든 화면에 자동으로 브랜드 로고 표시
+
+### 3. 취미 목록 페이지 검색 & 카테고리 필터 추가
+- **검색 기능**:
+  - 취미 이름/설명으로 실시간 검색
+  - X 버튼으로 검색어 클리어
+- **카테고리 필터**:
+  - 15개 카테고리 (전체, 운동/스포츠, 예술/창작 등)
+  - 가로 스크롤 가능한 버튼 UI
+  - 선택된 카테고리 하이라이트 (#FF7A5C)
+- **실시간 필터링**: 검색어 + 카테고리 조합 필터링
+- **결과 개수 표시**: "X개의 취미 (전체 Y개 중)"
+
+### 4. OAuth 소셜 로그인 기능 완전 구현 ⭐
+- **구현된 파일**:
+  - `mobile/src/services/api.ts`: OAuth URL 생성 및 콜백 처리 함수
+  - `mobile/src/screens/OAuthWebViewScreen.tsx`: WebView 기반 OAuth 인증 화면
+  - `mobile/src/navigation/AppNavigator.tsx`: OAuthWebView 화면 라우팅 추가
+  - `mobile/src/screens/LoginScreen.tsx`: 소셜 로그인 버튼 연동
+  - `mobile/OAUTH_SETUP.md`: 설정 가이드 문서
+
+- **실제 OAuth 클라이언트 ID 적용**:
+  - 카카오: `de424c0a4add19379cea19567a6cb17a`
+  - 네이버: `JhDatPR2iI0ZeyBEAk_T`
+  - 구글: `216701679575-komtl1g5qfmeue98bk93h8mho8m5nq9f.apps.googleusercontent.com`
+
+- **동작 흐름**:
+  1. 사용자가 소셜 로그인 버튼 클릭 (카카오/네이버/구글)
+  2. OAuthWebViewScreen으로 이동하여 WebView에서 OAuth 인증 진행
+  3. OAuth 제공자가 인증 코드를 콜백 URL로 전달
+  4. 서버(`/api/auth/{provider}/callback`)가 토큰 발급 및 사용자 정보 조회
+  5. 서버가 DB에 사용자 저장 후 Dashboard 또는 Survey로 리다이렉트
+  6. 모바일 앱이 URL 변경 감지하여 자동으로 해당 화면으로 이동
+
+- **패키지 설치**: `react-native-webview` (Expo SDK 54 호환)
+
+- **주요 기능**:
+  - WebView 기반 OAuth 인증
+  - 콜백 URL 감지 및 처리
+  - 로딩 인디케이터
+  - 인증 성공 시 자동 화면 전환
+  - 에러 처리 및 사용자 알림
+
+---
+
+## 📊 현재 진행 상태
+
+| 작업 | 상태 | 비고 |
+|-----|------|------|
+| 메인 페이지 UI 조정 | ✅ 완료 | SafeAreaView 적용 |
+| 브랜드 로고 적용 | ✅ 완료 | 전체 화면 적용 |
+| 검색 & 카테고리 필터 | ✅ 완료 | HobbyListScreen |
+| OAuth 소셜 로그인 | ✅ **개선 완료** | 외부 브라우저 방식으로 변경 |
+| CommunityList 완성 | ✅ **완료** | 탭, 검색, 카드 UI |
+| Dashboard UI 최적화 | ✅ **완료** | 배경색, 그림자 개선 |
+
+---
+
+## 🔧 OAuth 로그인 개선 작업 (2025-10-16)
+
+### 문제 상황
+- WebView 방식의 OAuth 인증에서 `device_id`와 `device_name` 파라미터 오류 발생
+- CORS 및 쿠키 문제로 인한 불안정한 인증 프로세스
+
+### 해결 방법
+**외부 브라우저 방식**으로 변경:
+
+1. **동작 흐름**:
+   ```
+   사용자가 소셜 로그인 버튼 클릭
+   ↓
+   안내 다이얼로그 표시
+   ↓
+   디바이스 기본 브라우저에서 OAuth 페이지 열기 (Linking.openURL)
+   ↓
+   사용자가 브라우저에서 인증 완료
+   ↓
+   서버가 콜백 처리 후 웹 세션 생성
+   ↓
+   사용자에게 "로그인 확인" 안내
+   ↓
+   앱으로 돌아와 로그인 상태 확인
+   ```
+
+2. **개선된 UX**:
+   - 명확한 안내 메시지와 2단계 다이얼로그
+   - 로그인 중 로딩 상태 표시
+   - 소셜 로그인 안내 박스 추가 (💡 브라우저에서 진행)
+
+3. **장점**:
+   - ✅ 안정적인 OAuth 인증 (CORS 문제 없음)
+   - ✅ 쿠키 공유로 웹/모바일 통합 세션
+   - ✅ 에러 발생 가능성 최소화
+
+4. **제한사항**:
+   - ⚠️ 앱으로 자동 복귀하지 않음 (수동으로 돌아와야 함)
+   - ⚠️ 프로덕션에서는 Native SDK 사용 권장
+
+### 변경된 파일
+- `mobile/src/screens/LoginScreen.tsx`: 외부 브라우저 방식으로 완전 재작성
+
+### 5. 네트워크 오류 해결 (AxiosError: Network Error) ✅ (2025-10-16)
+
+#### 문제 상황
+- **증상**: 모바일 앱에서 취미/커뮤니티 목록 로딩 시 `AxiosError: Network Error` 발생
+- **로그**: `ERROR ❌ Failed to load hobbies: [AxiosError: Network Error]`
+- **웹**: 정상 작동, 모바일만 오류
+
+#### 원인 분석
+- **IP 주소 변경**: 개발 PC의 로컬 IP가 변경됨
+  - 이전: `10.205.167.63`
+  - 현재: `192.168.0.40`
+- 모바일 앱의 API_BASE_URL이 구 IP 주소로 설정되어 있어 서버에 접근 불가
+- `ipconfig` 명령어로 확인: `IPv4 Address: 192.168.0.40`
+
+#### 해결 방법
+1. **Next.js 서버 시작 확인**
+   ```bash
+   npm run dev
+   # → http://localhost:3000 에서 실행 중
+   ```
+
+2. **API_BASE_URL 업데이트**
+   - 파일: `mobile/src/services/api.ts`
+   - 변경:
+     ```typescript
+     // Before
+     const API_BASE_URL = __DEV__
+       ? 'http://10.205.167.63:3000'  // ❌ 구 IP
+       : 'https://your-production-url.com';
+
+     // After
+     const API_BASE_URL = __DEV__
+       ? 'http://192.168.0.40:3000'  // ✅ 신 IP
+       : 'https://your-production-url.com';
+     ```
+
+3. **API 동작 확인**
+   ```bash
+   curl http://192.168.0.40:3000/api/hobbies
+   # → 123개 취미 데이터 정상 반환
+
+   curl http://192.168.0.40:3000/api/communities
+   # → 커뮤니티 데이터 정상 반환
+   ```
+
+#### 영향 범위
+- ✅ 취미 목록 로딩
+- ✅ 커뮤니티 목록 로딩
+- ✅ OAuth 소셜 로그인 (redirect_uri 자동 업데이트)
+- ✅ 모든 API 엔드포인트
+
+#### 재발 방지
+- **주의사항**: Wi-Fi 재연결 시 IP 주소가 변경될 수 있음
+- **확인 방법**: `ipconfig` (Windows) 또는 `ifconfig` (Mac/Linux)로 현재 IPv4 주소 확인
+- **향후 개선**: 환경 변수 사용 또는 동적 IP 감지 구현 권장
+
+#### 변경된 파일
+- `mobile/src/services/api.ts` (line 23)
+
+---
+
+### 이후 작업사항
+아니 모바일의 상단바까지는 ui가 침범하지 않도록 해줘야지 그리고 타고 추 카페에서 나만의 파우치 뜨기 저 부분은 내 취미 추천받기 칸으로 변경해서 클릭하면 설문페이지로 이동하도록하고 메인페이지와 마이페이지 ui 줄테니까 형식은 따라하되, 우리 브랜드 색을 유지해서 페이지 수정해줘
+Session limit reached ∙ resets 1am
+---
 
