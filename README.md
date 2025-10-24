@@ -6,19 +6,62 @@
 
 ---
 
-## 📱 프로젝트 구조
+## 📊 현재 작업 진행 상황 (2025-10-24 기준)
 
-이 프로젝트는 **웹 앱**과 **모바일 앱** 두 가지로 구성되어 있습니다:
+### ✅ 최근 완료된 주요 기능 및 수정사항
 
-### 1. **웹 애플리케이션** (Next.js)
-- 경로: 프로젝트 루트
-- 기술: Next.js 14, React 18, TypeScript
-- 포트: http://localhost:3001
+1.  **대용량 프로필 이미지 업로드 (Web & Mobile)**
+    *   **문제 해결**: 기존 `TEXT` 타입(65KB)의 DB 용량 한계로 프로필 이미지 업로드에 실패하던 문제를 `LONGTEXT`(최대 4GB) 타입으로 변경하여 해결했습니다.
+    *   **구현 방식**: 모바일 앱에서 이미지를 Base64로 인코딩하여 서버에 전송하고, 서버는 이를 그대로 DB에 저장합니다.
+    *   **사용자 경험**: 이제 화질 저하 없이 고용량의 프로필 사진을 업로드하고 모든 관련 화면(마이페이지, 댓글, 게시글 등)에서 확인할 수 있습니다.
 
-### 2. **모바일 애플리케이션** (Expo)
-- 경로: `/mobile` 폴더
-- 기술: Expo, React Native, TypeScript
-- 실행: `cd mobile && npx expo start`
+2.  **게시판 다중 이미지 업로드 기능 (Mobile)**
+    *   **기능 추가**: 게시글 작성 시 최대 5장의 이미지를 선택하여 업로드할 수 있는 기능을 모바일 앱에 추가했습니다.
+    *   **UI/UX**: 이미지 선택기, 선택한 이미지 미리보기 및 삭제 기능을 구현했습니다.
+    *   **기술**: `expo-image-picker`를 사용하여 다중 이미지를 선택하고, 각 이미지를 Base64로 변환하여 API에 전송합니다.
+
+3.  **로그인 및 인증 시스템 안정화**
+    *   **무한 로딩 해결**: 모바일 앱에서 로그인 시 발생하던 무한 로딩 문제를 API 서비스 파일의 URL에 포트 번호(`:3000`)를 명시하여 해결했습니다.
+    *   **서버 오류 수정**: `next-auth` 의존성 문제로 발생하던 500 에러를 커스텀 세션 관리 로직(`lib/auth/session`)으로 교체하여 해결했습니다.
+
+4.  **모바일 앱 사용성 개선**
+    *   **로그인 화면 스크롤**: 로그인 페이지에서 키보드가 활성화되었을 때도 화면을 스크롤할 수 있도록 `ScrollView`를 적용하여 입력 편의성을 높였습니다.
+    *   **프로필 이미지 표시**: 마이페이지에서 프로필 이미지가 정상적으로 표시되지 않던 버그를 수정했습니다. (`user.imageUrl` -> `user.profileImage`)
+
+### 🛠️ 현재 기술 스택
+
+*   **Web**: Next.js 14, React 18, TypeScript, Tailwind CSS, shadcn/ui
+*   **Mobile**: React Native, Expo SDK 54
+*   **Backend**: Next.js API Routes
+*   **Database**: **MySQL** with **Drizzle ORM**
+*   **Authentication**: **커스텀 세션 관리** (Bearer Token 방식)
+*   **Image Handling**: **Base64 Encoding** + **LONGTEXT** DB 저장
+
+---
+
+## 🔮 향후 진행 예정 사항
+
+### 1. 최우선 과제 (Immediate Next Steps)
+
+*   **[Backend] 게시판 이미지 저장 로직 구현**
+    *   모바일에서 전송된 Base64 이미지 배열을 `posts` 테이블의 `images` 컬럼(LONGTEXT)에 JSON 형태로 저장하는 API를 구현합니다.
+*   **[Web/Mobile] 게시글 이미지 표시 기능**
+    *   게시글 상세 페이지에서 저장된 이미지들을 불러와 화면에 표시합니다.
+*   **[Web/Mobile] 프로필 이미지 통합 표시**
+    *   현재 마이페이지에만 적용된 프로필 이미지를 **댓글, 리뷰, 게시글 작성자 정보** 등 모든 영역에 일관되게 표시합니다.
+
+### 2. 주요 기능 개발 (Upcoming Features)
+
+*   **[Mobile] 마이페이지 캘린더 기능 추가**
+    *   웹 버전과 동일하게, 모바일 마이페이지의 일정 관리 섹션에 `react-native-calendars`와 같은 라이브러리를 사용하여 캘린더 UI를 추가하고, 사용자가 자신의 일정을 시각적으로 관리할 수 있도록 합니다.
+*   **[Web/Mobile] 커뮤니티 실시간 채팅 기능**
+    *   `Socket.IO` 또는 `ws` 라이브러리를 사용하여 커뮤니티 멤버 간의 실시간 채팅 기능을 구현합니다.
+
+### 3. 개선 및 고도화 (Refinements)
+
+*   **추천 알고리즘 고도화**: 사용자 설문 데이터와 활동 로그를 기반으로 더 정교한 취미 추천 모델을 개발합니다.
+*   **성능 최적화**: 이미지 로딩 최적화(Lazy Loading, 캐싱) 및 API 응답 속도 개선을 진행합니다.
+*   **코드 리팩토링**: 웹/모바일 간 중복되는 로직을 공통 유틸리티로 분리하여 유지보수성을 높입니다.
 
 ---
 
@@ -41,166 +84,23 @@ pnpm dev
 # 1. mobile 폴더로 이동
 cd mobile
 
-# 2. Expo 개발 서버 실행
+# 2. 종속성 설치
+npm install
+
+# 3. Expo 개발 서버 실행
 npx expo start
 
-# 3. 실행 방법 선택
+# 4. 실행 방법 선택 (스마트폰과 PC가 동일한 Wi-Fi에 연결되어야 함)
 # - 스마트폰: Expo Go 앱으로 QR 코드 스캔
 # - Android: 'a' 키 눌러 에뮬레이터 실행
 # - iOS: 'i' 키 눌러 시뮬레이터 실행 (Mac만)
-# - 웹: 'w' 키 눌러 브라우저 실행
 ```
-
----
-
-## 🎯 주요 기능
-
-### 공통 기능 (웹 & 모바일)
-- ✅ **맞춤형 취미 추천**: 간단한 설문조사로 성향에 맞는 취미 추천
-- ✅ **취미 정보 탐색**: 123개 이상의 취미 카테고리별 탐색
-- ✅ **커뮤니티**: 관심사 기반 모임 참여 및 소통
-- ✅ **소셜 로그인**: 카카오, 네이버, 구글 OAuth 연동
-- ✅ **마이페이지**: 프로필 관리 및 활동 내역 확인
-
-### 웹 전용 기능
-- 🌓 다크 모드 지원
-- 📄 About, FAQ, Contact 페이지
-- 🎨 shadcn/ui 기반 컴포넌트
-
----
-
-## 🛠️ 기술 스택
-
-### 웹 (Next.js)
-- **Frontend**: Next.js 14, React 18, TypeScript
-- **Backend**: Next.js API Routes
-- **Database**: Drizzle ORM + Turso (SQLite)
-- **Styling**: Tailwind CSS, shadcn/ui
-- **Authentication**: NextAuth.js (OAuth)
-- **Theme**: next-themes (다크 모드)
-
-### 모바일 (Expo)
-- **Framework**: Expo SDK 54, React Native
-- **Language**: TypeScript
-- **Navigation**: React Navigation (Stack + Bottom Tabs)
-- **State**: AsyncStorage
-- **API**: Axios with interceptors
-- **Backend**: Next.js API Routes 연동
-
----
-
-## 📂 프로젝트 구조
-
-```
-retiree-hobby-app/
-├── app/                          # Next.js App Router
-│   ├── (auth)/                  # 인증 페이지
-│   │   ├── login/
-│   │   └── signup/
-│   ├── about/                   # 정보 페이지
-│   ├── contact/
-│   ├── faq/
-│   ├── hobbies/                 # 취미 관련
-│   ├── communities/             # 커뮤니티
-│   ├── survey/                  # 설문조사
-│   └── api/                     # API Routes
-│
-├── components/                   # React 컴포넌트
-│   ├── hero-section.tsx
-│   ├── hobby-list.tsx
-│   ├── social-login-buttons.tsx
-│   └── ui/                      # shadcn/ui 컴포넌트
-│
-├── lib/                         # 유틸리티
-│   ├── db.ts                    # Drizzle 설정
-│   ├── schema.ts                # DB 스키마
-│   └── actions/                 # Server Actions
-│
-├── scripts/                     # DB 스크립트
-│   ├── seed.ts
-│   ├── update-hobby-images.ts
-│   └── merge-hobbies.ts
-│
-├── public/                      # 정적 파일
-│   └── [취미 이미지들].png
-│
-└── mobile/                      # 📱 Expo 모바일 앱
-    ├── App.tsx                  # 앱 진입점
-    ├── app.json                 # Expo 설정
-    ├── src/
-    │   ├── navigation/
-    │   │   └── AppNavigator.tsx # 네비게이션 설정
-    │   ├── screens/             # 10개 화면
-    │   │   ├── HomeScreen.tsx
-    │   │   ├── LoginScreen.tsx
-    │   │   ├── RegisterScreen.tsx
-    │   │   ├── HobbyListScreen.tsx
-    │   │   ├── HobbyDetailScreen.tsx
-    │   │   ├── CommunityListScreen.tsx
-    │   │   ├── CommunityDetailScreen.tsx
-    │   │   ├── ProfileScreen.tsx
-    │   │   ├── SurveyScreen.tsx
-    │   │   └── RecommendationsScreen.tsx
-    │   ├── services/
-    │   │   └── api.ts           # API 클라이언트
-    │   └── types/
-    │       └── index.ts         # TypeScript 타입
-    └── README.md                # 모바일 앱 가이드
-```
-
----
-
-## 🗄️ 데이터베이스 스키마
-
-### 주요 테이블 (11개)
-1. **users** - 사용자 정보
-2. **hobbies** - 취미 정보 (123개)
-3. **communities** - 모임/커뮤니티
-4. **user_hobbies** - 사용자-취미 관계
-5. **community_members** - 커뮤니티 멤버
-6. **posts** - 게시글
-7. **comments** - 댓글
-8. **messages** - 메시지
-9. **events** - 이벤트
-10. **survey_responses** - 설문 응답
-11. **notifications** - 알림
-
-### 유용한 스크립트
-```bash
-# DB 시드 (초기 데이터 입력)
-pnpm tsx scripts/seed.ts
-
-# 취미 이미지 업데이트
-pnpm tsx scripts/update-hobby-images.ts
-
-# 중복 취미 병합 (예: 파크골프 → 게이트볼)
-pnpm tsx scripts/merge-hobbies.ts
-
-# DB 스키마 푸시
-pnpm drizzle-kit push
-```
-
----
-
-## 🎨 UI/UX 디자인 가이드
-
-### 브랜드 컬러
-- **Primary**: `#FF7A5C` (오렌지) - 주요 버튼, 강조
-- **Background**: `#FFF5F0` (연한 오렌지) - Hero 섹션
-- **Success**: `#10B981` (초록) - 성공 메시지
-- **Kakao**: `#FEE500` (노랑) - 카카오 로그인
-- **Naver**: `#03C75A` (초록) - 네이버 로그인
-
-### 디자인 원칙
-- 웹과 모바일 앱의 UI는 **완전히 동일**하게 유지
-- 소셜 로그인 버튼 색상은 **정확히** 브랜드 컬러 사용
-- 다크 모드는 웹에서만 지원 (모바일은 라이트 모드만)
 
 ---
 
 ## 🔑 환경 변수 설정
 
-`.env.local` 파일을 생성하고 아래 내용 추가:
+프로젝트 루트에 `.env.local` 파일을 생성하고 아래 내용 추가:
 
 ```env
 # OAuth Providers
@@ -211,249 +111,16 @@ NAVER_CLIENT_SECRET=...
 KAKAO_CLIENT_ID=...
 KAKAO_CLIENT_SECRET=...
 
-# NextAuth
-NEXTAUTH_URL=http://localhost:3001
-NEXTAUTH_SECRET=... # openssl rand -hex 32
+# Custom Auth Secret
+AUTH_SECRET=... # openssl rand -hex 32 명령어로 생성
 
-# Database (Turso)
-TURSO_DATABASE_URL=...
-TURSO_AUTH_TOKEN=...
+# Database (MySQL)
+DB_HOST=...
+DB_USER=...
+DB_PASSWORD=...
+DB_NAME=...
+DB_PORT=...
+
+# Next.js Server
+NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
-
----
-
-## 📱 모바일 앱 상세 가이드
-
-### 네비게이션 구조
-- **로그인 불필요**: 메인 페이지부터 시작 (웹과 동일)
-- **Stack Navigation**: 화면 간 이동
-- 초기 화면: `Home` (웹의 메인 페이지와 동일)
-
-### 화면 플로우
-```
-HomeScreen (메인)
-  ↓ [취미 추천받기]
-  SurveyScreen → RecommendationsScreen
-
-  ↓ [둘러보기]
-  HobbyListScreen → HobbyDetailScreen
-
-  ↓ [모임 찾기]
-  CommunityListScreen → CommunityDetailScreen
-
-  ↓ [로그인]
-  LoginScreen (소셜 로그인) → ProfileScreen
-```
-
-### API 연동
-- **개발 환경**: `http://localhost:3001/api`
-- **모바일 설정**: `src/services/api.ts`
-- **인증**: JWT 토큰 + AsyncStorage
-
----
-
-## 🚨 중요한 최근 변경사항
-
-### 2025-10-16 주요 업데이트
-
-#### 0. 네트워크 오류 수정 ✅
-- **문제**: AxiosError: Network Error - 취미/커뮤니티 목록 로딩 실패
-- **원인**: IP 주소 변경 (10.205.167.63 → 192.168.0.40)
-- **해결**: `mobile/src/services/api.ts`에서 API_BASE_URL 업데이트
-- **확인 방법**: `ipconfig` 명령어로 현재 IPv4 주소 확인 필요
-- **영향 범위**: 모든 API 호출 (호비, 커뮤니티, OAuth 등)
-
-#### 1. OAuth 소셜 로그인 완전 구현 ✅
-- **문제 해결**: WebView 방식의 CORS 및 쿠키 문제 해결
-- **새 방식**: 디바이스 기본 브라우저를 사용한 안정적인 OAuth 인증
-- **지원 제공자**: 카카오, 네이버, 구글 (실제 Client ID 적용)
-- **UX 개선**: 2단계 다이얼로그로 명확한 사용자 가이드
-- **LoginScreen**: 완전 재구현 (469 lines)
-- **RegisterScreen**: 완전 재구현 (644 lines)
-- **동작 흐름**:
-  1. 소셜 로그인 버튼 탭 → 안내 다이얼로그
-  2. "로그인 시작" → 브라우저에서 OAuth 인증
-  3. 인증 완료 후 앱으로 복귀
-  4. "로그인 확인" → Dashboard/Survey 화면으로 자동 이동
-
-#### 2. 모바일 앱 UI 개선 (2025-10-16)
-- ✅ **취미 목록 이미지**: 각 카드에 200px 높이 대표 이미지 표시
-- ✅ **브랜드 로고**: 재사용 가능한 Logo 컴포넌트 생성 및 전체 적용
-- ✅ **SafeAreaView**: 모바일 상단바(노치) 영역 대응
-- ✅ **네이티브 UI**: 웹 스타일 네비게이션 제거, 완전 모바일 네이티브 방식
-
-#### 3. 모바일 앱을 Expo로 변경 (2025-10-15)
-- ❌ **이전**: React Native CLI (Android Studio 필수)
-- ✅ **현재**: Expo (QR 코드로 즉시 실행)
-
-#### 4. 네비게이션 구조 변경 (2025-10-15)
-- ❌ **이전**: 로그인 화면부터 시작
-- ✅ **현재**: 메인 페이지부터 시작 (웹과 동일)
-
-#### 5. HomeScreen 웹 매칭 (2025-10-15)
-- ✅ Hero Section: "당신만을 위한 맞춤 취미를 찾아드립니다"
-- ✅ 통계: 12,000+ 회원, 500+ 모임, 50+ 카테고리
-- ✅ 이용 방법 3단계
-- ✅ 바로가기 버튼
-
----
-
-## 🐛 트러블슈팅
-
-### 웹 앱
-
-**포트 3000이 사용 중일 때**
-```bash
-# 자동으로 3001 포트 사용
-pnpm dev
-```
-
-**다크 모드 토글 버튼 작동 안함**
-- 해결됨: `theme-toggle.tsx`에서 dropdown → 직접 토글로 변경
-
-### 모바일 앱
-
-**Expo 서버 시작 안됨**
-```bash
-cd mobile
-rm -rf node_modules
-npm install
-npx expo start --clear
-```
-
-**QR 코드 스캔 안됨**
-- 컴퓨터와 스마트폰이 **같은 Wi-Fi**에 연결되어 있는지 확인
-- 터널 모드 사용: `npx expo start --tunnel`
-
-**웹 번들링 에러**
-- 무시해도 됨 (모바일 앱은 정상 작동)
-- 웹은 Next.js 사용, 모바일만 Expo 사용
-
----
-
-## 📝 개발 워크플로우
-
-### 새 기능 추가 시
-
-1. **웹 먼저 구현**
-   ```bash
-   # 웹 앱에서 기능 구현 및 테스트
-   pnpm dev
-   ```
-
-2. **모바일 동일하게 구현**
-   ```bash
-   # 웹과 동일한 UI/기능으로 모바일 구현
-   cd mobile
-   npx expo start
-   ```
-
-3. **README 업데이트**
-   - 변경사항을 README에 기록
-   - 새 세션에서 바로 이어서 작업 가능하도록
-
-### Git 커밋 메시지 규칙
-```
-feat: 새 기능 추가
-fix: 버그 수정
-docs: 문서 업데이트
-style: UI/스타일 변경
-refactor: 코드 리팩토링
-```
-
----
-
-## 🔮 향후 개선 계획
-
-### 웹 앱
-- [ ] 실시간 채팅 기능
-- [ ] 고도화된 추천 알고리즘
-- [ ] 오프라인 모임 지원
-- [ ] 관리자 대시보드
-
-### 모바일 앱
-- [ ] 실제 API 연동 (현재 준비 중)
-- [ ] Push 알림 구현
-- [ ] 오프라인 모드 지원
-- [ ] 앱스토어 배포 (EAS Build)
-
----
-
-## 🤝 기여하기
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'feat: Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 라이선스
-
-This project is licensed under the MIT License.
-
----
-
-## 📞 문의
-
-프로젝트 관련 문의사항은 [GitHub Issues](https://github.com/LeeJaeHaeng/HuLife-App/issues)에 남겨주세요.
-
----
-
-## 💡 빠른 참고
-
-### 자주 사용하는 명령어
-```bash
-# 웹 앱 실행
-pnpm dev
-
-# 모바일 앱 실행
-cd mobile && npx expo start
-
-# DB 시드
-pnpm tsx scripts/seed.ts
-
-# 의존성 설치
-pnpm install              # 웹
-cd mobile && npm install  # 모바일
-```
-
-### 중요 파일 위치
-- 웹 메인: `app/page.tsx`
-- 모바일 메인: `mobile/src/screens/HomeScreen.tsx`
-- 네비게이션: `mobile/src/navigation/AppNavigator.tsx`
-- API 서비스: `mobile/src/services/api.ts`
-- DB 스키마: `lib/schema.ts`
-
----
-
-## 🎨 최근 UI 개선 사항 (2025-10-16)
-
-### 1. 취미 목록 이미지 추가
-- 각 취미 카드에 대표 이미지 표시
-- 상대 URL → 절대 URL 자동 변환
-- 플레이스홀더 이미지 지원
-
-### 2. 브랜드 로고 컴포넌트
-- 재사용 가능한 Logo 컴포넌트 생성 (`mobile/src/components/Logo.tsx`)
-- 3가지 크기 옵션: small, medium, large
-- HomeScreen 및 Navigation 헤더에 적용
-
-### 3. 모바일 네이티브 UI 완성
-- 웹 스타일 네비게이션 바 제거 확인
-- 완전히 모바일 네이티브 방식으로 구현
-- 브랜드 아이덴티티 강화
-
----
-
-**마지막 업데이트**: 2025-10-16
-**현재 상태**:
-- ✅ **OAuth 소셜 로그인 완전 구현** (2025-10-16)
-  - Kakao, Naver, Google 로그인 정상 작동
-  - 외부 브라우저 방식으로 안정적인 인증 구현
-  - WebView CORS 문제 완전 해결
-- ✅ Expo 모바일 앱 완성, 웹과 완전히 동일한 UI/UX 구현 완료
-- ✅ 취미 목록 이미지 표시 (2025-10-16)
-- ✅ 브랜드 로고 컴포넌트 적용 (2025-10-16)
-- ✅ 모바일 네이티브 UI 최적화 완료 (2025-10-16)
