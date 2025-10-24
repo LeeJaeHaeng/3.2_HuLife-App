@@ -1,6 +1,6 @@
 # HuLife 웹 프로젝트의 Expo 모바일 앱 전환 기록
 
-> 📅 최종 업데이트: 2025년 10월 20일
+> 📅 최종 업데이트: 2025년 10월 20일 (Phase 4 완료)
 
 이 문서는 기존 Next.js(웹) 프로젝트를 Expo(React Native) 모바일 앱으로 전환하는 모든 과정과 주요 문제 해결 기록을 정리합니다.
 
@@ -49,9 +49,14 @@
       - 상세 정보 표시 (날짜, 시간, 장소 아이콘과 함께)
       - 다가오는 일정만 표시 (과거 일정 자동 필터링)
       - Empty state 개선 (안내 메시지)
+-   **✅ 완료:** **Phase 4 핵심 개선 완성!** (2025-10-20)
+  - **새로운 페이지 4개 추가:** Home (메인), About (회사 소개), FAQ, Contact (문의하기)
+  - **커뮤니티 이미지 버그 수정:** 서버 업로드 이미지 절대 URL 변환 로직 구현
+  - **OAuth 소셜 로그인 구현:** 카카오, 네이버, 구글 간편 로그인/회원가입
+  - **프로필 수정 기능 완성:** 이름, 나이, 지역, 전화번호 수정 + 프로필 사진 업로드
 -   **진행 중:** 취미 목록 이미지 매핑(`hobbyImages.js`) 작업 거의 완료 (일부 파일 누락 확인).
--   **남은 작업 (Phase 4):** 이미지 업로드, 댓글 기능, 채팅 기능, 알림
--   **⚠️ 참고:** 메인페이지(`app/index.js`) UI 구성은 모든 기능 구현 완료 후 최종 단계에서 디자인 변경 예정
+-   **남은 작업 (Phase 5):** 댓글 기능, 채팅 기능, Push 알림
+-   **⚠️ 참고:** 메인페이지(`app/index.js`)는 이제 `/home`으로 리다이렉트되어 완성된 Home 화면을 표시합니다
 
 ---
 
@@ -284,11 +289,139 @@
   - ✅ 직관적이고 시각적으로 개선된 UI
   - ✅ 유형별 색상으로 일정을 쉽게 구분 가능
 
+### 11. Phase 4 핵심 개선 및 확장 (2025-10-20)
+
+#### 11.1 새로운 페이지 4개 추가
+
+##### 11.1.1 Home 페이지 (`app/home.js`)
+- **구현 내용:**
+  - HeroSection: 히어로 이미지 + CTA 버튼 ("설문 시작하기")
+  - HobbyCategories: 6개 카테고리 그리드 (운동/스포츠, 예술/창작, 음악, 요리, 야외활동, 기타)
+  - FeaturedGroups: 추천 모임 Horizontal ScrollView
+  - HowItWorks: 이용 방법 3단계 안내
+  - Testimonials: 사용자 후기 3개
+  - CTASection: 추가 액션 유도 섹션
+  - Footer: 서비스 링크 (회사 소개, FAQ, 문의하기)
+- **네비게이션:** `app/index.js`가 `/home`으로 자동 리다이렉트
+
+##### 11.1.2 About 페이지 (`app/about.js`)
+- **구현 내용:**
+  - 우리의 미션 카드
+  - 통계 카드 4개 (12,000+ 활동 회원, 500+ 활동 모임, 123+ 취미 카테고리, 95% 회원 만족도)
+  - 연락처 정보 (이메일, 주소, 전화번호)
+  - Feather 아이콘 사용
+
+##### 11.1.3 FAQ 페이지 (`app/faq.js`)
+- **구현 내용:**
+  - 9개 자주 묻는 질문
+  - Accordion UI (토글 펼치기/접기)
+  - CTA 섹션 (추가 문의 안내)
+  - Contact 페이지로 이동 링크
+
+##### 11.1.4 Contact 페이지 (`app/contact.js`)
+- **구현 내용:**
+  - 연락처 정보 카드 3개 (이메일, 전화, 주소)
+  - 문의 폼 (이름, 이메일, 제목, 메시지)
+  - 유효성 검증
+  - 폼 제출 처리 (임시 구현)
+
+#### 11.2 커뮤니티 이미지 버그 수정
+- **문제:** 서버에 업로드된 커뮤니티 이미지가 모바일 앱에서 기본 로고로만 표시됨
+- **원인:**
+  - 웹 프로젝트는 상대 경로(`/uploads/communities/image.jpg`)로 이미지 저장
+  - 모바일 앱의 `getImageSource()` 함수가 이를 `hobbyImages` 매핑에서만 찾으려 함
+  - 서버 업로드 이미지는 절대 URL로 변환되어야 함
+- **해결 방법:**
+  - **파일:** `app/community.js`
+  - `API_BASE_URL` 상수 추가 (`http://172.30.1.60:3000`)
+  - `getImageSource()` 함수 업데이트:
+    - 상대 경로 중 `uploads` 또는 `public` 포함 → 절대 URL로 변환
+    - 그 외 상대 경로 → `hobbyImages` 매핑 사용
+    - HTTP URL → 그대로 사용
+- **결과:** ✅ 서버 업로드 커뮤니티 이미지가 정상 표시됨
+
+#### 11.3 OAuth 소셜 로그인 구현
+- **구현 화면:**
+  - **OAuthWebViewScreen** (`app/oauth-webview.js`): WebView 기반 OAuth 인증 처리
+  - **LoginScreen** (`app/login.js`): 소셜 로그인 버튼 3개 추가
+  - **SignupScreen** (`app/signup.js`): 소셜 회원가입 버튼 3개 추가
+
+- **지원하는 OAuth 제공자:**
+  - 카카오 (Kakao): 노란색 배경 (#FEE500)
+  - 네이버 (Naver): 초록색 배경 (#03C75A)
+  - 구글 (Google): 흰색 배경 + 테두리
+
+- **동작 흐름:**
+  1. 사용자가 소셜 로그인 버튼 클릭
+  2. OAuthWebViewScreen 모달 열림
+  3. WebView에서 OAuth 제공자 인증 페이지 로드
+  4. 사용자 인증 완료 후 콜백 URL로 리다이렉트
+  5. 웹 서버(`/api/auth/{provider}/callback`)가 처리:
+     - 액세스 토큰 획득
+     - 사용자 정보 조회
+     - DB에 사용자 생성/조회
+     - 세션 생성
+  6. 신규 사용자 → `/survey`, 기존 사용자 → `/dashboard`로 리다이렉트
+  7. 모바일 앱이 URL 변경 감지하여 해당 화면으로 자동 이동
+
+- **필요한 패키지:**
+  - `react-native-webview` (이미 설치됨)
+
+- **주의사항:**
+  - OAuth Client ID는 환경 변수로 관리 (현재 임시 값 사용)
+  - 프로덕션 환경에서는 Native SDK 사용 권장
+
+#### 11.4 프로필 수정 기능 완성
+- **구현 컴포넌트:**
+  - **EditProfileModal** (`components/EditProfileModal.js`): 전체 화면 모달
+  - 마이페이지(`app/my-page.js`)의 "프로필 수정" 버튼과 연동
+
+- **구현 기능:**
+  - **이미지 업로드:**
+    - `expo-image-picker` 사용 (자동 설치됨)
+    - 갤러리에서 사진 선택
+    - 1:1 비율로 크롭
+    - 프로필 아바타에 즉시 미리보기
+    - 카메라 버튼 오버레이
+  - **프로필 정보 수정:**
+    - 이름 (필수)
+    - 나이 (필수)
+    - 거주 지역 (필수, Picker 17개 지역)
+    - 전화번호 (선택)
+  - **유효성 검증:**
+    - 이름: 빈 값 체크
+    - 나이: 1~150 범위 체크
+  - **API 연동:**
+    - `updateUserProfile()` 함수 추가 (`api/userService.js`)
+    - 이미지 파일 있을 때: FormData로 multipart/form-data 전송
+    - 이미지 없을 때: JSON 데이터만 전송
+  - **성공 후 동작:**
+    - Alert로 성공 메시지 표시
+    - 마이페이지 데이터 자동 새로고침
+    - 모달 닫기
+
+- **설치된 패키지:**
+  - `expo-image-picker` (Phase 4에서 추가 설치)
+
+- **결과:**
+  - ✅ 프로필 정보 수정 가능
+  - ✅ 프로필 사진 업로드/변경 가능
+  - ✅ 즉시 마이페이지에 반영됨
+
+#### 11.5 네비게이션 업데이트
+- **파일:** `app/_layout.js`
+- **추가된 화면:**
+  - `home` (headerShown: false)
+  - `about` (headerShown: false)
+  - `faq` (headerShown: false)
+  - `contact` (headerShown: false)
+  - `oauth-webview` (headerShown: false, presentation: 'modal')
+
 ---
 
 ## 🛠️ 다음 진행 계획 (Next Steps)
 
-### Phase 4: 추가 기능 (선택)
+### Phase 5: 추가 기능 (선택)
 1.  **커뮤니티 채팅 기능**
     - 실시간 채팅 구현
     - WebSocket 또는 Polling 방식
@@ -301,15 +434,11 @@
     - 게시글 작성 화면 구현
     - 이미지 첨부 기능
 
-4.  **이미지 업로드**
-    - 프로필 사진 업로드
-    - 게시글 이미지 첨부
-
-5.  **알림 기능**
+4.  **알림 기능**
     - Push 알림 설정
     - 알림 목록 페이지
 
-6.  **취미 목록 이미지 완성**
+5.  **취미 목록 이미지 완성**
     - 누락된 이미지 파일 추가
     - `hobbyImages.js` 매핑 완성
 
@@ -329,9 +458,13 @@
 - **Event System:** DeviceEventEmitter (전역 상태 동기화)
 - **UI Components:**
   - @react-native-picker/picker (드롭다운 선택)
-  - Modal (일정 추가 등 커스텀 모달)
+  - Modal (일정 추가, 프로필 수정 등 커스텀 모달)
   - FlatList (리스트 렌더링, 2열 그리드)
+  - WebView (react-native-webview: OAuth 인증)
 - **Icons:** @expo/vector-icons (Feather, Ionicons)
+- **Image & Media:**
+  - expo-image-picker (프로필 사진 업로드)
+  - Image (이미지 표시)
 
 ---
 

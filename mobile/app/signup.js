@@ -205,8 +205,50 @@ export default function SignUpScreen() {
               <Text style={styles.buttonText}>{loading ? '가입하는 중...' : '회원가입'}</Text>
             </TouchableOpacity>
 
-            {/* 소셜 로그인 (임시) */}
-            <Text style={styles.socialLoginText}>소셜 로그인 버튼 영역</Text>
+            {/* 구분선 */}
+            <View style={styles.divider}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>또는</Text>
+              <View style={styles.dividerLine} />
+            </View>
+
+            {/* 소셜 회원가입 버튼들 */}
+            <View style={styles.socialLoginContainer}>
+              {/* 카카오 회원가입 */}
+              <TouchableOpacity
+                style={[styles.socialButton, styles.kakaoButton]}
+                onPress={() => router.push('/oauth-webview?provider=kakao')}
+              >
+                <View style={styles.socialButtonContent}>
+                  <View style={styles.kakaoIcon}>
+                    <Text style={{ fontSize: 18 }}>💬</Text>
+                  </View>
+                  <Text style={styles.kakaoText}>카카오</Text>
+                </View>
+              </TouchableOpacity>
+
+              {/* 네이버 회원가입 */}
+              <TouchableOpacity
+                style={[styles.socialButton, styles.naverButton]}
+                onPress={() => router.push('/oauth-webview?provider=naver')}
+              >
+                <View style={styles.socialButtonContent}>
+                  <Text style={styles.naverIcon}>N</Text>
+                  <Text style={styles.naverText}>네이버</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+
+            {/* 구글 회원가입 (전체 너비) */}
+            <TouchableOpacity
+              style={[styles.socialButton, styles.googleButton]}
+              onPress={() => router.push('/oauth-webview?provider=google')}
+            >
+              <View style={styles.socialButtonContent}>
+                <Text style={{ fontSize: 18 }}>🔍</Text>
+                <Text style={styles.googleText}>구글</Text>
+              </View>
+            </TouchableOpacity>
             
             {/* 로그인 링크 */}
             <View style={styles.footer}>
@@ -317,7 +359,78 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   buttonText: { color: 'white', fontSize: 16, fontWeight: 'bold' },
-  socialLoginText: { textAlign: 'center', marginVertical: 24, color: '#6B7280' },
+  divider: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#D1D5DB',
+  },
+  dividerText: {
+    marginHorizontal: 16,
+    color: '#6B7280',
+    fontSize: 14,
+  },
+  socialLoginContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  socialButton: {
+    height: 50,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  socialButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  kakaoButton: {
+    flex: 1,
+    backgroundColor: '#FEE500',
+    marginRight: 6,
+  },
+  kakaoIcon: {
+    width: 20,
+    alignItems: 'center',
+  },
+  kakaoText: {
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  naverButton: {
+    flex: 1,
+    backgroundColor: '#03C75A',
+    marginLeft: 6,
+  },
+  naverIcon: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  naverText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  googleButton: {
+    width: '100%',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    marginBottom: 16,
+  },
+  googleText: {
+    color: '#374151',
+    fontSize: 16,
+    fontWeight: '600',
+  },
   footer: { marginTop: 16 },
   footerText: { textAlign: 'center', color: '#6B7280' },
   linkText: { color: '#FF7A5C', fontWeight: 'bold' },

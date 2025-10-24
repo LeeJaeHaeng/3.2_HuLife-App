@@ -16,6 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { getCurrentUser, logoutUser } from '../api/authService';
 import { getUserCommunitiesAPI, getUserHobbiesAPI, getUserSchedulesAPI } from '../api/userService';
 import AddScheduleModal from '../components/AddScheduleModal';
+import EditProfileModal from '../components/EditProfileModal';
 
 // TabButton 컴포넌트
 const TabButton = ({ label, activeTab, setActiveTab }) => (
@@ -40,6 +41,7 @@ export default function MyPageScreen() {
   const [loading, setLoading] = useState(true); // 로딩 상태 (초기 + 새로고침 통합)
   const [error, setError] = useState(null);
   const [isAddScheduleModalVisible, setIsAddScheduleModalVisible] = useState(false);
+  const [isEditProfileModalVisible, setIsEditProfileModalVisible] = useState(false);
 
   // 데이터 로딩 함수
   const loadMyPageData = useCallback(async () => {
@@ -181,8 +183,8 @@ export default function MyPageScreen() {
         {/* 2. 프로필 카드 */}
         <View style={styles.profileCard}>
           <View style={styles.avatarContainer}>
-            {user.imageUrl || user.avatar ? (
-              <Image source={{ uri: user.imageUrl || user.avatar }} style={styles.avatar} />
+            {user.profileImage ? (
+              <Image source={{ uri: user.profileImage }} style={styles.avatar} />
             ) : (
               <View style={[styles.avatar, styles.avatarFallback]}>
                 <Text style={styles.avatarFallbackText}>{user.name ? user.name[0] : '?'}</Text>
@@ -191,7 +193,12 @@ export default function MyPageScreen() {
           </View>
           <Text style={styles.profileName}>{user.name || '이름 없음'}</Text>
           <Text style={styles.profileInfo}>{user.age ? `${user.age}세` : ''}{user.location ? ` • ${user.location}` : ''}</Text>
-          <TouchableOpacity style={styles.editButton}><Text style={styles.editButtonText}>프로필 수정</Text></TouchableOpacity>
+          <TouchableOpacity
+            style={styles.editButton}
+            onPress={() => setIsEditProfileModalVisible(true)}
+          >
+            <Text style={styles.editButtonText}>프로필 수정</Text>
+          </TouchableOpacity>
         </View>
 
         {/* 3. 활동 통계 카드 */}
@@ -352,6 +359,16 @@ export default function MyPageScreen() {
         onClose={() => setIsAddScheduleModalVisible(false)}
         onScheduleAdded={() => {
           loadMyPageData(); // Refresh data after adding schedule
+        }}
+      />
+
+      {/* Edit Profile Modal */}
+      <EditProfileModal
+        visible={isEditProfileModalVisible}
+        onClose={() => setIsEditProfileModalVisible(false)}
+        user={user}
+        onUpdate={() => {
+          loadMyPageData(); // Refresh data after profile update
         }}
       />
     </SafeAreaView>

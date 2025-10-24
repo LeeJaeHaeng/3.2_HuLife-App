@@ -17,7 +17,7 @@ export const users = mysqlTable("users", {
   age: int("age").notNull(),
   location: varchar("location", { length: 255 }).notNull(),
   phone: varchar("phone", { length: 255 }),
-  profileImage: varchar("profile_image", { length: 255 }),
+  profileImage: text("profile_image"), // ✅ LONGTEXT (최대 4GB, Base64 대용량 이미지 저장)
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
@@ -76,6 +76,7 @@ export const posts = mysqlTable("posts", {
   title: varchar("title", { length: 255 }).notNull(),
   content: text("content").notNull(),
   category: varchar("category", { length: 255 }).notNull(),
+  images: text("images"), // ✅ LONGTEXT: JSON 배열로 Base64 이미지 저장 (최대 4GB)
   likes: int("likes").notNull().default(0),
   comments: int("comments").notNull().default(0),
   views: int("views").notNull().default(0),

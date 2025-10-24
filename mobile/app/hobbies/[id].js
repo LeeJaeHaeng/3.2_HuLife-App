@@ -13,10 +13,11 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import YoutubeIframe from 'react-native-youtube-iframe';
-import { getHobbyById } from '../../api/hobbyService';
+import { getHobbyById, getHobbyReviews } from '../../api/hobbyService';
 import { addHobbyToUserAPI, getUserHobbiesAPI, removeHobbyFromUserAPI } from '../../api/userService';
 import { getAllCommunitiesAPI } from '../../api/communityService';
 import hobbyImages from '../../assets/hobbyImages';
+import AddReviewModal from '../../components/AddReviewModal';
 
 export default function HobbyDetailScreen() {
   const router = useRouter();
@@ -29,8 +30,10 @@ export default function HobbyDetailScreen() {
   const [isToggling, setIsToggling] = useState(false); // 좋아요 버튼 처리 중 로딩 상태
   const [error, setError] = useState(null);
   const [playing, setPlaying] = useState(false);
-  const [activeTab, setActiveTab] = useState('info'); // 'info' or 'communities'
+  const [activeTab, setActiveTab] = useState('info'); // 'info', 'communities', 'reviews'
   const [communities, setCommunities] = useState([]); // 관련 커뮤니티 목록
+  const [reviews, setReviews] = useState([]); // 리뷰 목록
+  const [isReviewModalVisible, setIsReviewModalVisible] = useState(false); // 리뷰 작성 모달
 
   // 데이터 로딩 함수 (재사용 가능하도록 분리)
   const loadData = useCallback(async () => {
@@ -42,15 +45,17 @@ export default function HobbyDetailScreen() {
 
     try {
       setLoading(true);
-      // 상세 정보와 사용자의 관심 목록, 관련 커뮤니티를 동시에 요청합니다.
-      const [hobbyData, userHobbiesData, communitiesData] = await Promise.all([
+      // 상세 정보와 사용자의 관심 목록, 관련 커뮤니티, 리뷰를 동시에 요청합니다.
+      const [hobbyData, userHobbiesData, communitiesData, reviewsData] = await Promise.all([
         getHobbyById(id),
         getUserHobbiesAPI(),
-        getAllCommunitiesAPI(id) // 이 취미와 관련된 커뮤니티만 조회
+        getAllCommunitiesAPI(id), // 이 취미와 관련된 커뮤니티만 조회
+        getHobbyReviews(id) // 리뷰 목록 조회
       ]);
 
       setHobby(hobbyData); // 취미 상세 정보 설정
       setCommunities(Array.isArray(communitiesData) ? communitiesData : []); // 커뮤니티 목록 설정
+      setReviews(Array.isArray(reviewsData) ? reviewsData : []); // 리뷰 목록 설정
 
       // 사용자의 관심 목록에 현재 취미가 있는지 확인합니다.
       if (Array.isArray(userHobbiesData)) {
@@ -58,7 +63,7 @@ export default function HobbyDetailScreen() {
         setIsInterested(isAlreadyAdded);
         console.log(`[상세 페이지] 이 취미는 관심 목록에 ${isAlreadyAdded ? '있습니다' : '없습니다'}.`);
       }
-      console.log(`[상세 페이지] 관련 커뮤니티 ${communitiesData.length}개 로드됨`);
+      console.log(`[상세 페이지] 관련 커뮤니티 ${communitiesData.length}개, 리뷰 ${reviewsData.length}개 로드됨`);
     } catch (e) {
       console.error("[상세 페이지 에러]", e);
       setError("취미 정보를 불러오는 데 실패했습니다.");
@@ -172,7 +177,7 @@ export default function HobbyDetailScreen() {
           onPress={() => setActiveTab('info')}
         >
           <Text style={[styles.tabText, activeTab === 'info' && styles.activeTabText]}>
-            취미 상세정보
+            상세정보
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -181,6 +186,14 @@ export default function HobbyDetailScreen() {
         >
           <Text style={[styles.tabText, activeTab === 'communities' && styles.activeTabText]}>
             모임 ({communities.length})
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tab, activeTab === 'reviews' && styles.activeTab]}
+          onPress={() => setActiveTab('reviews')}
+        >
+          <Text style={[styles.tabText, activeTab === 'reviews' && styles.activeTabText]}>
+            리뷰 ({reviews.length})
           </Text>
         </TouchableOpacity>
       </View>
@@ -228,7 +241,7 @@ export default function HobbyDetailScreen() {
               )}
             </View>
           </>
-        ) : (
+        ) : activeTab === 'communities' ? (
           <View style={styles.communitiesContainer}>
             {communities.length > 0 ? (
               communities.map((community) => (
@@ -277,8 +290,85 @@ export default function HobbyDetailScreen() {
               </View>
             )}
           </View>
+        ) : (
+          <View style={styles.reviewsContainer}>
+            <View style={styles.reviewHeader}>
+              <Text style={styles.reviewHeaderTitle}>
+                사용자 리뷰 ({reviews.length})
+              </Text>
+              <TouchableOpacity
+                style={styles.addReviewButton}
+                onPress={() => setIsReviewModalVisible(true)}
+              >
+                <Feather name="edit" size={16} color="#fff" />
+                <Text style={styles.addReviewButtonText}>리뷰 작성</Text>
+              </TouchableOpacity>
+            </View>
+
+            {reviews.length > 0 ? (
+              reviews.map((review) => (
+                <View key={review.id} style={styles.reviewCard}>
+                  <View style={styles.reviewHeader2}>
+                    <View style={styles.reviewUserInfo}>
+                      {review.userProfileImage ? (
+                        <Image
+                          source={{ uri: review.userProfileImage }}
+                          style={styles.reviewAvatar}
+                        />
+                      ) : (
+                        <View style={styles.reviewAvatarFallback}>
+                          <Text style={styles.reviewAvatarText}>
+                            {review.userName?.[0] || '?'}
+                          </Text>
+                        </View>
+                      )}
+                      <View>
+                        <Text style={styles.reviewUserName}>{review.userName}</Text>
+                        <View style={styles.reviewStars}>
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Feather
+                              key={star}
+                              name="star"
+                              size={14}
+                              color={star <= review.rating ? '#FFD700' : '#d1d5db'}
+                              fill={star <= review.rating ? '#FFD700' : 'transparent'}
+                            />
+                          ))}
+                        </View>
+                      </View>
+                    </View>
+                    <Text style={styles.reviewDate}>
+                      {new Date(review.createdAt).toLocaleDateString('ko-KR')}
+                    </Text>
+                  </View>
+                  <Text style={styles.reviewComment}>{review.comment}</Text>
+                </View>
+              ))
+            ) : (
+              <View style={styles.emptyReviewsContainer}>
+                <Feather name="message-square" size={48} color="#ccc" />
+                <Text style={styles.emptyReviewsText}>
+                  아직 이 취미에 대한 리뷰가 없습니다.
+                </Text>
+                <Text style={styles.emptyReviewsSubtext}>
+                  첫 번째 리뷰를 작성해보세요!
+                </Text>
+              </View>
+            )}
+          </View>
         )}
       </ScrollView>
+
+      {/* Add Review Modal */}
+      <AddReviewModal
+        visible={isReviewModalVisible}
+        onClose={() => setIsReviewModalVisible(false)}
+        hobbyId={id}
+        hobbyName={hobby?.name}
+        onReviewAdded={() => {
+          loadData(); // Reload data to show new review
+        }}
+      />
     </SafeAreaView>
   );
 }
@@ -416,5 +506,109 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  // Reviews styles
+  reviewsContainer: {
+    padding: 16,
+  },
+  reviewHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  reviewHeaderTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#111827',
+  },
+  addReviewButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: '#FF7A5C',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  addReviewButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  reviewCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  reviewHeader2: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  reviewUserInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  reviewAvatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#e5e7eb',
+  },
+  reviewAvatarFallback: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#FF7A5C',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  reviewAvatarText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  reviewUserName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#111827',
+    marginBottom: 4,
+  },
+  reviewStars: {
+    flexDirection: 'row',
+    gap: 2,
+  },
+  reviewDate: {
+    fontSize: 12,
+    color: '#9ca3af',
+  },
+  reviewComment: {
+    fontSize: 15,
+    color: '#374151',
+    lineHeight: 22,
+  },
+  emptyReviewsContainer: {
+    alignItems: 'center',
+    paddingVertical: 60,
+  },
+  emptyReviewsText: {
+    fontSize: 16,
+    color: '#999',
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  emptyReviewsSubtext: {
+    fontSize: 14,
+    color: '#ccc',
+    marginTop: 8,
+    textAlign: 'center',
   },
 });

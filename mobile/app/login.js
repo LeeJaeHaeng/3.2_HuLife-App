@@ -4,7 +4,9 @@ import {
   Alert,
   Image,
   KeyboardAvoidingView,
+  Linking,
   Platform,
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -49,9 +51,15 @@ export default function LoginScreen() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={styles.keyboardAvoidingContainer}
+        keyboardVerticalOffset={0}
       >
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+        >
         <View style={styles.card}>
           <View style={styles.header}>
             <Image source={require('../assets/hobbies/hulife_logo.png')} style={styles.logo} />
@@ -97,7 +105,50 @@ export default function LoginScreen() {
             <Text style={styles.buttonText}>{loading ? '로그인 중...' : '로그인'}</Text>
           </TouchableOpacity>
 
-          <Text style={styles.socialLoginText}>소셜 로그인 버튼 영역</Text>
+          {/* 구분선 */}
+          <View style={styles.divider}>
+            <View style={styles.dividerLine} />
+            <Text style={styles.dividerText}>또는</Text>
+            <View style={styles.dividerLine} />
+          </View>
+
+          {/* 소셜 로그인 버튼들 */}
+          <View style={styles.socialLoginContainer}>
+            {/* 카카오 로그인 */}
+            <TouchableOpacity
+              style={[styles.socialButton, styles.kakaoButton]}
+              onPress={() => router.push('/oauth-webview?provider=kakao')}
+            >
+              <View style={styles.socialButtonContent}>
+                <View style={styles.kakaoIcon}>
+                  <Text style={{ fontSize: 18 }}>💬</Text>
+                </View>
+                <Text style={styles.kakaoText}>카카오</Text>
+              </View>
+            </TouchableOpacity>
+
+            {/* 네이버 로그인 */}
+            <TouchableOpacity
+              style={[styles.socialButton, styles.naverButton]}
+              onPress={() => router.push('/oauth-webview?provider=naver')}
+            >
+              <View style={styles.socialButtonContent}>
+                <Text style={styles.naverIcon}>N</Text>
+                <Text style={styles.naverText}>네이버</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          {/* 구글 로그인 (전체 너비) */}
+          <TouchableOpacity
+            style={[styles.socialButton, styles.googleButton]}
+            onPress={() => router.push('/oauth-webview?provider=google')}
+          >
+            <View style={styles.socialButtonContent}>
+              <Text style={{ fontSize: 18 }}>🔍</Text>
+              <Text style={styles.googleText}>구글</Text>
+            </View>
+          </TouchableOpacity>
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>
@@ -108,6 +159,7 @@ export default function LoginScreen() {
             </Text>
           </View>
         </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -118,10 +170,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F9FAFB',
-    justifyContent: 'center',
   },
   keyboardAvoidingContainer: {
     flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
@@ -197,10 +251,77 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  socialLoginText: {
-    textAlign: 'center',
+  divider: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginVertical: 24,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#D1D5DB',
+  },
+  dividerText: {
+    marginHorizontal: 16,
     color: '#6B7280',
+    fontSize: 14,
+  },
+  socialLoginContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  socialButton: {
+    height: 50,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  socialButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  kakaoButton: {
+    flex: 1,
+    backgroundColor: '#FEE500',
+    marginRight: 6,
+  },
+  kakaoIcon: {
+    width: 20,
+    alignItems: 'center',
+  },
+  kakaoText: {
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  naverButton: {
+    flex: 1,
+    backgroundColor: '#03C75A',
+    marginLeft: 6,
+  },
+  naverIcon: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  naverText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  googleButton: {
+    width: '100%',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    marginBottom: 16,
+  },
+  googleText: {
+    color: '#374151',
+    fontSize: 16,
+    fontWeight: '600',
   },
   footer: {
     marginTop: 16,

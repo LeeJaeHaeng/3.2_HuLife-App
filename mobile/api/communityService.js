@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-const API_URL = 'http://10.20.35.102:3000/api';
+const API_URL = 'http://10.188.236.63:3000/api';
 const TOKEN_KEY = 'userToken';
 
 // Get all communities (optionally filter by hobbyId)

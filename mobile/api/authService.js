@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store'; // ✨ SecureStore 가져오기
 
-const API_URL = 'http://10.20.35.102:3000/api'; // 현재 IP 주소
+const API_URL = 'http://10.188.236.63:3000/api'; // 현재 IP 주소
 const TOKEN_KEY = 'userToken'; // 토큰 저장 시 사용할 키 이름
 
 // --- ✨ 로그인 API 호출 함수 추가 ---

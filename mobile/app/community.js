@@ -18,6 +18,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { getAllCommunitiesAPI, getAllPostsAPI, requestJoinCommunityAPI } from '../api/communityService';
 import hobbyImages from '../assets/hobbyImages';
 
+// API Base URL for image resolution
+const API_BASE_URL = 'http://172.30.1.60:3000';
+
 export default function CommunityPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('groups'); // 'groups' or 'posts'
@@ -136,7 +139,18 @@ export default function CommunityPage() {
       console.log('[커뮤니티 이미지] URL:', community.imageUrl);
 
       if (community.imageUrl?.startsWith('/') || community.imageUrl?.startsWith('.')) {
-        // 상대 경로인 경우 - imageUrl에서 취미 이름 추출
+        // 상대 경로인 경우
+
+        // 1. 서버 업로드 이미지인지 확인 (/uploads/, /public/ 등)
+        if (community.imageUrl.includes('uploads') || community.imageUrl.includes('public')) {
+          const absoluteUrl = community.imageUrl.startsWith('/')
+            ? `${API_BASE_URL}${community.imageUrl}`
+            : `${API_BASE_URL}/${community.imageUrl}`;
+          console.log('[커뮤니티 이미지] ✅ 서버 업로드 이미지 사용:', absoluteUrl);
+          return { uri: absoluteUrl };
+        }
+
+        // 2. 로컬 hobbyImages 매핑에서 찾기
         const imageName = community.imageUrl.replace(/^\//, '').replace('.png', '').replace('.jpg', '');
         console.log('[커뮤니티 이미지] 추출된 이미지 이름:', imageName);
 
@@ -146,7 +160,6 @@ export default function CommunityPage() {
           return image;
         } else {
           console.log('[커뮤니티 이미지] ❌ hobbyImages에 없음, 기본 이미지 사용:', imageName);
-          console.log('[커뮤니티 이미지] 사용 가능한 이미지들:', Object.keys(hobbyImages));
           return require('../assets/icon.png');
         }
       } else if (community.imageUrl?.startsWith('http')) {

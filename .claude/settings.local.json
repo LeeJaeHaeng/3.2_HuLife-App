@@ -31,7 +31,12 @@
       "Bash(rm -rf HuLifeExpoApp/.git)",
       "Bash(rm -f HuLifeExpoApp/nul)",
       "Bash(rm -rf HuLifeExpoApp)",
-      "Bash(git reset HEAD HuLifeExpoApp/)"
+      "Bash(git reset HEAD HuLifeExpoApp/)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat: 모바일 앱 대폭 개선 및 웹 API 확장\n\n## 모바일 앱 변경사항\n- 기존 mobile 폴더 삭제 (구버전 React Native)\n- HuLifeExpoApp을 새로운 mobile 폴더로 교체\n- Expo Router 기반 최신 모바일 앱 적용\n- 취미 필터링 (collapsible, 2-column grid)\n- 게시글 좋아요 동기화 (DeviceEventEmitter)\n- 일정 관리 기능 (calendar, color-coded cards)\n- 실시간 UI 업데이트 개선\n\n## 웹 API 추가 엔드포인트\n- POST /api/user/schedules (일정 생성)\n- GET /api/auth/me (현재 사용자 정보)\n- GET /api/communities/[id] (커뮤니티 상세)\n- GET /api/communities/active (활성 커뮤니티)\n- POST /api/communities/join (커뮤니티 가입)\n- GET /api/communities/user (사용자 커뮤니티)\n- GET /api/hobbies/user (사용자 취미)\n- POST /api/posts/[id]/comments (댓글 작성)\n- GET /api/user/communities (사용자 커뮤니티 목록)\n- GET /api/user/hobbies (사용자 관심 취미)\n\n## 문서 업데이트\n- README.md: 최신 진행상황 반영 (2025-10-20)\n- claude.md: 작업 로그 업데이트\n- .gitignore: HuLifeExpoApp 임시 폴더 제외\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(npm install)",
+      "Bash(dir:*)",
+      "Bash(npx expo start:*)",
+      "Bash(npx tsx:*)"
     ],
     "deny": [],
     "ask": []

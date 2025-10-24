@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
-const API_URL = 'http://10.20.35.102:3000/api'; // ✅ 포트 번호 :3000 추가!
+const API_URL = 'http://10.188.236.63:3000/api'; // ✅ 최신 로컬 IP (ipconfig로 확인)
 const TOKEN_KEY = 'userToken';
 
 // Get user's interested hobbies (디버깅 로그 추가)
@@ -136,5 +136,33 @@ export const createScheduleAPI = async (scheduleData) => {
   } catch (error) {
     console.error("[API 서비스] ❌ 일정 생성 실패!:", error.response?.data?.error || error.message);
     throw new Error(error.response?.data?.error || "일정 생성에 실패했습니다.");
+  }
+};
+
+// Update user profile
+export const updateUserProfile = async (profileData) => {
+  const requestUrl = `${API_URL}/user/profile`;
+  console.log(`[API 서비스] 📞 프로필 업데이트 요청: ${requestUrl}`);
+  console.log(`[API 서비스] 📦 전송 데이터 키:`, Object.keys(profileData));
+
+  try {
+    const token = await SecureStore.getItemAsync(TOKEN_KEY);
+    if (!token) throw new Error("로그인이 필요합니다.");
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    };
+
+    const response = await axios.put(requestUrl, profileData, { headers });
+
+    console.log(`[API 서비스] ✅ 프로필 업데이트 성공`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 프로필 업데이트 실패!:", error.response?.data?.error || error.message);
+    console.error("[API 서비스] ❌ 전체 에러:", error);
+    console.error("[API 서비스] ❌ 응답 상태:", error.response?.status);
+    console.error("[API 서비스] ❌ 응답 데이터:", error.response?.data);
+    throw new Error(error.response?.data?.error || "프로필 업데이트에 실패했습니다.");
   }
 };
