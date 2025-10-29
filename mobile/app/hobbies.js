@@ -16,8 +16,30 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getAllHobbies } from '../api/hobbyService';
 import { addHobbyToUserAPI, getUserHobbiesAPI, removeHobbyFromUserAPI } from '../api/userService';
+import { logActivity, ActivityTypes } from '../api/activityService';
 import hobbyImages from '../assets/hobbyImages';
 
+// 필터 값을 한글로 변환하는 헬퍼 함수들
+const getDifficultyLabel = (difficulty) => {
+  if (difficulty === 1) return '쉬움';
+  if (difficulty === 2) return '보통';
+  if (difficulty === 3) return '어려움';
+  return ''; // 1,2,3 외의 값은 무시
+};
+
+const getLocationLabel = (indoorOutdoor) => {
+  if (indoorOutdoor === 'indoor') return '실내';
+  if (indoorOutdoor === 'outdoor') return '실외';
+  if (indoorOutdoor === 'both') return '실내/실외';
+  return indoorOutdoor || '';
+};
+
+const getBudgetLabel = (budget) => {
+  if (budget === 'low') return '저예산';
+  if (budget === 'medium') return '중간';
+  if (budget === 'high') return '고예산';
+  return budget || '';
+};
 
 // HobbyCard 컴포넌트 수정
 const HobbyCard = ({ item, addedHobbies, onToggleInterest }) => {
@@ -89,8 +111,8 @@ export default function HobbiesScreen() {
         } else {
           throw new Error("취미 목록 데이터 형식이 올바르지 않습니다.");
         }
-        if (Array.isArray(userHobbiesData)) {
-          setAddedHobbies(new Set(userHobbiesData.map(h => h.hobbyId)));
+        if (Array.isArray(userHobbiesData) && userHobbiesData.length > 0) {
+          setAddedHobbies(new Set(userHobbiesData.filter(h => h && h.hobbyId).map(h => h.hobbyId)));
         } else {
           console.warn("관심 취미 데이터 형식이 올바르지 않습니다.");
           setAddedHobbies(new Set());
@@ -118,7 +140,7 @@ export default function HobbiesScreen() {
       return () => {
         console.log("[취미 목록] 화면 포커스 잃음.");
       };
-    }, [loadData, loading, hobbies.length])
+    }, [loadData, loading, hobbies])
   );
 
   // 🔔 전역 이벤트 리스너: 다른 화면에서 좋아요 상태가 변경되면 즉시 데이터 새로고침
@@ -127,9 +149,12 @@ export default function HobbiesScreen() {
       console.log("[취미 목록] 🔔 좋아요 상태 변경 이벤트 수신! 관심 취미 목록 다시 확인...");
       // 관심 취미 목록만 다시 확인
       getUserHobbiesAPI().then(userHobbiesData => {
-        if (Array.isArray(userHobbiesData)) {
-          setAddedHobbies(new Set(userHobbiesData.map(h => h.hobbyId)));
+        if (Array.isArray(userHobbiesData) && userHobbiesData.length > 0) {
+          setAddedHobbies(new Set(userHobbiesData.filter(h => h && h.hobbyId).map(h => h.hobbyId)));
           console.log(`[취미 목록] 관심 취미 개수 업데이트: ${userHobbiesData.length}개`);
+        } else {
+          setAddedHobbies(new Set());
+          console.log(`[취미 목록] 관심 취미 개수 업데이트: 0개`);
         }
       }).catch(err => {
         console.error("[취미 목록] 관심 취미 목록 확인 실패:", err);
@@ -140,6 +165,47 @@ export default function HobbiesScreen() {
       subscription.remove();
     };
   }, []);
+
+  // Filter hobbies based on search and all filters (한글 레이블로 비교)
+  const filteredHobbies = hobbies.filter(hobby => {
+    const matchesSearch = searchQuery
+      ? hobby.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        hobby.description.toLowerCase().includes(searchQuery.toLowerCase())
+      : true;
+
+    const matchesCategory = categoryFilter === '전체'
+      ? true
+      : hobby.category === categoryFilter;
+
+    const matchesDifficulty = difficultyFilter === '전체'
+      ? true
+      : getDifficultyLabel(hobby.difficulty) === difficultyFilter;
+
+    const matchesIndoorOutdoor = indoorOutdoorFilter === '전체'
+      ? true
+      : getLocationLabel(hobby.indoorOutdoor) === indoorOutdoorFilter;
+
+    const matchesBudget = budgetFilter === '전체'
+      ? true
+      : getBudgetLabel(hobby.budget) === budgetFilter;
+
+    return matchesSearch && matchesCategory && matchesDifficulty && matchesIndoorOutdoor && matchesBudget;
+  });
+
+  // Log search activity with debounce
+  useEffect(() => {
+    if (!searchQuery || searchQuery.trim().length < 2) return;
+
+    const timeoutId = setTimeout(() => {
+      logActivity(ActivityTypes.SEARCH, null, {
+        searchQuery: searchQuery.trim(),
+        context: 'hobbies',
+        resultsCount: filteredHobbies?.length || 0
+      });
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery, filteredHobbies]);
 
 
   const handleToggleInterest = async (hobbyId, isCurrentlyAdded) => {
@@ -163,37 +229,12 @@ export default function HobbiesScreen() {
     }
   };
 
-  // Filter hobbies based on search and all filters
-  const filteredHobbies = hobbies.filter(hobby => {
-    const matchesSearch = searchQuery
-      ? hobby.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        hobby.description.toLowerCase().includes(searchQuery.toLowerCase())
-      : true;
-
-    const matchesCategory = categoryFilter === '전체'
-      ? true
-      : hobby.category === categoryFilter;
-
-    const matchesDifficulty = difficultyFilter === '전체'
-      ? true
-      : hobby.difficulty === difficultyFilter;
-
-    const matchesIndoorOutdoor = indoorOutdoorFilter === '전체'
-      ? true
-      : hobby.indoorOutdoor === indoorOutdoorFilter;
-
-    const matchesBudget = budgetFilter === '전체'
-      ? true
-      : hobby.budget === budgetFilter;
-
-    return matchesSearch && matchesCategory && matchesDifficulty && matchesIndoorOutdoor && matchesBudget;
-  });
-
-  // Get unique filter values from hobbies
-  const categories = ['전체', ...new Set(hobbies.map(h => h.category))];
-  const difficulties = ['전체', '쉬움', '보통', '어려움'];
-  const indoorOutdoorOptions = ['전체', '실내', '실외', '둘 다'];
-  const budgetOptions = ['전체', '무료', '저렴', '보통', '비쌈'];
+  // Get unique filter values from hobbies - 실제 데이터로부터 동적 생성 (한글 변환)
+  const categories = ['전체', ...new Set(hobbies.map(h => h.category).filter(Boolean))];
+  // 난이도는 고정된 3개 값만 사용 (데이터 정합성 보장)
+  const difficulties = ['전체', '쉬움', '중간', '어려움'];
+  const indoorOutdoorOptions = ['전체', ...new Set(hobbies.map(h => getLocationLabel(h.indoorOutdoor)).filter(Boolean))];
+  const budgetOptions = ['전체', ...new Set(hobbies.map(h => getBudgetLabel(h.budget)).filter(Boolean))];
 
 
   if (loading && hobbies.length === 0) {
@@ -411,35 +452,35 @@ export default function HobbiesScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: 'white' },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 },
-  infoText: { fontSize: 16, color: '#6b7280', marginTop: 8 },
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#e5e7eb' },
-  headerTitle: { fontSize: 20, fontWeight: 'bold' },
+  infoText: { fontSize: 18, color: '#4B5563', marginTop: 10 },  // 16→18, darker color
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 2, borderBottomColor: '#e5e7eb' },  // Thicker border
+  headerTitle: { fontSize: 24, fontWeight: 'bold' },  // 20→24 for readability
   loadingOverlay: { position: 'absolute', top: 120, left: 0, right: 0, alignItems: 'center', zIndex: 10 }, 
   listContainer: { paddingHorizontal: 16, paddingBottom: 20 },
   listHeader: { marginBottom: 24, marginTop: 20 },
-  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 8 },
-  subtitle: { fontSize: 18, color: '#6b7280' },
-  searchContainer: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#f3f4f6', borderRadius: 12, marginHorizontal: 16, marginTop: 16, paddingHorizontal: 16 },
-  searchIcon: { marginRight: 8 },
-  searchInput: { flex: 1, height: 50, fontSize: 16 },
-  clearButton: { padding: 4 },
-  filterToggleButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFF5F0', paddingVertical: 12, marginHorizontal: 16, marginTop: 12, borderRadius: 8, gap: 8 },
-  filterToggleText: { fontSize: 14, fontWeight: '600', color: '#FF7A5C' },
-  filterContainer: { paddingVertical: 12 },
-  filterLabel: { fontSize: 14, fontWeight: '600', color: '#333', paddingHorizontal: 16, marginBottom: 8 },
-  filterList: { paddingHorizontal: 16, gap: 8 },
-  categoryChip: { backgroundColor: '#f3f4f6', paddingHorizontal: 16, paddingVertical: 8, borderRadius: 20, marginRight: 8 },
+  title: { fontSize: 30, fontWeight: 'bold', marginBottom: 10 },  // 28→30 for emphasis
+  subtitle: { fontSize: 18, color: '#4B5563', lineHeight: 24 },  // Darker color, better line height
+  searchContainer: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#f3f4f6', borderRadius: 12, marginHorizontal: 16, marginTop: 16, paddingHorizontal: 16, minHeight: 56 },  // Added minHeight
+  searchIcon: { marginRight: 10 },  // 8→10 for better spacing
+  searchInput: { flex: 1, height: 56, fontSize: 18 },  // 50→56, 16→18 for readability
+  clearButton: { padding: 6, minWidth: 32, minHeight: 32, justifyContent: 'center', alignItems: 'center' },  // Larger touch area
+  filterToggleButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFF5F0', paddingVertical: 14, marginHorizontal: 16, marginTop: 12, borderRadius: 8, gap: 10, minHeight: 52 },  // Larger touch area
+  filterToggleText: { fontSize: 16, fontWeight: '600', color: '#FF7A5C' },  // 14→16 for readability
+  filterContainer: { paddingVertical: 14 },  // 12→14 for better spacing
+  filterLabel: { fontSize: 16, fontWeight: '600', color: '#333', paddingHorizontal: 16, marginBottom: 10 },  // 14→16 for readability
+  filterList: { paddingHorizontal: 16, gap: 10 },  // 8→10 for better spacing
+  categoryChip: { backgroundColor: '#f3f4f6', paddingHorizontal: 18, paddingVertical: 10, borderRadius: 20, marginRight: 10, minHeight: 42 },  // Larger touch area
   categoryChipActive: { backgroundColor: '#FF7A5C' },
-  categoryChipText: { fontSize: 14, color: '#666', fontWeight: '500' },
+  categoryChipText: { fontSize: 16, color: '#666', fontWeight: '500' },  // 14→16 for readability
   categoryChipTextActive: { color: '#fff' },
   emptyState: { alignItems: 'center', justifyContent: 'center', paddingVertical: 60 },
-  emptyStateText: { fontSize: 16, color: '#999', marginTop: 16 },
-  card: { flex: 1, backgroundColor: '#ffffff', borderRadius: 16, marginHorizontal: 6, marginBottom: 16, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.08, shadowRadius: 8, elevation: 3, },
-  cardImage: { width: '100%', height: 140, borderTopLeftRadius: 16, borderTopRightRadius: 16, backgroundColor: '#e5e7eb' },
-  cardContent: { padding: 12 },
-  cardHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4, },
-  cardCategory: { fontSize: 12, color: '#FF7A5C', fontWeight: '600', },
-  heartButton: { padding: 2 },
-  cardTitle: { fontSize: 16, fontWeight: 'bold', marginBottom: 6 },
-  cardDescription: { fontSize: 13, color: '#4b5563', lineHeight: 18 },
+  emptyStateText: { fontSize: 18, color: '#999', marginTop: 18, lineHeight: 24 },  // 16→18 for readability
+  card: { flex: 1, backgroundColor: '#ffffff', borderRadius: 16, marginHorizontal: 6, marginBottom: 18, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.08, shadowRadius: 8, elevation: 3, },  // More bottom margin
+  cardImage: { width: '100%', height: 150, borderTopLeftRadius: 16, borderTopRightRadius: 16, backgroundColor: '#e5e7eb' },  // 140→150 for better visibility
+  cardContent: { padding: 14 },  // 12→14 for better spacing
+  cardHeaderRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6, },  // 4→6 for better spacing
+  cardCategory: { fontSize: 14, color: '#FF7A5C', fontWeight: '600', },  // 12→14 for readability
+  heartButton: { padding: 4, minWidth: 36, minHeight: 36, justifyContent: 'center', alignItems: 'center' },  // Larger touch area
+  cardTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 8, lineHeight: 24 },  // 16→18 for readability
+  cardDescription: { fontSize: 15, color: '#4b5563', lineHeight: 21 },  // 13→15 for readability
 });

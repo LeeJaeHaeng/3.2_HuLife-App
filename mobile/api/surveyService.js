@@ -1,7 +1,8 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { API_CONFIG } from '../config/api.config';
 
-const API_URL = 'http://10.188.236.63:3000/api'; // 현재 IP 주소
+const API_URL = API_CONFIG.API_URL;
 const TOKEN_KEY = 'userToken';
 
 // 설문 답변 제출 API 호출 함수

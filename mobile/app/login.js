@@ -196,65 +196,70 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   logo: {
-    width: 64,
-    height: 64,
-    marginBottom: 16,
+    width: 80,  // 64 → 80 (시니어 친화)
+    height: 80,
+    marginBottom: 20,  // 16 → 20
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,  // 24 → 28 (시니어 친화)
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 8,
+    marginBottom: 12,  // 8 → 12
+    lineHeight: 36,
   },
   description: {
-    fontSize: 16,
-    color: '#6B7280',
+    fontSize: 18,  // 16 → 18 (시니어 친화)
+    color: '#4B5563',  // 대비 강화
     textAlign: 'center',
+    lineHeight: 26,
   },
   errorContainer: {
     backgroundColor: '#FEE2E2',
-    padding: 12,
+    padding: 16,  // 12 → 16
     borderRadius: 8,
-    marginBottom: 16,
+    marginBottom: 20,  // 16 → 20
   },
   errorText: {
     color: '#B91C1C',
+    fontSize: 16,  // 기본값 추가 (시니어 친화)
     fontWeight: 'bold',
-    textAlign: 'center'
+    textAlign: 'center',
+    lineHeight: 24,
   },
   inputGroup: {
-    marginBottom: 16,
+    marginBottom: 20,  // 16 → 20
   },
   label: {
-    fontSize: 16,
-    marginBottom: 8,
-    color: '#374151',
+    fontSize: 18,  // 16 → 18 (시니어 친화)
+    marginBottom: 10,  // 8 → 10
+    color: '#1F2937',  // 대비 강화
+    fontWeight: '600',
   },
   input: {
-    height: 50,
-    borderWidth: 1,
+    height: 56,  // 50 → 56 (시니어 친화, 최소 터치 영역)
+    borderWidth: 2,  // 1 → 2 (더 명확하게)
     borderColor: '#D1D5DB',
     borderRadius: 8,
-    paddingHorizontal: 16,
-    fontSize: 16,
+    paddingHorizontal: 20,  // 16 → 20
+    fontSize: 18,  // 16 → 18 (시니어 친화)
   },
   button: {
-    height: 50,
+    height: 56,  // 50 → 56 (시니어 친화)
     backgroundColor: '#EA580C',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 8,
+    marginTop: 12,  // 8 → 12
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 20,  // 16 → 20 (시니어 친화)
     fontWeight: 'bold',
   },
   divider: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 24,
+    marginVertical: 28,  // 24 → 28
   },
   dividerLine: {
     flex: 1,
@@ -262,17 +267,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#D1D5DB',
   },
   dividerText: {
-    marginHorizontal: 16,
-    color: '#6B7280',
-    fontSize: 14,
+    marginHorizontal: 20,  // 16 → 20
+    color: '#4B5563',  // 대비 강화
+    fontSize: 16,  // 14 → 16 (시니어 친화)
   },
   socialLoginContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 12,
+    marginBottom: 16,  // 12 → 16
+    gap: 12,  // 추가
   },
   socialButton: {
-    height: 50,
+    height: 56,  // 50 → 56 (시니어 친화)
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
@@ -293,45 +299,47 @@ const styles = StyleSheet.create({
   },
   kakaoText: {
     color: '#000000',
-    fontSize: 16,
+    fontSize: 18,  // 16 → 18 (시니어 친화)
     fontWeight: '600',
   },
   naverButton: {
     flex: 1,
     backgroundColor: '#03C75A',
-    marginLeft: 6,
   },
   naverIcon: {
     color: '#FFFFFF',
-    fontSize: 20,
+    fontSize: 22,  // 20 → 22
     fontWeight: 'bold',
   },
   naverText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 18,  // 16 → 18 (시니어 친화)
     fontWeight: '600',
   },
   googleButton: {
     width: '100%',
     backgroundColor: '#FFFFFF',
-    borderWidth: 1,
+    borderWidth: 2,  // 1 → 2 (더 명확하게)
     borderColor: '#D1D5DB',
-    marginBottom: 16,
+    marginBottom: 20,  // 16 → 20
   },
   googleText: {
-    color: '#374151',
-    fontSize: 16,
+    color: '#1F2937',  // 대비 강화
+    fontSize: 18,  // 16 → 18 (시니어 친화)
     fontWeight: '600',
   },
   footer: {
-    marginTop: 16,
+    marginTop: 20,  // 16 → 20
   },
   footerText: {
     textAlign: 'center',
-    color: '#6B7280',
+    color: '#4B5563',  // 대비 강화
+    fontSize: 16,  // 추가 (시니어 친화)
+    lineHeight: 24,
   },
   linkText: {
     color: '#EA580C',
+    fontSize: 16,  // 추가 (시니어 친화)
     fontWeight: 'bold',
   },
 });

@@ -1,8 +1,45 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { API_CONFIG } from '../config/api.config';
 
-const API_URL = 'http://10.188.236.63:3000/api';
+const API_URL = API_CONFIG.API_URL;
 const TOKEN_KEY = 'userToken';
+
+// Axios 인스턴스 생성
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// 요청 인터셉터 - 토큰 추가
+api.interceptors.request.use(async (config) => {
+  const token = await SecureStore.getItemAsync(TOKEN_KEY);
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// 응답 인터셉터 - 오류 처리
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('[API 서비스] 상세 오류 정보:', {
+      status: error.response?.status,
+      statusText: error.response?.statusText,
+      data: error.response?.data,
+      config: {
+        url: error.config?.url,
+        method: error.config?.method,
+        data: error.config?.data,
+        headers: error.config?.headers,
+      },
+    });
+    return Promise.reject(error);
+  }
+);
 
 // Get all communities (optionally filter by hobbyId)
 export const getAllCommunitiesAPI = async (hobbyId = null) => {
@@ -95,21 +132,47 @@ export const getPostByIdAPI = async (id) => {
 
 // Create a new post
 export const createPostAPI = async (postData) => {
-  const requestUrl = `${API_URL}/posts`;
-  console.log(`[API 서비스] 📞 게시글 작성 요청: ${requestUrl}`, postData);
+  console.log(`[API 서비스] 📞 게시글 작성 시작`);
+
+  // 기본적인 데이터 검증
+  if (!postData.title?.trim()) {
+    throw new Error('제목을 입력해주세요.');
+  }
+
+  if (!postData.content?.trim()) {
+    throw new Error('내용을 입력해주세요.');
+  }
 
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
+    // 서버가 기대하는 형식으로만 데이터 전송 (title, content, category, images)
+    const sanitizedData = {
+      title: postData.title.trim(),
+      content: postData.content.trim(),
+      category: postData.category || '자유',
+    };
 
-    const response = await axios.post(requestUrl, postData, {
-      headers: { Authorization: `Bearer ${token}` }
+    // images 필드는 배열 형식으로만 추가 (서버가 기대하는 형식)
+    if (postData.images && Array.isArray(postData.images) && postData.images.length > 0) {
+      sanitizedData.images = postData.images;
+    }
+
+    console.log('[API 서비스] 정제된 요청 데이터:', {
+      title: sanitizedData.title,
+      content: sanitizedData.content.substring(0, 50) + '...',
+      category: sanitizedData.category,
+      imagesCount: sanitizedData.images?.length || 0
     });
 
-    console.log(`[API 서비스] ✅ 게시글 작성 성공!`);
+    const response = await api.post('/posts', sanitizedData);
+
+    console.log(`[API 서비스] ✅ 게시글 작성 성공! ID: ${response.data?.post?.id || 'unknown'}`);
     return response.data;
   } catch (error) {
-    console.error("[API 서비스] ❌ 게시글 작성 실패!:", error.response?.data?.error || error.message);
+    console.error("[API 서비스] ❌ 게시글 작성 실패!");
+    if (error.response) {
+      console.error('응답 상태:', error.response.status);
+      console.error('응답 데이터:', error.response.data);
+    }
     throw new Error(error.response?.data?.error || '게시글 작성 중 오류가 발생했습니다.');
   }
 };
@@ -168,5 +231,30 @@ export const createCommentAPI = async (postId, content) => {
   } catch (error) {
     console.error("[API 서비스] ❌ 댓글 작성 실패!:", error.response?.data?.error || error.message);
     throw new Error(error.response?.data?.error || '댓글 작성 중 오류가 발생했습니다.');
+  }
+};
+
+// Toggle like on a post
+export const togglePostLikeAPI = async (postId) => {
+  console.log(`[API 서비스] 📞 게시글 좋아요 토글 요청: ${postId}`);
+
+  try {
+    const response = await api.post(`/posts/${postId}/like`);
+    console.log(`[API 서비스] ✅ 좋아요 토글 성공! liked: ${response.data.liked}`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 좋아요 토글 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '좋아요 처리 중 오류가 발생했습니다.');
+  }
+};
+
+// Check if user liked a post
+export const checkPostLikeAPI = async (postId) => {
+  try {
+    const response = await api.get(`/posts/${postId}/like`);
+    return response.data.liked;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 좋아요 확인 실패!:", error);
+    return false;
   }
 };

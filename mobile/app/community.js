@@ -16,10 +16,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { getAllCommunitiesAPI, getAllPostsAPI, requestJoinCommunityAPI } from '../api/communityService';
+import { logActivity, ActivityTypes } from '../api/activityService';
 import hobbyImages from '../assets/hobbyImages';
 
 // API Base URL for image resolution
-const API_BASE_URL = 'http://172.30.1.60:3000';
+const API_BASE_URL = 'http://192.168.0.40:3000';
 
 export default function CommunityPage() {
   const router = useRouter();
@@ -78,13 +79,6 @@ export default function CommunityPage() {
     };
   }, []);
 
-  // Pull to refresh
-  const onRefresh = useCallback(async () => {
-    setRefreshing(true);
-    await loadData();
-    setRefreshing(false);
-  }, [loadData]);
-
   // Filter communities
   const filteredCommunities = communities.filter(community => {
     const matchesSearch = searchQuery
@@ -103,6 +97,28 @@ export default function CommunityPage() {
   const filteredPosts = posts.filter(post => {
     return categoryFilter === 'all' || post.category === categoryFilter;
   });
+
+  // Log search activity with debounce
+  useEffect(() => {
+    if (!searchQuery || searchQuery.trim().length < 2) return;
+
+    const timeoutId = setTimeout(() => {
+      logActivity(ActivityTypes.SEARCH, null, {
+        searchQuery: searchQuery.trim(),
+        context: activeTab === 'groups' ? 'communities' : 'posts',
+        resultsCount: activeTab === 'groups' ? filteredCommunities.length : filteredPosts.length
+      });
+    }, 500); // 500ms debounce
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery, activeTab, filteredCommunities.length, filteredPosts.length]);
+
+  // Pull to refresh
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await loadData();
+    setRefreshing(false);
+  }, [loadData]);
 
   // Handle join community
   const handleJoinCommunity = async (communityId, memberCount, maxMembers) => {
@@ -160,7 +176,7 @@ export default function CommunityPage() {
           return image;
         } else {
           console.log('[커뮤니티 이미지] ❌ hobbyImages에 없음, 기본 이미지 사용:', imageName);
-          return require('../assets/icon.png');
+          return require('../assets/hobbies/hulife_logo.png');
         }
       } else if (community.imageUrl?.startsWith('http')) {
         // 절대 URL인 경우
@@ -169,7 +185,7 @@ export default function CommunityPage() {
       } else {
         // 기본 이미지
         console.log('[커뮤니티 이미지] 기본 이미지 사용');
-        return require('../assets/icon.png');
+        return require('../assets/hobbies/hulife_logo.png');
       }
     };
 
@@ -235,10 +251,25 @@ export default function CommunityPage() {
 
       <View style={styles.postFooter}>
         <View style={styles.postAuthor}>
-          <Text style={styles.authorName}>{post.userName}</Text>
-          <Text style={styles.postDate}>
-            {new Date(post.createdAt).toLocaleDateString('ko-KR')}
-          </Text>
+          <View style={styles.postAuthorAvatar}>
+            {post.userImage ? (
+              <Image
+                source={{ uri: post.userImage }}
+                style={styles.postAuthorAvatarImage}
+                resizeMode="cover"
+              />
+            ) : (
+              <Text style={styles.postAuthorAvatarText}>
+                {post.userName?.[0] || 'U'}
+              </Text>
+            )}
+          </View>
+          <View style={styles.postAuthorInfo}>
+            <Text style={styles.authorName} numberOfLines={1}>{post.userName}</Text>
+            <Text style={styles.postDate}>
+              {new Date(post.createdAt).toLocaleDateString('ko-KR')}
+            </Text>
+          </View>
         </View>
 
         <View style={styles.postStats}>
@@ -426,47 +457,58 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loadingText: {
-    marginTop: 16,
-    fontSize: 16,
-    color: '#666',
+    marginTop: 18,  // 16→18
+    fontSize: 18,  // 16→18 for readability
+    color: '#4B5563',  // Darker color
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
+    paddingVertical: 14,  // 12→14 for better spacing
+    borderBottomWidth: 2,  // 1→2 for better visibility
     borderBottomColor: '#eee',
   },
   backButton: {
-    padding: 4,
+    padding: 6,  // 4→6 for larger touch area
+    minWidth: 36,  // Added minimum touch target
+    minHeight: 36,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 24,  // 20→24 for readability
     fontWeight: 'bold',
   },
   createButton: {
-    padding: 4,
+    padding: 6,  // 4→6 for larger touch area
+    minWidth: 36,  // Added minimum touch target
+    minHeight: 36,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   tabs: {
     flexDirection: 'row',
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,  // 1→2 for better visibility
     borderBottomColor: '#eee',
   },
   tab: {
     flex: 1,
-    paddingVertical: 16,
+    paddingVertical: 18,  // 16→18 for better spacing
+    minHeight: 56,  // Added minimum touch target
     alignItems: 'center',
-    borderBottomWidth: 2,
+    justifyContent: 'center',
+    borderBottomWidth: 3,  // 2→3 for better visibility
     borderBottomColor: 'transparent',
   },
   activeTab: {
     borderBottomColor: '#FF7A5C',
   },
   tabText: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: 18,  // 16→18 for readability
+    color: '#4B5563',  // Darker color
+    fontWeight: '500',
   },
   activeTabText: {
     color: '#FF7A5C',
@@ -476,8 +518,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   filterContainer: {
-    padding: 16,
-    borderBottomWidth: 1,
+    padding: 18,  // 16→18 for better spacing
+    borderBottomWidth: 2,  // 1→2 for better visibility
     borderBottomColor: '#eee',
   },
   searchContainer: {
@@ -485,31 +527,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#f5f5f5',
     borderRadius: 8,
-    paddingHorizontal: 12,
-    marginBottom: 12,
+    paddingHorizontal: 14,  // 12→14
+    marginBottom: 14,  // 12→14
+    minHeight: 56,  // Added minimum touch target
   },
   searchInput: {
     flex: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 8,
-    fontSize: 16,
+    paddingVertical: 14,  // 12→14
+    paddingHorizontal: 10,  // 8→10
+    fontSize: 18,  // 16→18 for readability
   },
   locationFilters: {
     flexDirection: 'row',
   },
   filterChip: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: 18,  // 16→18
+    paddingVertical: 10,  // 8→10
     borderRadius: 20,
     backgroundColor: '#f5f5f5',
-    marginRight: 8,
+    marginRight: 10,  // 8→10
+    minHeight: 42,  // Added minimum touch target
   },
   activeFilterChip: {
     backgroundColor: '#FF7A5C',
   },
   filterChipText: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: 16,  // 14→16 for readability
+    color: '#4B5563',  // Darker color
+    fontWeight: '500',
   },
   activeFilterChipText: {
     color: '#fff',
@@ -521,7 +566,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#fff',
     borderRadius: 12,
-    marginBottom: 12,
+    marginBottom: 16,  // 12→16 for better spacing
     overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -533,57 +578,58 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   cardImage: {
-    width: 100,
-    height: 100,
+    width: 110,  // 100→110 for better visibility
+    height: 110,
     backgroundColor: '#f0f0f0',
   },
   cardContent: {
     flex: 1,
-    padding: 12,
+    padding: 14,  // 12→14 for better spacing
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 6,
+    marginBottom: 8,  // 6→8
   },
   cardTitle: {
-    fontSize: 16,
+    fontSize: 18,  // 16→18 for readability
     fontWeight: 'bold',
     flex: 1,
-    marginRight: 8,
+    marginRight: 10,  // 8→10
+    lineHeight: 24,
   },
   memberBadge: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#E3F2FF',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingHorizontal: 10,  // 8→10
+    paddingVertical: 5,  // 4→5
     borderRadius: 12,
-    gap: 4,
+    gap: 5,  // 4→5
   },
   memberBadgeText: {
     color: '#FF7A5C',
-    fontSize: 11,
+    fontSize: 13,  // 11→13 for readability
     fontWeight: 'bold',
   },
   cardDescription: {
-    fontSize: 13,
-    color: '#666',
-    marginBottom: 8,
-    lineHeight: 18,
+    fontSize: 15,  // 13→15 for readability
+    color: '#4B5563',  // Darker color
+    marginBottom: 10,  // 8→10
+    lineHeight: 21,  // 18→21
   },
   cardInfo: {
-    gap: 4,
+    gap: 6,  // 4→6
   },
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   infoText: {
-    fontSize: 12,
-    color: '#666',
-    marginLeft: 6,
+    fontSize: 14,  // 12→14 for readability
+    color: '#4B5563',  // Darker color
+    marginLeft: 7,  // 6→7
     flex: 1,
   },
   postList: {
@@ -592,8 +638,8 @@ const styles = StyleSheet.create({
   postCard: {
     backgroundColor: '#fff',
     borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
+    padding: 18,  // 16→18 for better spacing
+    marginBottom: 16,  // 12→16
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
@@ -601,29 +647,31 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   postHeader: {
-    marginBottom: 12,
+    marginBottom: 14,  // 12→14
   },
   categoryBadge: {
     alignSelf: 'flex-start',
     backgroundColor: '#f0f0f0',
-    paddingHorizontal: 12,
-    paddingVertical: 4,
+    paddingHorizontal: 14,  // 12→14
+    paddingVertical: 6,  // 4→6
     borderRadius: 12,
   },
   categoryText: {
-    fontSize: 12,
-    color: '#666',
+    fontSize: 14,  // 12→14 for readability
+    color: '#4B5563',  // Darker color
+    fontWeight: '600',
   },
   postTitle: {
-    fontSize: 18,
+    fontSize: 20,  // 18→20 for readability
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 10,  // 8→10
+    lineHeight: 28,
   },
   postContent: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 16,
-    lineHeight: 20,
+    fontSize: 16,  // 14→16 for readability
+    color: '#4B5563',  // Darker color
+    marginBottom: 18,  // 16→18
+    lineHeight: 24,  // 20→24
   },
   postFooter: {
     flexDirection: 'row',
@@ -633,28 +681,54 @@ const styles = StyleSheet.create({
   postAuthor: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 10,  // 8→10
+    flex: 1,  // 공간을 차지하되 축소 가능
+    minWidth: 0,  // text overflow를 위해 필요
+  },
+  postAuthorAvatar: {
+    width: 36,  // 32→36 for better visibility
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#FF7A5C',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+  postAuthorAvatarImage: {
+    width: 36,  // 32→36
+    height: 36,
+  },
+  postAuthorAvatarText: {
+    color: '#fff',
+    fontSize: 16,  // 14→16 for readability
+    fontWeight: 'bold',
+  },
+  postAuthorInfo: {
+    flex: 1,
   },
   authorName: {
-    fontSize: 14,
+    fontSize: 16,  // 14→16 for readability
     color: '#333',
+    fontWeight: '600',
   },
   postDate: {
-    fontSize: 12,
+    fontSize: 14,  // 12→14 for readability
     color: '#999',
+    marginTop: 2,
   },
   postStats: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 14,  // 12→14
+    flexShrink: 0,  // 항상 보이도록 축소 방지
   },
   statItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: 5,  // 4→5
   },
   statText: {
-    fontSize: 12,
-    color: '#666',
+    fontSize: 14,  // 12→14 for readability
+    color: '#4B5563',  // Darker color
   },
   emptyState: {
     alignItems: 'center',
@@ -662,13 +736,15 @@ const styles = StyleSheet.create({
     paddingVertical: 80,
   },
   emptyStateText: {
-    fontSize: 16,
+    fontSize: 18,  // 16→18 for readability
     color: '#999',
-    marginTop: 16,
+    marginTop: 18,  // 16→18
+    lineHeight: 24,
   },
   emptyStateSubtext: {
-    fontSize: 14,
+    fontSize: 16,  // 14→16 for readability
     color: '#ccc',
-    marginTop: 8,
+    marginTop: 10,  // 8→10
+    lineHeight: 22,
   },
 });

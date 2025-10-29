@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import { postComments, posts, users } from "@/lib/db/schema"
-import { eq, desc } from "drizzle-orm"
+import { eq, desc, inArray } from "drizzle-orm"
 import { getSession } from "@/lib/auth/session"
 import { nanoid } from "nanoid"
 
@@ -13,19 +13,43 @@ export async function GET(
   try {
     const { id } = await params
 
-    const comments = await db
-      .select({
-        id: postComments.id,
-        postId: postComments.postId,
-        userId: postComments.userId,
-        userName: postComments.userName,
-        userImage: postComments.userImage,
-        content: postComments.content,
-        createdAt: postComments.createdAt,
-      })
+    // Get all comments for the post
+    const commentsData = await db
+      .select()
       .from(postComments)
       .where(eq(postComments.postId, id))
       .orderBy(desc(postComments.createdAt))
+
+    // If no comments, return empty array
+    if (commentsData.length === 0) {
+      return NextResponse.json([])
+    }
+
+    // Get unique user IDs
+    const userIds = [...new Set(commentsData.map(c => c.userId))]
+
+    // Get latest user info for all comment authors
+    const usersData = await db
+      .select({
+        id: users.id,
+        name: users.name,
+        profileImage: users.profileImage
+      })
+      .from(users)
+      .where(inArray(users.id, userIds))
+
+    // Create user map for quick lookup
+    const userMap = new Map(usersData.map(u => [u.id, u]))
+
+    // Merge comment data with latest user info
+    const comments = commentsData.map(comment => {
+      const latestUser = userMap.get(comment.userId)
+      return {
+        ...comment,
+        userName: latestUser?.name || comment.userName,
+        userImage: latestUser?.profileImage || comment.userImage
+      }
+    })
 
     return NextResponse.json(comments)
   } catch (error) {

@@ -284,57 +284,59 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   header: { alignItems: 'center', marginBottom: 24 },
-  logo: { width: 64, height: 64, marginBottom: 16 },
-  title: { fontSize: 28, fontWeight: 'bold' },
-  description: { fontSize: 16, color: '#6B7280', marginTop: 8 },
+  logo: { width: 80, height: 80, marginBottom: 20 },  // 64→80 for better visibility
+  title: { fontSize: 32, fontWeight: 'bold', lineHeight: 40 },  // 28→32 for seniors
+  description: { fontSize: 18, color: '#4B5563', marginTop: 10 },  // 16→18, darker color
   errorText: { color: 'red', textAlign: 'center', marginBottom: 16 },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  inputGroup: { marginBottom: 16 },
-  inputGroupHalf: { width: '48%', marginBottom: 16 },
-  label: { fontSize: 16, marginBottom: 8, color: '#374151' },
+  inputGroup: { marginBottom: 20 },  // 16→20 for better spacing
+  inputGroupHalf: { width: '48%', marginBottom: 20 },
+  label: { fontSize: 18, marginBottom: 10, color: '#374151', fontWeight: '600' },  // 16→18 for readability
   input: {
-    height: 50,
-    borderWidth: 1,
+    height: 56,  // 50→56 for easier touch
+    borderWidth: 2,  // 1→2 for better visibility
     borderColor: '#D1D5DB',
     borderRadius: 8,
     paddingHorizontal: 16,
-    fontSize: 16,
+    fontSize: 18,  // 16→18 for readability
   },
   pickerContainer: {
-    borderWidth: 1,
+    borderWidth: 2,  // 1→2 for better visibility
     borderColor: '#D1D5DB',
     borderRadius: 8,
     overflow: 'hidden',
   },
   picker: {
-    height: 50,
+    height: 56,  // 50→56 for easier touch
+    fontSize: 18,  // Added for consistency
   },
   selectButton: {
-    height: 50,
-    borderWidth: 1,
+    height: 56,  // 50→56 for easier touch
+    borderWidth: 2,  // 1→2 for better visibility
     borderColor: '#D1D5DB',
     borderRadius: 8,
     paddingHorizontal: 16,
     justifyContent: 'center',
   },
   termsContainer: {
-    marginVertical: 16,
+    marginVertical: 20,  // 16→20 for better spacing
   },
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 16,  // 12→16 for better spacing
+    minHeight: 48,  // Minimum touch target size
   },
   checkbox: {
-    width: 20,
-    height: 20,
-    borderWidth: 1,
+    width: 24,  // 20→24 for easier touch
+    height: 24,
+    borderWidth: 2,  // 1→2 for better visibility
     borderColor: '#D1D5DB',
     borderRadius: 4,
-    marginRight: 12,
+    marginRight: 14,  // 12→14 for better spacing
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -345,20 +347,23 @@ const styles = StyleSheet.create({
   checkboxCheckmark: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 16,  // Added for better visibility
   },
   checkboxLabel: {
-    fontSize: 14,
+    fontSize: 16,  // 14→16 for readability
+    lineHeight: 22,  // Added for better readability
+    color: '#374151',  // Explicit color for consistency
     flex: 1, // 텍스트가 길어질 경우 줄바꿈되도록
   },
   button: {
-    height: 50,
+    height: 56,  // 50→56 for easier touch
     backgroundColor: '#FF7A5C',
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 8,
+    marginTop: 12,  // 8→12 for better spacing
   },
-  buttonText: { color: 'white', fontSize: 16, fontWeight: 'bold' },
+  buttonText: { color: 'white', fontSize: 20, fontWeight: 'bold' },  // 16→20 for readability
   divider: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -371,8 +376,8 @@ const styles = StyleSheet.create({
   },
   dividerText: {
     marginHorizontal: 16,
-    color: '#6B7280',
-    fontSize: 14,
+    color: '#4B5563',  // Darker for better contrast
+    fontSize: 16,  // 14→16 for readability
   },
   socialLoginContainer: {
     flexDirection: 'row',
@@ -380,7 +385,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   socialButton: {
-    height: 50,
+    height: 56,  // 50→56 for easier touch
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
@@ -401,7 +406,7 @@ const styles = StyleSheet.create({
   },
   kakaoText: {
     color: '#000000',
-    fontSize: 16,
+    fontSize: 18,  // 16→18 for readability
     fontWeight: '600',
   },
   naverButton: {
@@ -411,27 +416,27 @@ const styles = StyleSheet.create({
   },
   naverIcon: {
     color: '#FFFFFF',
-    fontSize: 20,
+    fontSize: 22,  // 20→22 for better visibility
     fontWeight: 'bold',
   },
   naverText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 18,  // 16→18 for readability
     fontWeight: '600',
   },
   googleButton: {
     width: '100%',
     backgroundColor: '#FFFFFF',
-    borderWidth: 1,
+    borderWidth: 2,  // 1→2 for better visibility
     borderColor: '#D1D5DB',
     marginBottom: 16,
   },
   googleText: {
     color: '#374151',
-    fontSize: 16,
+    fontSize: 18,  // 16→18 for readability
     fontWeight: '600',
   },
-  footer: { marginTop: 16 },
-  footerText: { textAlign: 'center', color: '#6B7280' },
-  linkText: { color: '#FF7A5C', fontWeight: 'bold' },
+  footer: { marginTop: 20 },  // 16→20 for better spacing
+  footerText: { textAlign: 'center', color: '#4B5563', fontSize: 16 },  // Darker color, explicit size
+  linkText: { color: '#FF7A5C', fontWeight: 'bold', fontSize: 16 },  // Explicit size for consistency
 });

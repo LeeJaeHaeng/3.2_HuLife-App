@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import {
   ActivityIndicator, Alert,
   DeviceEventEmitter,
@@ -16,6 +16,7 @@ import YoutubeIframe from 'react-native-youtube-iframe';
 import { getHobbyById, getHobbyReviews } from '../../api/hobbyService';
 import { addHobbyToUserAPI, getUserHobbiesAPI, removeHobbyFromUserAPI } from '../../api/userService';
 import { getAllCommunitiesAPI } from '../../api/communityService';
+import { logActivity, ActivityTypes } from '../../api/activityService';
 import hobbyImages from '../../assets/hobbyImages';
 import AddReviewModal from '../../components/AddReviewModal';
 
@@ -72,10 +73,24 @@ export default function HobbyDetailScreen() {
     }
   }, [id]);
 
+  // Track page view duration
+  const startTimeRef = useRef(null);
+
   // 화면이 열릴 때 필요한 모든 데이터를 가져옵니다.
   useEffect(() => {
     loadData();
-  }, [loadData]);
+
+    // Log activity: view_hobby
+    startTimeRef.current = Date.now();
+
+    // Cleanup: log duration when leaving the screen
+    return () => {
+      if (startTimeRef.current && id) {
+        const duration = Math.floor((Date.now() - startTimeRef.current) / 1000);
+        logActivity(ActivityTypes.VIEW_HOBBY, id, { duration });
+      }
+    };
+  }, [loadData, id]);
 
   // 🔔 전역 이벤트 리스너: 다른 화면에서 좋아요 상태가 변경되면 즉시 데이터 새로고침
   useEffect(() => {

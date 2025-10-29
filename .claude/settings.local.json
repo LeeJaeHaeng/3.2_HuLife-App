@@ -36,7 +36,17 @@
       "Bash(npm install)",
       "Bash(dir:*)",
       "Bash(npx expo start:*)",
-      "Bash(npx tsx:*)"
+      "Bash(npx tsx:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run db:push:*)",
+      "Bash(npx drizzle-kit push)",
+      "Bash(for:*)",
+      "Bash(do echo \"=== $f ===\")",
+      "Bash(head:*)",
+      "Bash(done)",
+      "Bash(npx drizzle-kit generate:*)",
+      "Bash(node -e:*)",
+      "Bash(npm run dev:socket:*)"
     ],
     "deny": [],
     "ask": []

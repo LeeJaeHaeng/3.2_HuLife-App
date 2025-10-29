@@ -308,63 +308,65 @@ const styles = StyleSheet.create({
     color: BRAND_COLOR,
   },
   logoSub: {
-    fontSize: 16,
-    color: '#6b7280',
+    fontSize: 18,  // 16 → 18 (시니어 친화)
+    color: '#4b5563',  // 대비 강화
   },
   headerRight: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 10,  // 8 → 10
   },
   headerButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: 20,  // 16 → 20
+    paddingVertical: 12,    // 8 → 12 (최소 48px 터치 영역)
     borderRadius: 8,
+    minHeight: 48,  // 터치 영역 최소 크기
   },
   headerButtonPrimary: {
     backgroundColor: BRAND_COLOR,
   },
   headerButtonText: {
-    fontSize: 14,
+    fontSize: 16,  // 14 → 16 (시니어 친화)
     fontWeight: '600',
-    color: '#374151',
+    color: '#1f2937',  // 대비 강화
   },
   headerButtonTextPrimary: {
-    fontSize: 14,
+    fontSize: 16,  // 14 → 16
     fontWeight: '600',
     color: '#ffffff',
   },
   hero: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,  // 20 → 24
     paddingVertical: 60,
     backgroundColor: '#f9fafb',
     alignItems: 'center',
   },
   heroTitle: {
-    fontSize: 36,
+    fontSize: 38,  // 36 → 38 (시니어 친화)
     fontWeight: 'bold',
     color: '#111827',
     textAlign: 'center',
-    marginBottom: 16,
-    lineHeight: 44,
+    marginBottom: 20,  // 16 → 20
+    lineHeight: 46,    // 44 → 46
   },
   heroSubtitle: {
-    fontSize: 18,
-    color: '#6b7280',
+    fontSize: 20,  // 18 → 20 (시니어 친화)
+    color: '#4b5563',  // 대비 강화
     textAlign: 'center',
-    marginBottom: 32,
-    lineHeight: 28,
+    marginBottom: 36,  // 32 → 36
+    lineHeight: 30,    // 28 → 30
   },
   heroCTA: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 10,  // 8 → 10
     backgroundColor: BRAND_COLOR,
-    paddingHorizontal: 32,
-    paddingVertical: 16,
+    paddingHorizontal: 36,  // 32 → 36
+    paddingVertical: 20,    // 16 → 20
     borderRadius: 12,
+    minHeight: 56,  // 터치 영역 최소 크기
   },
   heroCTAText: {
-    fontSize: 18,
+    fontSize: 20,  // 18 → 20 (시니어 친화)
     fontWeight: 'bold',
     color: '#ffffff',
   },
@@ -379,39 +381,40 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 24,
+    fontSize: 28,  // 24 → 28 (시니어 친화)
     fontWeight: 'bold',
     color: '#111827',
-    marginBottom: 20,
+    marginBottom: 24,  // 20 → 24
   },
   sectionLink: {
-    fontSize: 14,
+    fontSize: 16,  // 14 → 16 (시니어 친화)
     color: BRAND_COLOR,
     fontWeight: '600',
   },
   categoryGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 12,
+    gap: 16,  // 12 → 16
   },
   categoryCard: {
-    width: (width - 64) / 2,
+    width: (width - 72) / 2,  // 간격 증가로 인한 조정
     backgroundColor: '#ffffff',
     borderRadius: 12,
-    padding: 16,
+    padding: 20,  // 16 → 20
     borderWidth: 2,
     alignItems: 'center',
-    gap: 12,
+    gap: 14,  // 12 → 14
+    minHeight: 140,  // 터치 영역 확보
   },
   categoryIcon: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 64,  // 60 → 64
+    height: 64,
+    borderRadius: 32,
     alignItems: 'center',
     justifyContent: 'center',
   },
   categoryName: {
-    fontSize: 16,
+    fontSize: 18,  // 16 → 18 (시니어 친화)
     fontWeight: '600',
     color: '#111827',
     textAlign: 'center',
@@ -439,61 +442,61 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   communityName: {
-    fontSize: 16,
+    fontSize: 18,  // 16 → 18 (시니어 친화)
     fontWeight: 'bold',
     color: '#111827',
   },
   communityLocation: {
-    fontSize: 14,
-    color: '#6b7280',
+    fontSize: 16,  // 14 → 16 (시니어 친화)
+    color: '#4b5563',  // 대비 강화
   },
   communityMembers: {
-    fontSize: 14,
-    color: '#6b7280',
+    fontSize: 16,  // 14 → 16
+    color: '#4b5563',
   },
   stepsContainer: {
-    gap: 24,
+    gap: 28,  // 24 → 28
   },
   stepCard: {
     backgroundColor: '#ffffff',
     borderRadius: 12,
-    padding: 24,
+    padding: 28,  // 24 → 28
     borderWidth: 1,
     borderColor: '#e5e7eb',
     alignItems: 'center',
     position: 'relative',
   },
   stepIcon: {
-    marginBottom: 16,
+    marginBottom: 20,  // 16 → 20
   },
   stepNumber: {
     position: 'absolute',
-    top: 12,
-    right: 12,
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    top: 16,  // 12 → 16
+    right: 16,
+    width: 40,  // 32 → 40
+    height: 40,
+    borderRadius: 20,
     backgroundColor: BRAND_COLOR + '20',
     alignItems: 'center',
     justifyContent: 'center',
   },
   stepNumberText: {
-    fontSize: 18,
+    fontSize: 22,  // 18 → 22 (시니어 친화)
     fontWeight: 'bold',
     color: BRAND_COLOR,
   },
   stepTitle: {
-    fontSize: 20,
+    fontSize: 22,  // 20 → 22 (시니어 친화)
     fontWeight: 'bold',
     color: '#111827',
-    marginBottom: 8,
+    marginBottom: 12,  // 8 → 12
     textAlign: 'center',
   },
   stepDesc: {
-    fontSize: 14,
-    color: '#6b7280',
+    fontSize: 16,  // 14 → 16 (시니어 친화)
+    color: '#4b5563',  // 대비 강화
     textAlign: 'center',
-    lineHeight: 20,
+    lineHeight: 24,  // 20 → 24
   },
   testimonialsSection: {
     backgroundColor: '#f9fafb',

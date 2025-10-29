@@ -1,0 +1,1 @@
+ALTER TABLE `posts` MODIFY COLUMN `user_image` text;

@@ -72,7 +72,7 @@ export const posts = mysqlTable("posts", {
   id: varchar("id", { length: 255 }).primaryKey(),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
   userName: varchar("user_name", { length: 255 }).notNull(),
-  userImage: varchar("user_image", { length: 255 }),
+  userImage: text("user_image"), // text로 변경하여 base64 지원
   title: varchar("title", { length: 255 }).notNull(),
   content: text("content").notNull(),
   category: varchar("category", { length: 255 }).notNull(),
@@ -104,6 +104,13 @@ export const schedules = mysqlTable("schedules", {
   type: mysqlEnum("type", ["class", "practice", "meeting", "event"]).notNull(),
 });
 
+export const postLikes = mysqlTable("post_likes", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  postId: varchar("post_id", { length: 255 }).notNull().references(() => posts.id),
+  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 
 // --- RELATIONS ---
 
@@ -117,6 +124,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   posts: many(posts),
   userHobbies: many(userHobbies),
   schedules: many(schedules),
+  activities: many(userActivities),
 }))
 
 export const hobbiesRelations = relations(hobbies, ({ many }) => ({
@@ -255,6 +263,32 @@ export const schedulesRelations = relations(schedules, ({ one }) => ({
   }),
 }));
 
+// User activity logs table for tracking user behavior and improving recommendations
+export const userActivities = mysqlTable("user_activities", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
+  activityType: mysqlEnum("activity_type", [
+    "view_hobby",
+    "view_community",
+    "view_post",
+    "search",
+    "join_community",
+    "add_hobby_interest",
+    "remove_hobby_interest",
+    "complete_survey",
+    "create_post",
+    "create_schedule"
+  ]).notNull(),
+  targetId: varchar("target_id", { length: 255 }), // ID of the hobby/community/post being interacted with
+  metadata: json("metadata").$type<{
+    searchQuery?: string;
+    duration?: number; // seconds spent on page
+    scrollDepth?: number; // percentage scrolled
+    [key: string]: any;
+  }>(), // Additional contextual data
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
 export const joinRequestsRelations = relations(joinRequests, ({ one }) => ({
   community: one(communities, {
     fields: [joinRequests.communityId],
@@ -281,6 +315,13 @@ export const chatMessagesRelations = relations(chatMessages, ({ one }) => ({
   }),
   user: one(users, {
     fields: [chatMessages.userId],
+    references: [users.id],
+  }),
+}));
+
+export const userActivitiesRelations = relations(userActivities, ({ one }) => ({
+  user: one(users, {
+    fields: [userActivities.userId],
     references: [users.id],
   }),
 }));

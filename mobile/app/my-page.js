@@ -13,6 +13,7 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Calendar } from 'react-native-calendars';
 import { getCurrentUser, logoutUser } from '../api/authService';
 import { getUserCommunitiesAPI, getUserHobbiesAPI, getUserSchedulesAPI } from '../api/userService';
 import AddScheduleModal from '../components/AddScheduleModal';
@@ -42,6 +43,10 @@ export default function MyPageScreen() {
   const [error, setError] = useState(null);
   const [isAddScheduleModalVisible, setIsAddScheduleModalVisible] = useState(false);
   const [isEditProfileModalVisible, setIsEditProfileModalVisible] = useState(false);
+
+  // Calendar states
+  const [selectedDate, setSelectedDate] = useState('');
+  const [markedDates, setMarkedDates] = useState({});
 
   // 데이터 로딩 함수
   const loadMyPageData = useCallback(async () => {
@@ -79,6 +84,53 @@ export default function MyPageScreen() {
       setLoading(false); // 로딩 종료
     }
   }, []); // loading 상태 의존성 제거
+
+  // 캘린더에 일정 마킹
+  useEffect(() => {
+    if (userSchedules.length > 0) {
+      const marked = {};
+      userSchedules.forEach(schedule => {
+        const dateStr = new Date(schedule.date).toISOString().split('T')[0];
+        const typeColor = getTypeColor(schedule.type);
+
+        if (!marked[dateStr]) {
+          marked[dateStr] = { dots: [], marked: true };
+        }
+        marked[dateStr].dots.push({ color: typeColor });
+      });
+
+      // 선택된 날짜 하이라이트 추가
+      if (selectedDate && marked[selectedDate]) {
+        marked[selectedDate].selected = true;
+        marked[selectedDate].selectedColor = '#FF7A5C';
+      } else if (selectedDate) {
+        marked[selectedDate] = { selected: true, selectedColor: '#FF7A5C' };
+      }
+
+      setMarkedDates(marked);
+    }
+  }, [userSchedules, selectedDate]);
+
+  // Helper function for type colors
+  const getTypeColor = (type) => {
+    switch (type) {
+      case 'class': return '#3b82f6'; // blue
+      case 'practice': return '#10b981'; // green
+      case 'meeting': return '#8b5cf6'; // purple
+      case 'event': return '#f97316'; // orange
+      default: return '#6b7280'; // gray
+    }
+  };
+
+  const getTypeLabel = (type) => {
+    switch (type) {
+      case 'class': return '수업';
+      case 'practice': return '연습';
+      case 'meeting': return '모임';
+      case 'event': return '행사';
+      default: return type;
+    }
+  };
 
   // useFocusEffect 사용: 화면이 포커스를 얻을 때마다 실행
   useFocusEffect(
@@ -268,6 +320,29 @@ export default function MyPageScreen() {
 
           {activeTab === '일정' && (
             <>
+              {/* Calendar */}
+              <View style={styles.calendarContainer}>
+                <Calendar
+                  markingType={'multi-dot'}
+                  markedDates={markedDates}
+                  onDayPress={(day) => {
+                    setSelectedDate(day.dateString);
+                  }}
+                  theme={{
+                    todayTextColor: '#FF7A5C',
+                    selectedDayBackgroundColor: '#FF7A5C',
+                    selectedDayTextColor: '#ffffff',
+                    arrowColor: '#FF7A5C',
+                    monthTextColor: '#333',
+                    textMonthFontWeight: 'bold',
+                    textMonthFontSize: 18,
+                    textDayFontSize: 16,
+                    textDayHeaderFontSize: 14,
+                  }}
+                  style={styles.calendar}
+                />
+              </View>
+
               {/* Add Schedule Button */}
               <TouchableOpacity
                 style={styles.addScheduleButton}
@@ -277,30 +352,34 @@ export default function MyPageScreen() {
                 <Text style={styles.addScheduleButtonText}>일정 추가</Text>
               </TouchableOpacity>
 
+              {/* Selected Date Header */}
+              {selectedDate && (
+                <View style={styles.selectedDateHeader}>
+                  <Feather name="calendar" size={18} color="#FF7A5C" />
+                  <Text style={styles.selectedDateText}>
+                    {new Date(selectedDate).toLocaleDateString('ko-KR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      weekday: 'short',
+                    })}
+                  </Text>
+                </View>
+              )}
+
               {/* Schedule List */}
               {userSchedules.length > 0 ? (
                 userSchedules
-                  .filter((s) => new Date(s.date) >= new Date()) // Only show upcoming schedules
+                  .filter((s) => {
+                    // 선택된 날짜가 있으면 해당 날짜만, 없으면 전체 미래 일정
+                    if (selectedDate) {
+                      const scheduleDate = new Date(s.date).toISOString().split('T')[0];
+                      return scheduleDate === selectedDate;
+                    }
+                    return new Date(s.date) >= new Date();
+                  })
                   .slice(0, 10)
                   .map(item => {
-                    const getTypeColor = (type) => {
-                      switch (type) {
-                        case 'class': return '#3b82f6'; // blue
-                        case 'practice': return '#10b981'; // green
-                        case 'meeting': return '#8b5cf6'; // purple
-                        case 'event': return '#f97316'; // orange
-                        default: return '#6b7280'; // gray
-                      }
-                    };
-                    const getTypeLabel = (type) => {
-                      switch (type) {
-                        case 'class': return '수업';
-                        case 'practice': return '연습';
-                        case 'meeting': return '모임';
-                        case 'event': return '행사';
-                        default: return type;
-                      }
-                    };
 
                     return (
                       <View key={item.id} style={styles.scheduleCard}>
@@ -380,8 +459,8 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#f3f4f6' },
   center: { justifyContent: 'center', alignItems: 'center', flex:1 },
   centerContent: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 },
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16, backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: '#e5e7eb', },
-  headerTitle: { fontSize: 20, fontWeight: 'bold' },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16, backgroundColor: 'white', borderBottomWidth: 2, borderBottomColor: '#e5e7eb', },  // Thicker border
+  headerTitle: { fontSize: 24, fontWeight: 'bold' },  // 20→24 for readability
   loadingOverlay: {
     position: 'absolute',
     left: 0,
@@ -392,57 +471,58 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 10,
   },
-  profileCard: { backgroundColor: 'white', alignItems: 'center', padding: 24, margin: 16, borderRadius: 12, },
-  avatarContainer: { marginBottom: 16 },
-  avatar: { width: 96, height: 96, borderRadius: 48, backgroundColor: '#e5e7eb' },
+  profileCard: { backgroundColor: 'white', alignItems: 'center', padding: 26, margin: 16, borderRadius: 12, },  // 24→26
+  avatarContainer: { marginBottom: 18 },  // 16→18
+  avatar: { width: 104, height: 104, borderRadius: 52, backgroundColor: '#e5e7eb' },  // 96→104 for better visibility
   avatarFallback: { backgroundColor: '#FF7A5C', justifyContent: 'center', alignItems: 'center', },
-  avatarFallbackText: { color: 'white', fontSize: 40 },
-  profileName: { fontSize: 24, fontWeight: 'bold', marginBottom: 4 },
-  profileInfo: { fontSize: 16, color: '#6b7280', marginBottom: 16 },
-  editButton: { borderColor: '#e5e7eb', borderWidth: 1, borderRadius: 8, paddingVertical: 8, paddingHorizontal: 16, },
-  editButtonText: { fontWeight: '600' },
-  card: { backgroundColor: 'white', padding: 16, marginHorizontal: 16, marginBottom: 16, borderRadius: 12, },
-  cardTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 12 },
-  statsRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 8, },
+  avatarFallbackText: { color: 'white', fontSize: 44 },  // 40→44 for readability
+  profileName: { fontSize: 26, fontWeight: 'bold', marginBottom: 6, lineHeight: 34 },  // 24→26 for readability
+  profileInfo: { fontSize: 18, color: '#4B5563', marginBottom: 18 },  // 16→18, darker color
+  editButton: { borderColor: '#e5e7eb', borderWidth: 2, borderRadius: 8, paddingVertical: 10, paddingHorizontal: 20, minHeight: 48 },  // Larger touch area
+  editButtonText: { fontWeight: '600', fontSize: 16 },  // Added explicit size
+  card: { backgroundColor: 'white', padding: 18, marginHorizontal: 16, marginBottom: 16, borderRadius: 12, },  // 16→18
+  cardTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 14 },  // 18→20, 12→14
+  statsRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 10, },  // 8→10
   statsItem: { flexDirection: 'row', alignItems: 'center' },
-  statsLabel: { marginLeft: 8, color: '#6b7280' },
-  statsValue: { fontSize: 16, fontWeight: 'bold' },
-  tabContainer: { flexDirection: 'row', backgroundColor: 'white', marginHorizontal: 16, borderRadius: 12, padding: 4, },
-  tab: { flex: 1, padding: 12, borderRadius: 8, alignItems: 'center', },
+  statsLabel: { marginLeft: 10, color: '#4B5563', fontSize: 16 },  // 8→10, darker color, explicit size
+  statsValue: { fontSize: 18, fontWeight: 'bold' },  // 16→18
+  tabContainer: { flexDirection: 'row', backgroundColor: 'white', marginHorizontal: 16, borderRadius: 12, padding: 6, },  // 4→6
+  tab: { flex: 1, padding: 14, borderRadius: 8, alignItems: 'center', minHeight: 52 },  // 12→14, added minHeight
   activeTab: { backgroundColor: '#FF7A5C' },
-  tabText: { fontSize: 16, fontWeight: '600', color: 'black' },
+  tabText: { fontSize: 18, fontWeight: '600', color: 'black' },  // 16→18
   activeTabText: { color: 'white' },
-  tabContent: { marginHorizontal: 16, marginTop: 16 },
-  listItemCard: { backgroundColor: 'white', padding: 16, borderRadius: 12, marginBottom: 12, },
-  listItemTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 4 },
-  listItemSubtitle: { color: '#6b7280', fontSize: 14, marginBottom: 8 },
-  typeBadge: { alignSelf: 'flex-start', paddingVertical: 4, paddingHorizontal: 8, borderRadius: 12, },
-  typeBadgeText: { fontSize: 12, fontWeight: '600', color: '#fff', },
-  emptyText: { textAlign: 'center', color: '#6b7280', padding: 24 },
-  emptySubtext: { textAlign: 'center', color: '#9ca3af', fontSize: 14, marginTop: 8 },
-  loginButton: { marginTop: 20, backgroundColor: '#FF7A5C', paddingVertical: 12, paddingHorizontal: 32, borderRadius: 8, },
-  loginButtonText: { color: 'white', fontSize: 16, fontWeight: 'bold', },
+  tabContent: { marginHorizontal: 16, marginTop: 18 },  // 16→18
+  listItemCard: { backgroundColor: 'white', padding: 18, borderRadius: 12, marginBottom: 14, },  // 16→18, 12→14
+  listItemTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 6, lineHeight: 26 },  // 18→20, added line height
+  listItemSubtitle: { color: '#4B5563', fontSize: 16, marginBottom: 10 },  // 14→16, darker color
+  typeBadge: { alignSelf: 'flex-start', paddingVertical: 6, paddingHorizontal: 10, borderRadius: 12, },  // 4→6, 8→10
+  typeBadgeText: { fontSize: 14, fontWeight: '600', color: '#fff', },  // 12→14
+  emptyText: { textAlign: 'center', color: '#4B5563', padding: 26, fontSize: 18 },  // Darker color, explicit size
+  emptySubtext: { textAlign: 'center', color: '#9ca3af', fontSize: 16, marginTop: 10 },  // 14→16, 8→10
+  loginButton: { marginTop: 22, backgroundColor: '#FF7A5C', paddingVertical: 14, paddingHorizontal: 36, borderRadius: 8, minHeight: 52 },  // Larger touch area
+  loginButtonText: { color: 'white', fontSize: 18, fontWeight: 'bold', },  // 16→18
   addScheduleButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FF7A5C',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: 14,  // 12→14
+    paddingHorizontal: 18,  // 16→18
     borderRadius: 8,
-    marginBottom: 16,
-    gap: 8,
+    marginBottom: 18,  // 16→18
+    gap: 10,  // 8→10
+    minHeight: 52,  // Added minimum touch target
   },
   addScheduleButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,  // 16→18 for readability
     fontWeight: '600',
   },
   scheduleCard: {
     flexDirection: 'row',
     backgroundColor: '#fff',
     borderRadius: 12,
-    marginBottom: 12,
+    marginBottom: 14,  // 12→14
     overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -451,38 +531,68 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   typeIndicator: {
-    width: 4,
+    width: 5,  // 4→5 for better visibility
   },
   scheduleContent: {
     flex: 1,
-    padding: 16,
+    padding: 18,  // 16→18
   },
   scheduleHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
-    gap: 8,
+    marginBottom: 14,  // 12→14
+    gap: 10,  // 8→10
   },
   scheduleTitle: {
-    fontSize: 16,
+    fontSize: 18,  // 16→18 for readability
     fontWeight: 'bold',
     color: '#000',
     flex: 1,
+    lineHeight: 24,
   },
   scheduleDetails: {
-    gap: 6,
+    gap: 8,  // 6→8
   },
   scheduleDetailItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
+    gap: 7,  // 6→7
   },
   scheduleDetailText: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: 16,  // 14→16 for readability
+    color: '#4B5563',  // Darker color
   },
   emptySchedule: {
     alignItems: 'center',
     paddingVertical: 60,
+  },
+  calendarContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    overflow: 'hidden',
+  },
+  calendar: {
+    borderRadius: 12,
+  },
+  selectedDateHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,  // 8→10
+    paddingHorizontal: 18,  // 16→18
+    paddingVertical: 14,  // 12→14
+    backgroundColor: '#FFF5F2',
+    borderRadius: 8,
+    marginBottom: 18,  // 16→18
+  },
+  selectedDateText: {
+    fontSize: 18,  // 16→18 for readability
+    fontWeight: '600',
+    color: '#333',
   },
 });

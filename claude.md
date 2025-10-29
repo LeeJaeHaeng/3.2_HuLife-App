@@ -2170,8 +2170,91 @@ const [imageLoading, setImageLoading] = useState(true);
 
 ---
 
-### 이후 작업사항
-아니 모바일의 상단바까지는 ui가 침범하지 않도록 해줘야지 그리고 타고 추 카페에서 나만의 파우치 뜨기 저 부분은 내 취미 추천받기 칸으로 변경해서 클릭하면 설문페이지로 이동하도록하고 메인페이지와 마이페이지 ui 줄테니까 형식은 따라하되, 우리 브랜드 색을 유지해서 페이지 수정해줘
-Session limit reached ∙ resets 1am
+### 6. API 500 에러 해결 - Import 이름 불일치 (2025-10-28) ✅
+
+#### 문제 상황
+- **증상**: 서버 시작 후 모든 API 엔드포인트에서 500 에러 발생
+- **로그**: 로그인 성공 후 모든 API 요청 실패
+  - `ERROR [API 서비스] ❌ 관심 취미 목록 요청 실패!: Request failed with status code 500`
+  - `ERROR [API 서비스] ❌ 추천 목록 요청 실패!: Request failed with status code 500`
+- **원인**: `app/api/recommendations/route.ts`에서 잘못된 import 이름 사용
+  - 실제 export: `KNNRecommendationEngine`
+  - 사용된 import: `KNNEngine` (존재하지 않음)
+- **영향**: KNN 추천 엔진을 사용하는 모든 API 실패, Next.js 컴파일 오류
+
+#### 해결 방법
+**파일**: `app/api/recommendations/route.ts` (lines 7, 57)
+
+```typescript
+// ❌ Before (오류)
+import { KNNEngine } from '@/lib/recommendation/knn-engine';
+knnRecs = await KNNEngine.getKNNRecommendations(session.userId, 5, 10);
+
+// ✅ After (수정)
+import { KNNRecommendationEngine } from '@/lib/recommendation/knn-engine';
+knnRecs = await KNNRecommendationEngine.getKNNRecommendations(session.userId, 5, 10);
+```
+
+#### 검증 결과
+```bash
+npm run dev
+# ✓ Ready in 2.2s - 컴파일 성공
+# ✓ Compiled /api/hobbies in 1737ms
+
+curl http://localhost:3000/api/hobbies
+# ✅ 200 OK - 123개 취미 데이터 정상 반환
+
+curl http://192.168.219.204:3000/api/hobbies
+# ✅ 로컬 네트워크에서도 접근 가능
+```
+
+#### 영향 범위
+- ✅ 추천 API (`/api/recommendations`)
+- ✅ 하이브리드 추천 알고리즘 (Content-based 60-70% + KNN 30-40%)
+- ✅ 사용자 활동 기반 동적 가중치 조정
+- ✅ 모든 API 엔드포인트 정상화
+
+#### 변경된 파일
+- `app/api/recommendations/route.ts` (lines 7, 57)
+
+#### 현재 서버 상태
+- 로컬 네트워크 IP: `192.168.219.204:3000`
+- 서버 상태: ✅ 실행 중
+- 모바일 앱 API Base URL과 일치 확인됨
+
 ---
 
+### 7. 모바일 앱 커뮤니티 페이지 에러 수정 (2025-10-28) ✅
+
+#### 문제 상황
+- **증상**: 커뮤니티 페이지 접근 시 앱 크래시
+- **에러**: 
+- **위치**:  -  컴포넌트
+- **원인**: 의 의존성 배열에서 아직 정의되지 않은 변수의  속성 참조
+
+#### 근본 원인
+
+
+#### 해결 방법
+**파일**: 
+
+1. **변수 정의 순서 재배치** - 필터 변수를 useEffect보다 먼저 정의
+2. **중복 정의 제거** - 105-121번 줄의 중복된 필터 정의 삭제
+3. **API Base URL 업데이트** -  → 
+
+#### 검증 결과
+- ✅ 커뮤니티 페이지 정상 로드
+- ✅ 모임 목록 표시
+- ✅ 게시판 탭 전환
+- ✅ 검색 및 필터 기능
+- ✅ 이미지 로딩 (로컬 + 서버)
+
+#### 영향 범위
+- ✅ 커뮤니티 페이지 ()
+- ✅ 모임 목록 표시
+- ✅ 게시글 목록 표시
+- ✅ 검색 활동 로깅
+- ✅ Pull-to-Refresh
+
+#### 변경된 파일
+-  (lines 23, 82-121)

@@ -1,23 +1,16 @@
-import axios from 'axios';
+import api, { API_URL, TOKEN_KEY } from './apiClient';
+import { logActivity, ActivityTypes } from './activityService';
 import * as SecureStore from 'expo-secure-store';
-
-const API_URL = 'http://10.188.236.63:3000/api'; // ✅ 최신 로컬 IP (ipconfig로 확인)
-const TOKEN_KEY = 'userToken';
+import axios from 'axios';
 
 // Get user's interested hobbies (디버깅 로그 추가)
 export const getUserHobbiesAPI = async () => {
-  const requestUrl = `${API_URL}/user/hobbies`;
-  console.log(`[API 서비스] 📞 관심 취미 목록 요청: ${requestUrl}`);
+  console.log(`[API 서비스] 📞 관심 취미 목록 요청`);
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
+    const response = await api.get('/user/hobbies');
 
-    const response = await axios.get(requestUrl, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-
-    // ✨ 서버로부터 받은 응답 데이터(response.data)를 직접 확인!
-    console.log(`[API 서비스] ✅ 관심 취미 목록 응답 받음:`, JSON.stringify(response.data, null, 2));
+    // ✨ 서버로부터 받은 응답 데이터 개수만 확인
+    console.log(`[API 서비스] ✅ 관심 취미 목록 응답 받음: ${response.data?.length || 0}개`);
 
     // 응답 데이터가 배열인지 다시 한번 확인하고 반환
     if (Array.isArray(response.data)) {
@@ -48,6 +41,9 @@ export const addHobbyToUserAPI = async (hobbyId, status = 'interested') => {
       headers: { Authorization: `Bearer ${token}` }
     });
 
+    // Log activity
+    logActivity(ActivityTypes.ADD_HOBBY_INTEREST, hobbyId);
+
     console.log(`[API 서비스] ✅ 관심 취미 추가 성공!`);
     return response.data;
   } catch (error) {
@@ -69,7 +65,10 @@ export const removeHobbyFromUserAPI = async (hobbyId) => {
       headers: { Authorization: `Bearer ${token}` }
     });
 
-    console.log(`[API 서비스] ✅ 관심 취미 제거 성공!`, response.data);
+    // Log activity
+    logActivity(ActivityTypes.REMOVE_HOBBY_INTEREST, hobbyId);
+
+    console.log(`[API 서비스] ✅ 관심 취미 제거 성공!`);
     return response.data;
   } catch (error) {
     console.error("[API 서비스] ❌ 관심 취미 제거 실패!:", error.response?.data?.error || error.message);
@@ -129,6 +128,12 @@ export const createScheduleAPI = async (scheduleData) => {
 
     const response = await axios.post(requestUrl, scheduleData, {
       headers: { Authorization: `Bearer ${token}` }
+    });
+
+    // Log activity
+    logActivity(ActivityTypes.CREATE_SCHEDULE, scheduleData.hobbyId, {
+      scheduleType: scheduleData.type,
+      scheduleTitle: scheduleData.title
     });
 
     console.log(`[API 서비스] ✅ 일정 생성 성공`);

@@ -1,11 +1,8 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { API_CONFIG } from '../config/api.config';
 
-//===============================================//
-// 사용자님의 IP 주소로 최종 수정되었습니다.     //
-// cmd 창에서 'ipconfig' 명령어로 확인 가능.     //
-const API_URL = 'http://10.188.236.63:3000/api';  //
-//===============================================//
+const API_URL = API_CONFIG.API_URL;
 const TOKEN_KEY = 'userToken';
 
 export const getAllHobbies = async () => {

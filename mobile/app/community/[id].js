@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { getCommunityByIdAPI, requestJoinCommunityAPI } from '../../api/communityService';
 import { getCurrentUser } from '../../api/authService';
+import { logActivity, ActivityTypes } from '../../api/activityService';
 
 export default function CommunityDetailPage() {
   const router = useRouter();
@@ -26,6 +27,9 @@ export default function CommunityDetailPage() {
   const [activeTab, setActiveTab] = useState('intro'); // 'intro', 'members'
   const [isMember, setIsMember] = useState(false);
   const [isLeader, setIsLeader] = useState(false);
+
+  // Activity tracking: duration measurement
+  const startTimeRef = useRef(null);
 
   // Load community data
   const loadData = useCallback(async () => {
@@ -65,7 +69,18 @@ export default function CommunityDetailPage() {
 
   useEffect(() => {
     loadData();
-  }, [loadData]);
+
+    // Start tracking view duration
+    startTimeRef.current = Date.now();
+
+    // Cleanup: log activity with duration when leaving the screen
+    return () => {
+      if (startTimeRef.current && id) {
+        const duration = Math.floor((Date.now() - startTimeRef.current) / 1000); // seconds
+        logActivity(ActivityTypes.VIEW_COMMUNITY, id, { duration });
+      }
+    };
+  }, [loadData, id]);
 
   // Pull to refresh
   const onRefresh = useCallback(async () => {
@@ -286,8 +301,12 @@ export default function CommunityDetailPage() {
       {/* Bottom Action Button */}
       <View style={styles.bottomBar}>
         {isMember ? (
-          <TouchableOpacity style={[styles.actionButton, styles.secondaryActionButton]}>
-            <Text style={styles.secondaryActionButtonText}>멤버 전용 채팅 (준비 중)</Text>
+          <TouchableOpacity
+            style={[styles.actionButton, styles.secondaryActionButton]}
+            onPress={() => router.push(`/community/chat/${id}`)}
+          >
+            <Ionicons name="chatbubbles" size={20} color="#FF7A5C" style={{ marginRight: 8 }} />
+            <Text style={styles.secondaryActionButtonText}>멤버 전용 채팅</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity

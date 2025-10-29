@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -12,11 +12,17 @@ import {
   KeyboardAvoidingView,
   Platform,
   DeviceEventEmitter,
+  Image,
+  Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { getPostByIdAPI, getPostCommentsAPI, createCommentAPI } from '../../../api/communityService';
+import { getPostByIdAPI, getPostCommentsAPI, createCommentAPI, togglePostLikeAPI } from '../../../api/communityService';
+import { logActivity, ActivityTypes } from '../../../api/activityService';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const IMAGE_WIDTH = SCREEN_WIDTH - 32; // 16px padding on each side
 
 export default function PostDetailPage() {
   const router = useRouter();
@@ -29,9 +35,23 @@ export default function PostDetailPage() {
   const [commentText, setCommentText] = useState('');
   const [submittingComment, setSubmittingComment] = useState(false);
 
+  // Activity tracking: duration measurement
+  const startTimeRef = useRef(null);
+
   useEffect(() => {
     loadPost();
     loadComments();
+
+    // Start tracking view duration
+    startTimeRef.current = Date.now();
+
+    // Cleanup: log activity with duration when leaving the screen
+    return () => {
+      if (startTimeRef.current && id) {
+        const duration = Math.floor((Date.now() - startTimeRef.current) / 1000); // seconds
+        logActivity(ActivityTypes.VIEW_POST, id, { duration });
+      }
+    };
   }, [id]);
 
   // 🔔 전역 이벤트 리스너: 다른 화면에서 돌아왔을 때 좋아요 상태 유지
@@ -49,22 +69,39 @@ export default function PostDetailPage() {
     };
   }, [id]);
 
-  const handleLike = () => {
+  const handleLike = async () => {
     const newLiked = !liked;
     const newLikes = newLiked ? likes + 1 : likes - 1;
 
+    // Optimistic UI update
     setLiked(newLiked);
     setLikes(newLikes);
 
-    // 🔔 전역 이벤트 발송: 게시글 목록에 좋아요 변경 알림
-    DeviceEventEmitter.emit('POST_LIKE_CHANGED', {
-      postId: id,
-      likes: newLikes,
-      liked: newLiked
-    });
-    console.log('[게시글 상세] 좋아요 상태 변경 이벤트 발송:', { postId: id, likes: newLikes });
+    try {
+      // API 호출하여 서버에 좋아요 상태 저장
+      const response = await togglePostLikeAPI(id);
+      console.log('[게시글 상세] 좋아요 API 응답:', response);
 
-    // TODO: API 호출하여 서버에 좋아요 상태 저장
+      // 서버 응답으로 정확한 좋아요 수 업데이트
+      if (response && typeof response.likesCount !== 'undefined') {
+        setLikes(response.likesCount);
+        setLiked(response.liked);
+      }
+
+      // 🔔 전역 이벤트 발송: 게시글 목록에 좋아요 변경 알림
+      DeviceEventEmitter.emit('POST_LIKE_CHANGED', {
+        postId: id,
+        likes: response.likesCount || newLikes,
+        liked: response.liked !== undefined ? response.liked : newLiked
+      });
+      console.log('[게시글 상세] 좋아요 상태 변경 이벤트 발송:', { postId: id, likes: response.likesCount });
+    } catch (error) {
+      console.error('[게시글 좋아요] API 호출 실패:', error);
+      // Revert optimistic update on error
+      setLiked(!newLiked);
+      setLikes(!newLiked ? likes + 1 : likes - 1);
+      Alert.alert('오류', '좋아요 처리에 실패했습니다. 다시 시도해주세요.');
+    }
   };
 
   const handleShare = async () => {
@@ -84,7 +121,8 @@ export default function PostDetailPage() {
       const postData = await getPostByIdAPI(id);
       setPost(postData);
       setLikes(postData.likes || 0);
-      console.log('[게시글 상세] 데이터 로드 성공:', postData.title);
+      setLiked(postData.isLiked || false);
+      console.log('[게시글 상세] 데이터 로드 성공:', postData.title, '좋아요 상태:', postData.isLiked);
     } catch (error) {
       console.error('[게시글 상세] 데이터 로드 실패:', error);
       Alert.alert('오류', error.message || '게시글을 불러올 수 없습니다.');
@@ -179,7 +217,15 @@ export default function PostDetailPage() {
         <View style={styles.metaContainer}>
           <View style={styles.authorContainer}>
             <View style={styles.avatar}>
-              <Text style={styles.avatarText}>{post.userName?.[0] || 'U'}</Text>
+              {post.userImage ? (
+                <Image
+                  source={{ uri: post.userImage }}
+                  style={styles.avatarImage}
+                  resizeMode="cover"
+                />
+              ) : (
+                <Text style={styles.avatarText}>{post.userName?.[0] || 'U'}</Text>
+              )}
             </View>
             <View style={styles.authorInfo}>
               <Text style={styles.authorName}>{post.userName}</Text>
@@ -219,6 +265,33 @@ export default function PostDetailPage() {
           <Text style={styles.contentText}>{post.content}</Text>
         </View>
 
+        {/* Images */}
+        {post.images && post.images.length > 0 && (
+          <View style={styles.imagesContainer}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              pagingEnabled
+              decelerationRate="fast"
+              snapToInterval={IMAGE_WIDTH + 12}
+              contentContainerStyle={styles.imagesScrollContent}
+            >
+              {post.images.map((imageBase64, index) => (
+                <View key={index} style={styles.imageWrapper}>
+                  <Image
+                    source={{ uri: imageBase64 }}
+                    style={styles.postImage}
+                    resizeMode="cover"
+                  />
+                  <View style={styles.imageCounter}>
+                    <Text style={styles.imageCounterText}>{index + 1} / {post.images.length}</Text>
+                  </View>
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+        )}
+
         <View style={styles.divider} />
 
         {/* Action Buttons */}
@@ -254,7 +327,15 @@ export default function PostDetailPage() {
               {comments.map((comment) => (
                 <View key={comment.id} style={styles.commentItem}>
                   <View style={styles.commentAvatar}>
-                    <Text style={styles.commentAvatarText}>{comment.userName?.[0] || 'U'}</Text>
+                    {comment.userImage ? (
+                      <Image
+                        source={{ uri: comment.userImage }}
+                        style={styles.commentAvatarImage}
+                        resizeMode="cover"
+                      />
+                    ) : (
+                      <Text style={styles.commentAvatarText}>{comment.userName?.[0] || 'U'}</Text>
+                    )}
                   </View>
                   <View style={styles.commentContent}>
                     <View style={styles.commentHeader}>
@@ -390,6 +471,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
+    overflow: 'hidden',
+  },
+  avatarImage: {
+    width: 48,
+    height: 48,
   },
   avatarText: {
     color: '#fff',
@@ -436,6 +522,37 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
     lineHeight: 26,
+  },
+  imagesContainer: {
+    marginTop: 16,
+  },
+  imagesScrollContent: {
+    paddingHorizontal: 16,
+  },
+  imageWrapper: {
+    width: IMAGE_WIDTH,
+    marginRight: 12,
+    position: 'relative',
+  },
+  postImage: {
+    width: '100%',
+    height: IMAGE_WIDTH * 0.75, // 4:3 aspect ratio
+    borderRadius: 12,
+    backgroundColor: '#f0f0f0',
+  },
+  imageCounter: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+  },
+  imageCounterText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
   },
   actionContainer: {
     flexDirection: 'row',
@@ -492,6 +609,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
+    overflow: 'hidden',
+  },
+  commentAvatarImage: {
+    width: 36,
+    height: 36,
   },
   commentAvatarText: {
     color: '#666',

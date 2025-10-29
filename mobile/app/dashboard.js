@@ -219,35 +219,35 @@ const styles = StyleSheet.create({
     safeArea: { flex: 1, backgroundColor: '#f8f9fa' },
     container: { flex: 1, backgroundColor: '#f8f9fa' },
     center: { justifyContent: 'center', alignItems: 'center' },
-    header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 10, backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: '#eee' },
-    logo: { width: 40, height: 40, marginRight: 8 },
-    headerTitle: { fontSize: 22, fontWeight: 'bold' },
-    headerLink: { fontSize: 16, color: '#FF7A5C', fontWeight: '500' },
-    welcomeSection: { padding: 20 },
-    welcomeTitle: { fontSize: 28, fontWeight: 'bold', marginBottom: 4 },
-    welcomeSubtitle: { fontSize: 18, color: '#6c757d' },
-    surveyBanner: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#FF7A5C', padding: 20, borderRadius: 12, marginHorizontal: 16, marginBottom: 16 },
-    bannerTitle: { fontSize: 18, fontWeight: 'bold', color: 'white' },
-    bannerSubtitle: { fontSize: 14, color: 'white', marginTop: 4 },
+    header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 12, backgroundColor: 'white', borderBottomWidth: 2, borderBottomColor: '#eee' },  // Thicker border
+    logo: { width: 44, height: 44, marginRight: 10 },  // 40→44, 8→10
+    headerTitle: { fontSize: 26, fontWeight: 'bold' },  // 22→26 for readability
+    headerLink: { fontSize: 18, color: '#FF7A5C', fontWeight: '500' },  // 16→18
+    welcomeSection: { padding: 22 },  // 20→22
+    welcomeTitle: { fontSize: 30, fontWeight: 'bold', marginBottom: 6, lineHeight: 38 },  // 28→30 for readability
+    welcomeSubtitle: { fontSize: 20, color: '#4B5563' },  // 18→20, darker color
+    surveyBanner: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#FF7A5C', padding: 22, borderRadius: 12, marginHorizontal: 16, marginBottom: 18, minHeight: 90 },  // 20→22, added minHeight
+    bannerTitle: { fontSize: 20, fontWeight: 'bold', color: 'white', lineHeight: 26 },  // 18→20 for readability
+    bannerSubtitle: { fontSize: 16, color: 'white', marginTop: 6 },  // 14→16, 4→6
     summaryGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around', paddingHorizontal: 10 },
-    summaryCard: { width: '45%', backgroundColor: 'white', borderRadius: 12, padding: 20, marginBottom: 20, alignItems: 'flex-start', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 8, elevation: 5 },
-    summaryValue: { fontSize: 24, fontWeight: 'bold', marginTop: 8 },
-    summaryLabel: { fontSize: 14, color: '#6c757d', marginTop: 4 },
-    card: { backgroundColor: 'white', borderRadius: 12, padding: 20, marginHorizontal: 16, marginBottom: 16 },
-    cardTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 16 },
-    listItem: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#eee' },
-    itemImage: { width: 50, height: 50, borderRadius: 8, marginRight: 12, backgroundColor: '#e5e7eb' },
+    summaryCard: { width: '45%', backgroundColor: 'white', borderRadius: 12, padding: 22, marginBottom: 20, alignItems: 'flex-start', shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 8, elevation: 5 },  // 20→22
+    summaryValue: { fontSize: 26, fontWeight: 'bold', marginTop: 10 },  // 24→26, 8→10
+    summaryLabel: { fontSize: 16, color: '#4B5563', marginTop: 6 },  // 14→16, darker color, 4→6
+    card: { backgroundColor: 'white', borderRadius: 12, padding: 22, marginHorizontal: 16, marginBottom: 18 },  // 20→22, 16→18
+    cardTitle: { fontSize: 22, fontWeight: 'bold', marginBottom: 18 },  // 20→22, 16→18 for readability
+    listItem: { flexDirection: 'row', alignItems: 'center', paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: '#eee' },  // 12→14
+    itemImage: { width: 56, height: 56, borderRadius: 8, marginRight: 14, backgroundColor: '#e5e7eb' },  // 50→56, 12→14
     itemContent: { flex: 1 },
-    itemTitle: { fontSize: 16, fontWeight: '500' },
-    itemSubtitle: { fontSize: 14, color: '#6c757d', marginTop: 4 },
-    progressContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 8 },
-    progressBg: { height: 8, backgroundColor: '#e9ecef', borderRadius: 4, flex: 1 },
-    progressFill: { height: 8, backgroundColor: '#FF7A5C', borderRadius: 4 },
-    progressLabelContainer: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 },
-    matchScore: { marginLeft: 10, fontSize: 14, color: '#FF7A5C', fontWeight: 'bold' },
-    viewMoreButton: { marginTop: 16, alignItems: 'center' },
-    viewMoreButtonText: { color: '#FF7A5C', fontWeight: 'bold' },
-    scheduleItem: { backgroundColor: '#f1f3f5', padding: 16, borderRadius: 8, marginBottom: 10 },
-    retryButton: { marginTop: 20, backgroundColor: '#FF7A5C', paddingVertical: 12, paddingHorizontal: 32, borderRadius: 8, },
-    retryButtonText: { color: 'white', fontSize: 16, fontWeight: 'bold', }
+    itemTitle: { fontSize: 18, fontWeight: '500', lineHeight: 24 },  // 16→18 for readability
+    itemSubtitle: { fontSize: 16, color: '#4B5563', marginTop: 6 },  // 14→16, darker color, 4→6
+    progressContainer: { flexDirection: 'row', alignItems: 'center', marginTop: 10 },  // 8→10
+    progressBg: { height: 10, backgroundColor: '#e9ecef', borderRadius: 5, flex: 1 },  // 8→10, 4→5
+    progressFill: { height: 10, backgroundColor: '#FF7A5C', borderRadius: 5 },  // 8→10, 4→5
+    progressLabelContainer: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },  // 8→10
+    matchScore: { marginLeft: 12, fontSize: 16, color: '#FF7A5C', fontWeight: 'bold' },  // 10→12, 14→16
+    viewMoreButton: { marginTop: 18, alignItems: 'center', paddingVertical: 10 },  // 16→18, added padding
+    viewMoreButtonText: { color: '#FF7A5C', fontWeight: 'bold', fontSize: 16 },  // Added explicit size
+    scheduleItem: { backgroundColor: '#f1f3f5', padding: 18, borderRadius: 8, marginBottom: 12 },  // 16→18, 10→12
+    retryButton: { marginTop: 22, backgroundColor: '#FF7A5C', paddingVertical: 14, paddingHorizontal: 36, borderRadius: 8, minHeight: 52 },  // Larger touch area
+    retryButtonText: { color: 'white', fontSize: 18, fontWeight: 'bold', }  // 16→18
 });

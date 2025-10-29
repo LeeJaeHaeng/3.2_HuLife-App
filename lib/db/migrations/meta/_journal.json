@@ -15,6 +15,27 @@
       "when": 1759516065627,
       "tag": "0001_chief_whirlwind",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1761529069126,
+      "tag": "0002_cooing_namora",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1761668687611,
+      "tag": "0003_late_manta",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1761698259944,
+      "tag": "0004_curved_hellcat",
+      "breakpoints": true
     }
   ]
 }
