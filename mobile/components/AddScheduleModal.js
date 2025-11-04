@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,15 +13,38 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
-import { createScheduleAPI } from '../api/userService';
+import { createScheduleAPI, updateScheduleAPI } from '../api/userService';
 
-export default function AddScheduleModal({ visible, onClose, onScheduleAdded }) {
+export default function AddScheduleModal({ visible, onClose, editingSchedule, onScheduleAdded }) {
   const [title, setTitle] = useState('');
   const [type, setType] = useState('class');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [location, setLocation] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const isEditMode = !!editingSchedule;
+
+  // Load existing schedule data when editing
+  useEffect(() => {
+    if (editingSchedule) {
+      setTitle(editingSchedule.title || '');
+      setType(editingSchedule.type || 'class');
+      // Format date for display (YYYY-MM-DD)
+      const scheduleDate = new Date(editingSchedule.date);
+      const formattedDate = scheduleDate.toISOString().split('T')[0];
+      setDate(formattedDate);
+      setTime(editingSchedule.time || '');
+      setLocation(editingSchedule.location || '');
+    } else {
+      // Reset form for new schedule
+      setTitle('');
+      setType('class');
+      setDate('');
+      setTime('');
+      setLocation('');
+    }
+  }, [editingSchedule, visible]);
 
   const scheduleTypes = [
     { value: 'class', label: '수업' },
@@ -55,20 +78,20 @@ export default function AddScheduleModal({ visible, onClose, onScheduleAdded }) 
         location: location.trim() || undefined,
       };
 
-      await createScheduleAPI(scheduleData);
-      Alert.alert('성공', '일정이 추가되었습니다!');
-
-      // Reset form
-      setTitle('');
-      setType('class');
-      setDate('');
-      setTime('');
-      setLocation('');
+      if (isEditMode) {
+        // Update existing schedule
+        await updateScheduleAPI(editingSchedule.id, scheduleData);
+        Alert.alert('성공', '일정이 수정되었습니다!');
+      } else {
+        // Create new schedule
+        await createScheduleAPI(scheduleData);
+        Alert.alert('성공', '일정이 추가되었습니다!');
+      }
 
       onScheduleAdded?.(); // Callback to refresh schedule list
       onClose(); // Close modal
     } catch (error) {
-      Alert.alert('오류', error.message || '일정 추가에 실패했습니다.');
+      Alert.alert('오류', error.message || `일정 ${isEditMode ? '수정' : '추가'}에 실패했습니다.`);
     } finally {
       setIsSubmitting(false);
     }
@@ -85,14 +108,14 @@ export default function AddScheduleModal({ visible, onClose, onScheduleAdded }) 
         <View style={styles.modalContent}>
           {/* Header */}
           <View style={styles.modalHeader}>
-            <Text style={styles.modalTitle}>일정 추가</Text>
+            <Text style={styles.modalTitle}>{isEditMode ? '일정 수정' : '일정 추가'}</Text>
             <TouchableOpacity onPress={onClose} disabled={isSubmitting}>
               <Ionicons name="close" size={24} color="#666" />
             </TouchableOpacity>
           </View>
 
           <Text style={styles.modalDescription}>
-            새로운 취미 활동 일정을 추가하세요.
+            {isEditMode ? '일정 정보를 수정하세요.' : '새로운 취미 활동 일정을 추가하세요.'}
           </Text>
 
           <ScrollView style={styles.formContainer}>
@@ -180,7 +203,7 @@ export default function AddScheduleModal({ visible, onClose, onScheduleAdded }) 
               {isSubmitting ? (
                 <ActivityIndicator size="small" color="#fff" />
               ) : (
-                <Text style={styles.submitButtonText}>추가하기</Text>
+                <Text style={styles.submitButtonText}>{isEditMode ? '수정하기' : '추가하기'}</Text>
               )}
             </TouchableOpacity>
           </View>

@@ -254,6 +254,57 @@ HomeScreen (메인)
 
 ## 🚨 중요한 최근 변경사항
 
+### 2025-10-30 주요 업데이트
+
+#### 1. 키보드 입력 가림 문제 해결 ✅
+- **문제**: 모바일 앱에서 댓글 작성, 게시글 작성, 채팅 메시지 등 입력 시 키보드가 입력창을 가려 사용자가 입력 내용을 볼 수 없음
+- **시도한 방법**: `react-native-keyboard-aware-scroll-view` 설치
+  - React Compiler 오류 발생 → `app.json`에서 `reactCompiler: false` 설정
+  - Metro bundler watch mode 오류 → `my-v0-project` 의존성 제거
+  - 런타임 에러 발생 → Expo SDK 54와 호환성 문제
+- **최종 해결**: Native 솔루션 사용
+  - `KeyboardAvoidingView` + `ScrollView` 조합으로 교체
+  - 모든 텍스트 입력 화면에 적용:
+    - `community/posts/[id].js` (댓글 입력)
+    - `community/posts/create.js` (게시글 작성)
+    - `community/create.js` (모임 생성)
+    - `contact.js` (문의 폼)
+  - 자동화 스크립트: `mobile/scripts/fix-keyboard.js`
+  - Platform.OS 분기: iOS는 'padding', Android는 'height' behavior
+
+#### 2. 게시글 작성 500 에러 해결 ✅
+- **문제**: 게시글 작성 시 `POST /api/posts` 500 에러 발생
+- **에러 메시지**: `Incorrect datetime value: '2025-10-30T03:22:55.123Z' for column 'created_at'`
+- **원인**: Drizzle ORM이 자동으로 `created_at`을 처리하는데 수동으로 `createdAt: new Date()` 추가하여 타입 불일치 발생
+- **해결**: `app/api/posts/route.ts`에서 `createdAt` 제거
+- **적용 파일**:
+  - `app/api/posts/route.ts`
+  - `app/api/posts/[id]/comments/route.ts` (댓글도 동일한 문제)
+
+#### 3. 데이터베이스 컬럼 타입 수정 ✅
+- **문제**: Base64 인코딩된 프로필 이미지 저장 시 `Data too long for column` 에러
+- **원인**:
+  - Base64 이미지는 약 50KB~200KB
+  - `VARCHAR(255)`는 최대 255바이트만 저장 가능
+- **해결**:
+  - `users.profile_image`: `varchar(255)` → `longtext`
+  - `posts.user_image`: `varchar(255)` → `text`
+  - `posts.images`: `longtext` (이미 적용됨)
+- **영향**: 프로필 이미지, 게시글 작성자 이미지가 정상적으로 저장됨
+
+#### 4. 대시보드 실시간 업데이트 구현 ✅
+- **요구사항**: 취미 목록에서 관심 추가/제거 시 대시보드가 즉시 반영되어야 함
+- **이전**: `useEffect`로 최초 로드만 수행
+- **현재**: `useFocusEffect`로 화면 포커스 시마다 데이터 새로고침
+- **적용 파일**: `mobile/app/dashboard.js`
+- **적용 범위**:
+  - 관심 취미 수 (❤️ 하트 버튼)
+  - 참여 모임 수
+  - 예정된 일정 수
+  - 완료한 취미 수
+  - 추천 취미 목록
+  - 학습 진행도
+
 ### 2025-10-16 주요 업데이트
 
 #### 0. 네트워크 오류 수정 ✅
@@ -447,8 +498,21 @@ cd mobile && npm install  # 모바일
 
 ---
 
-**마지막 업데이트**: 2025-10-28
+**마지막 업데이트**: 2025-10-30
 **현재 상태**:
+- ✅ **키보드 입력 가림 문제 해결** (2025-10-30)
+  - 모든 텍스트 입력 화면에서 키보드가 입력창을 가리던 문제 해결
+  - Native `KeyboardAvoidingView` + `ScrollView` 솔루션 적용
+  - 4개 화면 수정: 댓글 입력, 게시글 작성, 모임 생성, 문의 폼
+- ✅ **게시글/댓글 작성 500 에러 해결** (2025-10-30)
+  - Drizzle ORM의 자동 `createdAt` 처리와 충돌하는 수동 설정 제거
+  - `app/api/posts/route.ts`, `app/api/posts/[id]/comments/route.ts` 수정
+- ✅ **데이터베이스 컬럼 타입 수정** (2025-10-30)
+  - Base64 이미지 저장을 위해 `VARCHAR(255)` → `LONGTEXT/TEXT` 변경
+  - `users.profile_image`, `posts.user_image` 컬럼 업데이트
+- ✅ **대시보드 실시간 업데이트 구현** (2025-10-30)
+  - `useEffect` → `useFocusEffect`로 변경
+  - 관심 취미, 참여 모임 등 변경 사항이 즉시 반영됨
 - ✅ **게시글 작성 500 에러 해결** (2025-10-28 오후)
   - `posts` 테이블의 `userImage` 컬럼을 `varchar(255)` → `text`로 변경
   - Base64 이미지 데이터 지원으로 프로필 이미지 정상 저장
@@ -485,7 +549,7 @@ cd mobile && npm install  # 모바일
 
 ### 현재 서버 상태
 - 💻 로컬 IP: `192.168.0.40:3000` (**주의**: Wi-Fi 재연결 시 IP 변경 가능)
-- 🚀 서버: Next.js 14 (`npm run dev`)
+- 🚀 서버: Next.js 14 (`npm run dev:socket`)
 - ✅ 상태: 정상 작동 중
 - 📱 모바일 API Base URL: `mobile/api/apiClient.js`에서 현재 IP로 업데이트 필요
 

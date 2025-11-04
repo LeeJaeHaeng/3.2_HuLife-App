@@ -9,10 +9,10 @@
  */
 
 // ⚠️ IP 주소 변경 시 여기만 수정하세요!
-const BASE_IP = '10.20.35.108';
+const BASE_IP = '10.20.35.184';
 const BASE_PORT = 3000;
 
-// 자동으로 모든 URL 생성
+// 자동으로 모든 URL 생성 
 export const API_CONFIG = {
   BASE_IP,
   BASE_PORT,

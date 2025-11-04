@@ -38,6 +38,7 @@ export default function RootLayout() {
       <Stack.Screen name="community/create" options={{ headerShown: false }} />
       <Stack.Screen name="community/posts/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="community/posts/create" options={{ headerShown: false }} />
+      <Stack.Screen name="community/chat/[id]" options={{ headerShown: false }} />
 
       {/* 마이페이지 */}
       <Stack.Screen name="my-page" options={{ headerShown: false }} />

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { db } from "@/lib/db"
 import { posts, users, postLikes } from "@/lib/db/schema"
-import { eq, desc, and } from "drizzle-orm"
+import { eq, desc } from "drizzle-orm"
 import { getSession } from "@/lib/auth/session"
 import { nanoid } from "nanoid"
 
@@ -120,7 +120,7 @@ export async function POST(request: Request) {
       likes: 0,
       comments: 0,
       views: 0,
-      createdAt: new Date(),
+      // createdAt은 schema의 defaultNow()가 자동 처리
     })
 
     console.log(`[게시글 생성] ID: ${postId}, 제목: ${title}, 이미지: ${images?.length || 0}개`)

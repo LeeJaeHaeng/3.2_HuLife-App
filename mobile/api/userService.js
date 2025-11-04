@@ -171,3 +171,94 @@ export const updateUserProfile = async (profileData) => {
     throw new Error(error.response?.data?.error || "프로필 업데이트에 실패했습니다.");
   }
 };
+
+// ==================== 수정/삭제 API ====================
+
+// Update schedule
+export const updateScheduleAPI = async (scheduleId, scheduleData) => {
+  console.log(`[API 서비스] 📞 일정 수정 요청: ${scheduleId}`);
+
+  try {
+    const response = await api.put(`/user/schedules/${scheduleId}`, scheduleData);
+    console.log(`[API 서비스] ✅ 일정 수정 성공!`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 일정 수정 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '일정 수정 중 오류가 발생했습니다.');
+  }
+};
+
+// Delete schedule
+export const deleteScheduleAPI = async (scheduleId) => {
+  console.log(`[API 서비스] 📞 일정 삭제 요청: ${scheduleId}`);
+
+  try {
+    const response = await api.delete(`/user/schedules/${scheduleId}`);
+    console.log(`[API 서비스] ✅ 일정 삭제 성공!`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 일정 삭제 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '일정 삭제 중 오류가 발생했습니다.');
+  }
+};
+
+// ==================== 학습 진행도 API ====================
+
+// Update hobby progress
+export const updateHobbyProgressAPI = async (hobbyId, progress, status = null) => {
+  console.log(`[API 서비스] 📞 학습 진행도 업데이트 요청: ${hobbyId}`, { progress, status });
+
+  try {
+    const data = { progress };
+    if (status) data.status = status;
+
+    const response = await api.put(`/user/hobbies/${hobbyId}`, data);
+    console.log(`[API 서비스] ✅ 학습 진행도 업데이트 성공!`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 학습 진행도 업데이트 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '학습 진행도 업데이트 중 오류가 발생했습니다.');
+  }
+};
+
+// Update curriculum progress
+export const updateCurriculumProgressAPI = async (hobbyId, week, action) => {
+  console.log(`[API 서비스] 📞 커리큘럼 진행도 업데이트 요청: ${hobbyId}`, { week, action });
+
+  try {
+    const response = await api.post(`/user/hobbies/${hobbyId}/curriculum`, { week, action });
+    console.log(`[API 서비스] ✅ 커리큘럼 진행도 업데이트 성공!`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 커리큘럼 진행도 업데이트 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '커리큘럼 진행도 업데이트 중 오류가 발생했습니다.');
+  }
+};
+
+// Get curriculum progress
+export const getCurriculumProgressAPI = async (hobbyId) => {
+  console.log(`[API 서비스] 📞 커리큘럼 진행 상황 조회: ${hobbyId}`);
+
+  try {
+    const response = await api.get(`/user/hobbies/${hobbyId}/curriculum`);
+    console.log(`[API 서비스] ✅ 커리큘럼 진행 상황 조회 성공!`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 커리큘럼 진행 상황 조회 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '커리큘럼 진행 상황 조회 중 오류가 발생했습니다.');
+  }
+};
+
+// Get learning stats
+export const getLearningStatsAPI = async () => {
+  console.log(`[API 서비스] 📞 학습 통계 조회`);
+
+  try {
+    const response = await api.get('/user/learning-stats');
+    console.log(`[API 서비스] ✅ 학습 통계 조회 성공!`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 학습 통계 조회 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '학습 통계 조회 중 오류가 발생했습니다.');
+  }
+};

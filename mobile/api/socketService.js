@@ -22,11 +22,13 @@ class SocketService {
     console.log('[Socket Service] Connecting to:', SOCKET_URL);
 
     this.socket = io(SOCKET_URL, {
-      transports: ['websocket'],
+      path: '/api/socketio',  // Socket.IO 서버 경로
+      transports: ['websocket', 'polling'],  // polling 추가 (fallback)
       autoConnect: true,
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionAttempts: 10,
+      timeout: 10000,  // 10초 타임아웃
     });
 
     this.socket.on('connect', () => {

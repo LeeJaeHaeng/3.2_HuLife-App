@@ -46,7 +46,16 @@
       "Bash(done)",
       "Bash(npx drizzle-kit generate:*)",
       "Bash(node -e:*)",
-      "Bash(npm run dev:socket:*)"
+      "Bash(npm run dev:socket:*)",
+      "Bash(Get-Content -Tail 50 -Wait .next/trace)",
+      "Bash(Select-Object -First 30)",
+      "Bash(npx drizzle-kit:*)",
+      "Read(//c//**)",
+      "Bash(pnpm remove:*)",
+      "Bash(node scripts/fix-keyboard.js:*)",
+      "Bash(timeout /t 2 /nobreak)",
+      "Bash(timeout /t 5 /nobreak)",
+      "Bash(Out-Null)"
     ],
     "deny": [],
     "ask": []

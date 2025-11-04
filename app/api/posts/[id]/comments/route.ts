@@ -122,7 +122,7 @@ export async function POST(
       userName: user.name,
       userImage: user.profileImage || null,
       content: content.trim(),
-      createdAt: new Date(),
+      // createdAt은 schema의 defaultNow()가 자동 처리
     })
 
     // Update comment count
@@ -131,17 +131,16 @@ export async function POST(
       .set({ comments: post.comments + 1 })
       .where(eq(posts.id, postId))
 
+    // Get the created comment with actual createdAt from DB
+    const createdComment = await db
+      .select()
+      .from(postComments)
+      .where(eq(postComments.id, commentId))
+      .then(results => results[0])
+
     return NextResponse.json({
       message: "댓글이 작성되었습니다",
-      comment: {
-        id: commentId,
-        postId,
-        userId: session.userId,
-        userName: user.name,
-        userImage: user.profileImage,
-        content: content.trim(),
-        createdAt: new Date(),
-      }
+      comment: createdComment
     })
   } catch (error) {
     console.error("Error creating comment:", error)

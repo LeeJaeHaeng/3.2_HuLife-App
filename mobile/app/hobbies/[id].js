@@ -13,12 +13,14 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import YoutubeIframe from 'react-native-youtube-iframe';
-import { getHobbyById, getHobbyReviews } from '../../api/hobbyService';
+import { getHobbyById, getHobbyReviews, updateHobbyReview, deleteHobbyReview } from '../../api/hobbyService';
 import { addHobbyToUserAPI, getUserHobbiesAPI, removeHobbyFromUserAPI } from '../../api/userService';
 import { getAllCommunitiesAPI } from '../../api/communityService';
 import { logActivity, ActivityTypes } from '../../api/activityService';
+import { getCurrentUser } from '../../api/authService';
 import hobbyImages from '../../assets/hobbyImages';
 import AddReviewModal from '../../components/AddReviewModal';
+import ProgressSlider from '../../components/ProgressSlider';
 
 export default function HobbyDetailScreen() {
   const router = useRouter();
@@ -31,10 +33,13 @@ export default function HobbyDetailScreen() {
   const [isToggling, setIsToggling] = useState(false); // 좋아요 버튼 처리 중 로딩 상태
   const [error, setError] = useState(null);
   const [playing, setPlaying] = useState(false);
-  const [activeTab, setActiveTab] = useState('info'); // 'info', 'communities', 'reviews'
+  const [activeTab, setActiveTab] = useState('info'); // 'info', 'communities', 'reviews', 'learning'
   const [communities, setCommunities] = useState([]); // 관련 커뮤니티 목록
   const [reviews, setReviews] = useState([]); // 리뷰 목록
   const [isReviewModalVisible, setIsReviewModalVisible] = useState(false); // 리뷰 작성 모달
+  const [editingReview, setEditingReview] = useState(null); // 수정 중인 리뷰
+  const [currentUser, setCurrentUser] = useState(null); // 현재 사용자
+  const [userHobbyData, setUserHobbyData] = useState(null); // 사용자의 이 취미에 대한 학습 데이터
 
   // 데이터 로딩 함수 (재사용 가능하도록 분리)
   const loadData = useCallback(async () => {
@@ -47,21 +52,25 @@ export default function HobbyDetailScreen() {
     try {
       setLoading(true);
       // 상세 정보와 사용자의 관심 목록, 관련 커뮤니티, 리뷰를 동시에 요청합니다.
-      const [hobbyData, userHobbiesData, communitiesData, reviewsData] = await Promise.all([
+      const [hobbyData, userHobbiesData, communitiesData, reviewsData, userData] = await Promise.all([
         getHobbyById(id),
         getUserHobbiesAPI(),
         getAllCommunitiesAPI(id), // 이 취미와 관련된 커뮤니티만 조회
-        getHobbyReviews(id) // 리뷰 목록 조회
+        getHobbyReviews(id), // 리뷰 목록 조회
+        getCurrentUser().catch(() => null) // 현재 사용자 정보 (로그인 안되어있으면 null)
       ]);
 
       setHobby(hobbyData); // 취미 상세 정보 설정
       setCommunities(Array.isArray(communitiesData) ? communitiesData : []); // 커뮤니티 목록 설정
       setReviews(Array.isArray(reviewsData) ? reviewsData : []); // 리뷰 목록 설정
+      setCurrentUser(userData); // 현재 사용자 정보 설정
 
       // 사용자의 관심 목록에 현재 취미가 있는지 확인합니다.
       if (Array.isArray(userHobbiesData)) {
-        const isAlreadyAdded = userHobbiesData.some(uh => uh.hobbyId === id);
+        const userHobby = userHobbiesData.find(uh => uh.hobbyId === id);
+        const isAlreadyAdded = !!userHobby;
         setIsInterested(isAlreadyAdded);
+        setUserHobbyData(userHobby || null);
         console.log(`[상세 페이지] 이 취미는 관심 목록에 ${isAlreadyAdded ? '있습니다' : '없습니다'}.`);
       }
       console.log(`[상세 페이지] 관련 커뮤니티 ${communitiesData.length}개, 리뷰 ${reviewsData.length}개 로드됨`);
@@ -99,8 +108,10 @@ export default function HobbyDetailScreen() {
       // 하트 상태만 다시 확인 (전체 데이터 다시 로드하지 않음)
       getUserHobbiesAPI().then(userHobbiesData => {
         if (Array.isArray(userHobbiesData)) {
-          const isAlreadyAdded = userHobbiesData.some(uh => uh.hobbyId === id);
+          const userHobby = userHobbiesData.find(uh => uh.hobbyId === id);
+          const isAlreadyAdded = !!userHobby;
           setIsInterested(isAlreadyAdded);
+          setUserHobbyData(userHobby || null);
           console.log(`[상세 페이지] 관심 상태 업데이트: ${isAlreadyAdded ? '있음' : '없음'}`);
         }
       }).catch(err => {
@@ -120,10 +131,13 @@ export default function HobbyDetailScreen() {
       if (isInterested) { // 이미 관심 추가 상태라면 제거 API 호출
         await removeHobbyFromUserAPI(id);
         setIsInterested(false);
+        setUserHobbyData(null);
         Alert.alert("성공", "관심 취미에서 제거되었습니다.");
       } else { // 아니라면 추가 API 호출
         await addHobbyToUserAPI(id, 'interested');
         setIsInterested(true);
+        // Reload to get userHobbyData
+        await loadData();
         Alert.alert("성공", "관심 취미에 추가되었습니다!");
       }
       // 🔔 전역 이벤트 발송: 마이페이지에 데이터 새로고침 알림
@@ -134,6 +148,53 @@ export default function HobbyDetailScreen() {
     } finally {
       setIsToggling(false);
     }
+  };
+
+  // Handle progress change from ProgressSlider
+  const handleProgressChange = (updatedUserHobby) => {
+    setUserHobbyData(updatedUserHobby);
+    console.log('[학습 진행도] 업데이트됨:', updatedUserHobby);
+  };
+
+  // Handle review delete
+  const handleDeleteReview = (reviewId, reviewUserId) => {
+    if (!currentUser || currentUser.id !== reviewUserId) {
+      Alert.alert('오류', '본인의 리뷰만 삭제할 수 있습니다.');
+      return;
+    }
+
+    Alert.alert(
+      '리뷰 삭제',
+      '정말 이 리뷰를 삭제하시겠습니까?',
+      [
+        { text: '취소', style: 'cancel' },
+        {
+          text: '삭제',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await deleteHobbyReview(reviewId);
+              Alert.alert('성공', '리뷰가 삭제되었습니다.');
+              await loadData(); // Reload reviews
+            } catch (error) {
+              console.error('[리뷰 삭제 실패]', error);
+              Alert.alert('오류', error.message || '리뷰 삭제 중 오류가 발생했습니다.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  // Handle review edit
+  const handleEditReview = (review) => {
+    if (!currentUser || currentUser.id !== review.userId) {
+      Alert.alert('오류', '본인의 리뷰만 수정할 수 있습니다.');
+      return;
+    }
+
+    setEditingReview(review);
+    setIsReviewModalVisible(true);
   };
 
 
@@ -195,6 +256,16 @@ export default function HobbyDetailScreen() {
             상세정보
           </Text>
         </TouchableOpacity>
+        {isInterested && (
+          <TouchableOpacity
+            style={[styles.tab, activeTab === 'learning' && styles.activeTab]}
+            onPress={() => setActiveTab('learning')}
+          >
+            <Text style={[styles.tabText, activeTab === 'learning' && styles.activeTabText]}>
+              학습하기
+            </Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity
           style={[styles.tab, activeTab === 'communities' && styles.activeTab]}
           onPress={() => setActiveTab('communities')}
@@ -214,7 +285,39 @@ export default function HobbyDetailScreen() {
       </View>
 
       <ScrollView>
-        {activeTab === 'info' ? (
+        {activeTab === 'learning' ? (
+          <View style={styles.learningContainer}>
+            {userHobbyData && (
+              <ProgressSlider
+                hobbyId={id}
+                initialProgress={userHobbyData.progress || 0}
+                initialStatus={userHobbyData.status || 'interested'}
+                onProgressChange={handleProgressChange}
+              />
+            )}
+
+            {/* Curriculum Section */}
+            {hobby.curriculum && hobby.curriculum.length > 0 && (
+              <View style={styles.curriculumSection}>
+                <Text style={styles.sectionTitle}>커리큘럼</Text>
+                <Text style={styles.curriculumDescription}>
+                  총 {hobby.curriculum.length}주 과정
+                </Text>
+                {hobby.curriculum.slice(0, 3).map((week, index) => (
+                  <View key={index} style={styles.curriculumWeek}>
+                    <Text style={styles.weekTitle}>Week {week.week}</Text>
+                    <Text style={styles.weekContent}>{week.content}</Text>
+                  </View>
+                ))}
+                {hobby.curriculum.length > 3 && (
+                  <Text style={styles.moreWeeks}>
+                    +{hobby.curriculum.length - 3}주 더보기
+                  </Text>
+                )}
+              </View>
+            )}
+          </View>
+        ) : activeTab === 'info' ? (
           <>
             <View style={styles.videoContainer}>
               {videoId ? (
@@ -352,9 +455,27 @@ export default function HobbyDetailScreen() {
                         </View>
                       </View>
                     </View>
-                    <Text style={styles.reviewDate}>
-                      {new Date(review.createdAt).toLocaleDateString('ko-KR')}
-                    </Text>
+                    <View style={styles.reviewMetaContainer}>
+                      <Text style={styles.reviewDate}>
+                        {new Date(review.createdAt).toLocaleDateString('ko-KR')}
+                      </Text>
+                      {currentUser && currentUser.id === review.userId && (
+                        <View style={styles.reviewActions}>
+                          <TouchableOpacity
+                            onPress={() => handleEditReview(review)}
+                            style={styles.reviewActionButton}
+                          >
+                            <Feather name="edit-2" size={16} color="#3b82f6" />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => handleDeleteReview(review.id, review.userId)}
+                            style={styles.reviewActionButton}
+                          >
+                            <Feather name="trash-2" size={16} color="#ef4444" />
+                          </TouchableOpacity>
+                        </View>
+                      )}
+                    </View>
                   </View>
                   <Text style={styles.reviewComment}>{review.comment}</Text>
                 </View>
@@ -377,11 +498,16 @@ export default function HobbyDetailScreen() {
       {/* Add Review Modal */}
       <AddReviewModal
         visible={isReviewModalVisible}
-        onClose={() => setIsReviewModalVisible(false)}
+        onClose={() => {
+          setIsReviewModalVisible(false);
+          setEditingReview(null);
+        }}
         hobbyId={id}
         hobbyName={hobby?.name}
+        editingReview={editingReview}
         onReviewAdded={() => {
-          loadData(); // Reload data to show new review
+          loadData(); // Reload data to show new/updated review
+          setEditingReview(null);
         }}
       />
     </SafeAreaView>
@@ -601,14 +727,67 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 2,
   },
+  reviewMetaContainer: {
+    alignItems: 'flex-end',
+  },
   reviewDate: {
     fontSize: 12,
     color: '#9ca3af',
+    marginBottom: 4,
+  },
+  reviewActions: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  reviewActionButton: {
+    padding: 4,
   },
   reviewComment: {
     fontSize: 15,
     color: '#374151',
     lineHeight: 22,
+  },
+  learningContainer: {
+    padding: 16,
+  },
+  curriculumSection: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    marginTop: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  curriculumDescription: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 16,
+  },
+  curriculumWeek: {
+    marginBottom: 12,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  weekTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FF7A5C',
+    marginBottom: 4,
+  },
+  weekContent: {
+    fontSize: 14,
+    color: '#374151',
+    lineHeight: 20,
+  },
+  moreWeeks: {
+    fontSize: 14,
+    color: '#3b82f6',
+    textAlign: 'center',
+    marginTop: 8,
   },
   emptyReviewsContainer: {
     alignItems: 'center',

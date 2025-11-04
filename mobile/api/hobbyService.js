@@ -74,3 +74,45 @@ export const createHobbyReview = async (hobbyId, reviewData) => {
     throw new Error(error.response?.data?.error || '리뷰 작성 중 오류가 발생했습니다.');
   }
 };
+
+// ==================== 수정/삭제 API ====================
+
+// Update review
+export const updateHobbyReview = async (reviewId, reviewData) => {
+  const requestUrl = `${API_URL}/hobbies/reviews/${reviewId}`;
+  console.log(`[API 서비스] 📞 리뷰 수정 요청: ${requestUrl}`, reviewData);
+  try {
+    const token = await SecureStore.getItemAsync(TOKEN_KEY);
+    if (!token) throw new Error("로그인이 필요합니다.");
+
+    const response = await axios.put(requestUrl, reviewData, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    console.log(`[API 서비스] ✅ 리뷰 수정 성공`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 리뷰 수정 실패:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '리뷰 수정 중 오류가 발생했습니다.');
+  }
+};
+
+// Delete review
+export const deleteHobbyReview = async (reviewId) => {
+  const requestUrl = `${API_URL}/hobbies/reviews/${reviewId}`;
+  console.log(`[API 서비스] 📞 리뷰 삭제 요청: ${requestUrl}`);
+  try {
+    const token = await SecureStore.getItemAsync(TOKEN_KEY);
+    if (!token) throw new Error("로그인이 필요합니다.");
+
+    const response = await axios.delete(requestUrl, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    console.log(`[API 서비스] ✅ 리뷰 삭제 성공`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 리뷰 삭제 실패:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '리뷰 삭제 중 오류가 발생했습니다.');
+  }
+};

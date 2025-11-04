@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Alert,
   Modal,
@@ -11,14 +11,26 @@ import {
   ActivityIndicator
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { createHobbyReview } from '../api/hobbyService';
+import { createHobbyReview, updateHobbyReview } from '../api/hobbyService';
 
 const BRAND_COLOR = '#FF7A5C';
 
-export default function AddReviewModal({ visible, onClose, hobbyId, hobbyName, onReviewAdded }) {
+export default function AddReviewModal({ visible, onClose, hobbyId, hobbyName, editingReview, onReviewAdded }) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const isEditMode = !!editingReview;
+
+  // Load existing review data when editing
+  useEffect(() => {
+    if (editingReview) {
+      setRating(editingReview.rating || 0);
+      setComment(editingReview.comment || '');
+    } else {
+      resetForm();
+    }
+  }, [editingReview, visible]);
 
   // Reset form
   const resetForm = () => {
@@ -53,17 +65,27 @@ export default function AddReviewModal({ visible, onClose, hobbyId, hobbyName, o
     setLoading(true);
 
     try {
-      await createHobbyReview(hobbyId, {
-        rating,
-        comment: comment.trim(),
-      });
+      if (isEditMode) {
+        // Update existing review
+        await updateHobbyReview(editingReview.id, {
+          rating,
+          comment: comment.trim(),
+        });
+        Alert.alert('성공', '리뷰가 수정되었습니다.');
+      } else {
+        // Create new review
+        await createHobbyReview(hobbyId, {
+          rating,
+          comment: comment.trim(),
+        });
+        Alert.alert('성공', '리뷰가 등록되었습니다.');
+      }
 
-      Alert.alert('성공', '리뷰가 등록되었습니다.');
       if (onReviewAdded) onReviewAdded();
       handleClose();
     } catch (error) {
-      console.error('[리뷰 작성 오류]', error);
-      Alert.alert('오류', error.message || '리뷰 작성에 실패했습니다.');
+      console.error('[리뷰 작성/수정 오류]', error);
+      Alert.alert('오류', error.message || `리뷰 ${isEditMode ? '수정' : '작성'}에 실패했습니다.`);
     } finally {
       setLoading(false);
     }
@@ -104,12 +126,12 @@ export default function AddReviewModal({ visible, onClose, hobbyId, hobbyName, o
           <TouchableOpacity onPress={handleClose}>
             <Feather name="x" size={24} color="#111827" />
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>리뷰 작성</Text>
+          <Text style={styles.headerTitle}>{isEditMode ? '리뷰 수정' : '리뷰 작성'}</Text>
           <TouchableOpacity onPress={handleSubmit} disabled={loading}>
             {loading ? (
               <ActivityIndicator size="small" color={BRAND_COLOR} />
             ) : (
-              <Text style={styles.submitText}>등록</Text>
+              <Text style={styles.submitText}>{isEditMode ? '수정' : '등록'}</Text>
             )}
           </TouchableOpacity>
         </View>

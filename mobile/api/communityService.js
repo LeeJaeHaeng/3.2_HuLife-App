@@ -258,3 +258,113 @@ export const checkPostLikeAPI = async (postId) => {
     return false;
   }
 };
+
+// Get or create chat room for a community
+export const getCommunityChatRoomAPI = async (communityId) => {
+  console.log(`[API 서비스] 📞 채팅방 조회/생성 요청: communityId=${communityId}`);
+
+  try {
+    const response = await api.get(`/communities/${communityId}/chat-room`);
+    console.log(`[API 서비스] ✅ 채팅방 조회 성공! chatRoomId: ${response.data.id}`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 채팅방 조회 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '채팅방 조회에 실패했습니다.');
+  }
+};
+
+// ==================== 수정/삭제 API ====================
+
+// Update post
+export const updatePostAPI = async (postId, postData) => {
+  console.log(`[API 서비스] 📞 게시글 수정 요청: ${postId}`);
+
+  try {
+    const sanitizedData = {
+      title: postData.title.trim(),
+      content: postData.content.trim(),
+      category: postData.category || '자유',
+    };
+
+    if (postData.images && Array.isArray(postData.images)) {
+      sanitizedData.images = postData.images;
+    }
+
+    const response = await api.put(`/posts/${postId}`, sanitizedData);
+    console.log(`[API 서비스] ✅ 게시글 수정 성공!`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 게시글 수정 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '게시글 수정 중 오류가 발생했습니다.');
+  }
+};
+
+// Delete post
+export const deletePostAPI = async (postId) => {
+  console.log(`[API 서비스] 📞 게시글 삭제 요청: ${postId}`);
+
+  try {
+    const response = await api.delete(`/posts/${postId}`);
+    console.log(`[API 서비스] ✅ 게시글 삭제 성공!`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 게시글 삭제 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '게시글 삭제 중 오류가 발생했습니다.');
+  }
+};
+
+// Update comment
+export const updateCommentAPI = async (commentId, content) => {
+  console.log(`[API 서비스] 📞 댓글 수정 요청: ${commentId}`);
+
+  try {
+    const response = await api.put(`/posts/comments/${commentId}`, { content });
+    console.log(`[API 서비스] ✅ 댓글 수정 성공!`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 댓글 수정 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '댓글 수정 중 오류가 발생했습니다.');
+  }
+};
+
+// Delete comment
+export const deleteCommentAPI = async (commentId) => {
+  console.log(`[API 서비스] 📞 댓글 삭제 요청: ${commentId}`);
+
+  try {
+    const response = await api.delete(`/posts/comments/${commentId}`);
+    console.log(`[API 서비스] ✅ 댓글 삭제 성공!`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 댓글 삭제 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '댓글 삭제 중 오류가 발생했습니다.');
+  }
+};
+
+// Update community
+export const updateCommunityAPI = async (communityId, communityData) => {
+  console.log(`[API 서비스] 📞 모임 수정 요청: ${communityId}`);
+
+  try {
+    const response = await api.put(`/communities/${communityId}`, communityData);
+    console.log(`[API 서비스] ✅ 모임 수정 성공!`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 모임 수정 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '모임 수정 중 오류가 발생했습니다.');
+  }
+};
+
+// Delete community
+export const deleteCommunityAPI = async (communityId) => {
+  console.log(`[API 서비스] 📞 모임 삭제 요청: ${communityId}`);
+
+  try {
+    const response = await api.delete(`/communities/${communityId}`);
+    console.log(`[API 서비스] ✅ 모임 삭제 성공!`);
+    return response.data;
+  } catch (error) {
+    console.error("[API 서비스] ❌ 모임 삭제 실패!:", error.response?.data?.error || error.message);
+    throw new Error(error.response?.data?.error || '모임 삭제 중 오류가 발생했습니다.');
+  }
+};

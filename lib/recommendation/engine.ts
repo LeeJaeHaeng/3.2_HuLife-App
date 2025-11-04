@@ -60,8 +60,11 @@ export class RecommendationEngine {
     // Indoor/Outdoor matching (weight: 25%)
     const outdoorWeight = 0.25
     if (hobby.indoorOutdoor === "both") {
-      // "both" gets medium score - not automatically high
-      score += outdoorWeight * 0.5
+      // "both" is flexible - gives high score regardless of preference
+      // Calculate score based on proximity to moderate preference (0.5)
+      // Users with extreme preferences (0 or 1) get 0.7, moderate users get 1.0
+      const flexibility = 1 - Math.abs(profile.outdoorPreference - 0.5) * 0.6
+      score += outdoorWeight * flexibility
     } else if (hobby.indoorOutdoor === "outdoor") {
       // Strong preference match: high outdoor preference (>0.5) gets bonus
       score += outdoorWeight * profile.outdoorPreference
@@ -73,7 +76,10 @@ export class RecommendationEngine {
     // Social/Individual matching (weight: 25%)
     const socialWeight = 0.25
     if (hobby.socialIndividual === "both") {
-      score += socialWeight * 0.5
+      // "both" is flexible - gives high score regardless of preference
+      // Users with extreme preferences get 0.7, moderate users get 1.0
+      const flexibility = 1 - Math.abs(profile.socialPreference - 0.5) * 0.6
+      score += socialWeight * flexibility
     } else if (hobby.socialIndividual === "social") {
       score += socialWeight * profile.socialPreference
     } else {

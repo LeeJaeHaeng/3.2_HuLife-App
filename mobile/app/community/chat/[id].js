@@ -15,11 +15,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { getCurrentUser } from '../../../api/authService';
+import { getCommunityChatRoomAPI } from '../../../api/communityService';
 import socketService from '../../../api/socketService';
 
 export default function CommunityChatScreen() {
   const router = useRouter();
-  const { id: chatRoomId } = useLocalSearchParams(); // Chat room ID
+  const { id: communityId } = useLocalSearchParams(); // Community ID
+  const [chatRoomId, setChatRoomId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
@@ -43,13 +45,19 @@ export default function CommunityChatScreen() {
       socketService.removeAllListeners('user-stopped-typing');
       socketService.removeAllListeners('error');
     };
-  }, [chatRoomId]);
+  }, [communityId]);
 
   const initializeChat = async () => {
     try {
       // Get current user
       const user = await getCurrentUser();
       setCurrentUser(user);
+
+      // Get or create chat room for this community
+      console.log('[Chat] Getting chat room for community:', communityId);
+      const chatRoom = await getCommunityChatRoomAPI(communityId);
+      setChatRoomId(chatRoom.id);
+      console.log('[Chat] Chat room ID:', chatRoom.id);
 
       // Connect to Socket.IO server
       socketService.connect();
@@ -59,7 +67,7 @@ export default function CommunityChatScreen() {
         if (socketService.isConnected()) {
           clearInterval(checkConnection);
           setupSocketListeners(user);
-          socketService.joinRoom(chatRoomId, user.id);
+          socketService.joinRoom(chatRoom.id, user.id);
         }
       }, 100);
 
@@ -73,7 +81,7 @@ export default function CommunityChatScreen() {
       }, 5000);
     } catch (error) {
       console.error('[Chat] Initialization error:', error);
-      Alert.alert('오류', '채팅을 시작할 수 없습니다.');
+      Alert.alert('오류', error.message || '채팅을 시작할 수 없습니다.');
       router.back();
     }
   };
@@ -121,9 +129,23 @@ export default function CommunityChatScreen() {
   const handleSendMessage = async () => {
     if (!newMessage.trim() || sending || !currentUser) return;
 
+    // Check if chatRoomId is available
+    if (!chatRoomId) {
+      console.error('[Chat] Cannot send message: chatRoomId is null');
+      Alert.alert('오류', '채팅방 정보를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+      return;
+    }
+
     setSending(true);
 
     try {
+      console.log('[Chat] Sending message:', {
+        chatRoomId,
+        userId: currentUser.id,
+        userName: currentUser.name,
+        message: newMessage.trim().substring(0, 20) + '...',
+      });
+
       socketService.sendMessage({
         chatRoomId,
         userId: currentUser.id,
@@ -171,40 +193,75 @@ export default function CommunityChatScreen() {
     }, 100);
   };
 
-  const renderMessage = ({ item }) => {
+  // Helper function to format date in Korean (like KakaoTalk)
+  const formatDateSeparator = (date) => {
+    const d = new Date(date);
+    const days = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const day = d.getDate();
+    const dayOfWeek = days[d.getDay()];
+
+    return `${year}년 ${month}월 ${day}일 ${dayOfWeek}`;
+  };
+
+  // Helper function to check if two dates are on the same day
+  const isSameDay = (date1, date2) => {
+    if (!date1 || !date2) return false;
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    return d1.getFullYear() === d2.getFullYear() &&
+           d1.getMonth() === d2.getMonth() &&
+           d1.getDate() === d2.getDate();
+  };
+
+  const renderMessage = ({ item, index }) => {
     const isOwnMessage = currentUser && item.userId === currentUser.id;
+    // Show date separator if this is the first message or if the day changed
+    const showDateSeparator = index === 0 || !isSameDay(messages[index - 1].createdAt, item.createdAt);
 
     return (
-      <View style={[
-        styles.messageContainer,
-        isOwnMessage ? styles.ownMessageContainer : styles.otherMessageContainer
-      ]}>
-        {!isOwnMessage && (
-          <View style={styles.messageHeader}>
-            <Text style={styles.messageSender}>{item.userName}</Text>
+      <>
+        {showDateSeparator && (
+          <View style={styles.dateSeparatorContainer}>
+            <View style={styles.dateSeparator}>
+              <Text style={styles.dateSeparatorText}>
+                {formatDateSeparator(item.createdAt)}
+              </Text>
+            </View>
           </View>
         )}
         <View style={[
-          styles.messageBubble,
-          isOwnMessage ? styles.ownMessageBubble : styles.otherMessageBubble
+          styles.messageContainer,
+          isOwnMessage ? styles.ownMessageContainer : styles.otherMessageContainer
         ]}>
-          <Text style={[
-            styles.messageText,
-            isOwnMessage && styles.ownMessageText
+          {!isOwnMessage && (
+            <View style={styles.messageHeader}>
+              <Text style={styles.messageSender}>{item.userName}</Text>
+            </View>
+          )}
+          <View style={[
+            styles.messageBubble,
+            isOwnMessage ? styles.ownMessageBubble : styles.otherMessageBubble
           ]}>
-            {item.message}
+            <Text style={[
+              styles.messageText,
+              isOwnMessage && styles.ownMessageText
+            ]}>
+              {item.message}
+            </Text>
+          </View>
+          <Text style={[
+            styles.messageTime,
+            isOwnMessage && styles.ownMessageTime
+          ]}>
+            {new Date(item.createdAt).toLocaleTimeString('ko-KR', {
+              hour: '2-digit',
+              minute: '2-digit'
+            })}
           </Text>
         </View>
-        <Text style={[
-          styles.messageTime,
-          isOwnMessage && styles.ownMessageTime
-        ]}>
-          {new Date(item.createdAt).toLocaleTimeString('ko-KR', {
-            hour: '2-digit',
-            minute: '2-digit'
-          })}
-        </Text>
-      </View>
+      </>
     );
   };
 
@@ -242,8 +299,8 @@ export default function CommunityChatScreen() {
 
       <KeyboardAvoidingView
         style={styles.chatContainer}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={100}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={0}
       >
         {/* Messages List */}
         <FlatList
@@ -281,9 +338,9 @@ export default function CommunityChatScreen() {
             maxLength={500}
           />
           <TouchableOpacity
-            style={[styles.sendButton, !newMessage.trim() && styles.sendButtonDisabled]}
+            style={[styles.sendButton, (!newMessage.trim() || !chatRoomId) && styles.sendButtonDisabled]}
             onPress={handleSendMessage}
-            disabled={!newMessage.trim() || sending}
+            disabled={!newMessage.trim() || sending || !chatRoomId}
           >
             {sending ? (
               <ActivityIndicator size="small" color="#fff" />
@@ -442,5 +499,20 @@ const styles = StyleSheet.create({
   },
   sendButtonDisabled: {
     opacity: 0.5,
+  },
+  dateSeparatorContainer: {
+    alignItems: 'center',
+    marginVertical: 16,
+  },
+  dateSeparator: {
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    borderRadius: 12,
+  },
+  dateSeparatorText: {
+    fontSize: 12,
+    color: '#666',
+    fontWeight: '500',
   },
 });

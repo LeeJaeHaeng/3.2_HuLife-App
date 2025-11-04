@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons';
-import { Link, useRouter } from 'expo-router'; // useRouter 추가
-import { useEffect, useState } from 'react';
+import { Link, useRouter, useFocusEffect } from 'expo-router'; // useFocusEffect 추가
+import { useCallback, useState } from 'react';
 import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'; // ActivityIndicator 추가
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getCurrentUser } from '../api/authService'; // 사용자 정보
@@ -38,41 +38,47 @@ export default function DashboardScreen() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // ✨ 화면 로드 시 모든 데이터를 한 번에 가져옵니다.
-    useEffect(() => {
-        const loadDashboardData = async () => {
-            try {
-                setLoading(true);
-                setError(null);
-                // 여러 API 동시 호출
-                const [userData, hobbiesData, communitiesData, schedulesData, recsData] = await Promise.all([
-                    getCurrentUser(),
-                    getUserHobbiesAPI(),
-                    getUserCommunitiesAPI(),
-                    getUserSchedulesAPI(),
-                    getRecommendationsAPI() // 추천 목록 호출
-                ]);
+    // ✨ 화면에 포커스될 때마다 모든 데이터를 다시 가져옵니다 (실시간 업데이트)
+    const loadDashboardData = useCallback(async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            // 여러 API 동시 호출
+            const [userData, hobbiesData, communitiesData, schedulesData, recsData] = await Promise.all([
+                getCurrentUser(),
+                getUserHobbiesAPI(),
+                getUserCommunitiesAPI(),
+                getUserSchedulesAPI(),
+                getRecommendationsAPI() // 추천 목록 호출
+            ]);
 
-                setUser(userData);
-                setUserHobbies(Array.isArray(hobbiesData) ? hobbiesData : []);
-                setUserCommunities(Array.isArray(communitiesData) ? communitiesData : []);
-                setUserSchedules(Array.isArray(schedulesData) ? schedulesData : []);
-                // 추천 데이터 처리 (recommendations 키 확인)
-                setRecommendations(Array.isArray(recsData?.recommendations) ? recsData.recommendations : []);
+            setUser(userData);
+            setUserHobbies(Array.isArray(hobbiesData) ? hobbiesData : []);
+            setUserCommunities(Array.isArray(communitiesData) ? communitiesData : []);
+            setUserSchedules(Array.isArray(schedulesData) ? schedulesData : []);
+            // 추천 데이터 처리 (recommendations 키 확인)
+            setRecommendations(Array.isArray(recsData?.recommendations) ? recsData.recommendations : []);
 
-            } catch (e) {
-                setError("대시보드 정보를 불러오는 데 실패했습니다.");
-                console.error("[대시보드 에러]", e);
-                // 로그인 필요 에러 시 로그인 화면으로 이동
-                if (e.message?.includes("로그인이 필요합니다") || e.response?.status === 401) {
-                  router.replace('/login');
-                }
-            } finally {
-                setLoading(false);
+        } catch (e) {
+            setError("대시보드 정보를 불러오는 데 실패했습니다.");
+            console.error("[대시보드 에러]", e);
+            // 로그인 필요 에러 시 로그인 화면으로 이동
+            if (e.message?.includes("로그인이 필요합니다") || e.response?.status === 401) {
+              router.replace('/login');
             }
-        };
-        loadDashboardData();
-    }, []); // 마운트 시 한 번만 실행
+        } finally {
+            setLoading(false);
+        }
+    }, [router]);
+
+    // 화면이 포커스될 때마다 데이터 새로고침
+    useFocusEffect(
+        useCallback(() => {
+            loadDashboardData();
+            // cleanup 함수 반환 (필요시)
+            return () => {};
+        }, [loadDashboardData])
+    );
 
     // 로딩 중 화면
     if (loading) {

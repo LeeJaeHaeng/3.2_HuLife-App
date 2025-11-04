@@ -3,22 +3,24 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
   ActivityIndicator,
   Alert,
   Share,
   TextInput,
-  KeyboardAvoidingView,
   Platform,
   DeviceEventEmitter,
   Image,
   Dimensions,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { getPostByIdAPI, getPostCommentsAPI, createCommentAPI, togglePostLikeAPI } from '../../../api/communityService';
+import { getPostByIdAPI, getPostCommentsAPI, createCommentAPI, togglePostLikeAPI, updateCommentAPI, deleteCommentAPI, updatePostAPI, deletePostAPI } from '../../../api/communityService';
+import { getCurrentUser } from '../../../api/authService';
 import { logActivity, ActivityTypes } from '../../../api/activityService';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -34,6 +36,9 @@ export default function PostDetailPage() {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState('');
   const [submittingComment, setSubmittingComment] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editingCommentText, setEditingCommentText] = useState('');
 
   // Activity tracking: duration measurement
   const startTimeRef = useRef(null);
@@ -41,6 +46,7 @@ export default function PostDetailPage() {
   useEffect(() => {
     loadPost();
     loadComments();
+    loadCurrentUser();
 
     // Start tracking view duration
     startTimeRef.current = Date.now();
@@ -53,6 +59,16 @@ export default function PostDetailPage() {
       }
     };
   }, [id]);
+
+  const loadCurrentUser = async () => {
+    try {
+      const user = await getCurrentUser();
+      setCurrentUser(user);
+    } catch (error) {
+      console.error('[사용자 정보 로드 실패]', error);
+      setCurrentUser(null);
+    }
+  };
 
   // 🔔 전역 이벤트 리스너: 다른 화면에서 돌아왔을 때 좋아요 상태 유지
   useEffect(() => {
@@ -170,6 +186,105 @@ export default function PostDetailPage() {
     }
   };
 
+  // Edit comment
+  const handleEditComment = (comment) => {
+    if (!currentUser || currentUser.id !== comment.userId) {
+      Alert.alert('오류', '본인의 댓글만 수정할 수 있습니다.');
+      return;
+    }
+    setEditingCommentId(comment.id);
+    setEditingCommentText(comment.content);
+  };
+
+  // Save edited comment
+  const handleSaveEditComment = async (commentId) => {
+    if (!editingCommentText.trim()) {
+      Alert.alert('알림', '댓글 내용을 입력해주세요.');
+      return;
+    }
+
+    try {
+      await updateCommentAPI(commentId, editingCommentText.trim());
+      setEditingCommentId(null);
+      setEditingCommentText('');
+      await loadComments();
+      Alert.alert('성공', '댓글이 수정되었습니다.');
+    } catch (error) {
+      console.error('[댓글 수정] 실패:', error);
+      Alert.alert('오류', error.message || '댓글 수정에 실패했습니다.');
+    }
+  };
+
+  // Cancel edit comment
+  const handleCancelEditComment = () => {
+    setEditingCommentId(null);
+    setEditingCommentText('');
+  };
+
+  // Delete comment
+  const handleDeleteComment = (commentId, commentUserId) => {
+    if (!currentUser || currentUser.id !== commentUserId) {
+      Alert.alert('오류', '본인의 댓글만 삭제할 수 있습니다.');
+      return;
+    }
+
+    Alert.alert(
+      '댓글 삭제',
+      '정말 이 댓글을 삭제하시겠습니까?',
+      [
+        { text: '취소', style: 'cancel' },
+        {
+          text: '삭제',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await deleteCommentAPI(commentId);
+              await loadComments();
+              // Update post comment count
+              if (post) {
+                setPost({ ...post, comments: Math.max(0, post.comments - 1) });
+              }
+              Alert.alert('성공', '댓글이 삭제되었습니다.');
+            } catch (error) {
+              console.error('[댓글 삭제] 실패:', error);
+              Alert.alert('오류', error.message || '댓글 삭제에 실패했습니다.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  // Delete post
+  const handleDeletePost = () => {
+    if (!currentUser || !post || currentUser.id !== post.userId) {
+      Alert.alert('오류', '본인의 게시글만 삭제할 수 있습니다.');
+      return;
+    }
+
+    Alert.alert(
+      '게시글 삭제',
+      '정말 이 게시글을 삭제하시겠습니까?',
+      [
+        { text: '취소', style: 'cancel' },
+        {
+          text: '삭제',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await deletePostAPI(id);
+              Alert.alert('성공', '게시글이 삭제되었습니다.');
+              router.back();
+            } catch (error) {
+              console.error('[게시글 삭제] 실패:', error);
+              Alert.alert('오류', error.message || '게시글 삭제에 실패했습니다.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   if (loading) {
     return (
       <SafeAreaView style={styles.container}>
@@ -192,17 +307,35 @@ export default function PostDetailPage() {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.headerButton}>
           <Ionicons name="arrow-back" size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>게시글</Text>
-        <View style={{ width: 24 }} />
+        {currentUser && post && currentUser.id === post.userId ? (
+          <TouchableOpacity onPress={handleDeletePost} style={styles.headerButton}>
+            <Ionicons name="trash-outline" size={24} color="#ef4444" />
+          </TouchableOpacity>
+        ) : (
+          <View style={{ width: 24 }} />
+        )}
       </View>
 
-      <ScrollView style={styles.content}>
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={0}
+      >
+        <ScrollView
+        style={styles.content}
+        contentContainerStyle={styles.scrollContent}
+        enableOnAndroid={true}
+        enableAutomaticScroll={true}
+        extraScrollHeight={20}
+        keyboardShouldPersistTaps="handled"
+      >
         {/* Category Badge */}
         <View style={styles.categoryContainer}>
           <View style={styles.categoryBadge}>
@@ -340,29 +473,69 @@ export default function PostDetailPage() {
                   <View style={styles.commentContent}>
                     <View style={styles.commentHeader}>
                       <Text style={styles.commentAuthor}>{comment.userName}</Text>
-                      <Text style={styles.commentDate}>
-                        {new Date(comment.createdAt).toLocaleDateString('ko-KR', {
-                          month: 'short',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
-                      </Text>
+                      <View style={styles.commentHeaderRight}>
+                        <Text style={styles.commentDate}>
+                          {new Date(comment.createdAt).toLocaleDateString('ko-KR', {
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </Text>
+                        {currentUser && currentUser.id === comment.userId && (
+                          <View style={styles.commentActions}>
+                            <TouchableOpacity
+                              onPress={() => handleEditComment(comment)}
+                              style={styles.commentActionButton}
+                            >
+                              <Ionicons name="create-outline" size={16} color="#3b82f6" />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                              onPress={() => handleDeleteComment(comment.id, comment.userId)}
+                              style={styles.commentActionButton}
+                            >
+                              <Ionicons name="trash-outline" size={16} color="#ef4444" />
+                            </TouchableOpacity>
+                          </View>
+                        )}
+                      </View>
                     </View>
-                    <Text style={styles.commentText}>{comment.content}</Text>
+                    {editingCommentId === comment.id ? (
+                      <View style={styles.editCommentContainer}>
+                        <TextInput
+                          style={styles.editCommentInput}
+                          value={editingCommentText}
+                          onChangeText={setEditingCommentText}
+                          multiline
+                          maxLength={500}
+                          autoFocus
+                        />
+                        <View style={styles.editCommentActions}>
+                          <TouchableOpacity
+                            onPress={handleCancelEditComment}
+                            style={styles.cancelButton}
+                          >
+                            <Text style={styles.cancelButtonText}>취소</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => handleSaveEditComment(comment.id)}
+                            style={styles.saveButton}
+                          >
+                            <Text style={styles.saveButtonText}>저장</Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    ) : (
+                      <Text style={styles.commentText}>{comment.content}</Text>
+                    )}
                   </View>
                 </View>
               ))}
             </View>
           )}
         </View>
-      </ScrollView>
 
-      {/* Comment Input */}
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
-      >
+        {/* Comment Input - 내부에 배치하여 스크롤과 함께 이동 */}
         <View style={styles.commentInputContainer}>
           <TextInput
             style={styles.commentInput}
@@ -384,6 +557,7 @@ export default function PostDetailPage() {
             )}
           </TouchableOpacity>
         </View>
+      </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -431,6 +605,9 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 20,
   },
   categoryContainer: {
     padding: 16,
@@ -629,6 +806,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 6,
   },
+  commentHeaderRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   commentAuthor: {
     fontSize: 14,
     fontWeight: '600',
@@ -637,6 +819,54 @@ const styles = StyleSheet.create({
   commentDate: {
     fontSize: 12,
     color: '#999',
+  },
+  commentActions: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  commentActionButton: {
+    padding: 4,
+  },
+  editCommentContainer: {
+    marginTop: 8,
+  },
+  editCommentInput: {
+    backgroundColor: '#f5f5f5',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    fontSize: 14,
+    maxHeight: 100,
+    borderWidth: 1,
+    borderColor: '#FF7A5C',
+  },
+  editCommentActions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 8,
+    marginTop: 8,
+  },
+  cancelButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 6,
+    backgroundColor: '#f0f0f0',
+  },
+  cancelButtonText: {
+    fontSize: 14,
+    color: '#666',
+    fontWeight: '600',
+  },
+  saveButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 6,
+    backgroundColor: '#FF7A5C',
+  },
+  saveButtonText: {
+    fontSize: 14,
+    color: '#fff',
+    fontWeight: '600',
   },
   commentText: {
     fontSize: 14,

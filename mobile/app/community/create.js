@@ -3,14 +3,17 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
   TextInput,
   Image,
   Alert,
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Picker } from '@react-native-picker/picker';
@@ -164,7 +167,19 @@ export default function CreateCommunityScreen() {
         <View style={{ width: 24 }} />
       </View>
 
-      <ScrollView style={styles.content}>
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={0}
+      >
+        <ScrollView
+        style={styles.content}
+        contentContainerStyle={styles.scrollContent}
+        enableOnAndroid={true}
+        enableAutomaticScroll={true}
+        extraScrollHeight={100}
+        keyboardShouldPersistTaps="handled"
+      >
         {/* Hobby Image Preview */}
         {selectedHobby && (
           <View style={styles.imagePreviewContainer}>
@@ -274,6 +289,7 @@ export default function CreateCommunityScreen() {
           </View>
         </View>
       </ScrollView>
+      </KeyboardAvoidingView>
 
       {/* Submit Button */}
       <View style={styles.footer}>
@@ -319,6 +335,9 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 20,
   },
   imagePreviewContainer: {
     padding: 16,

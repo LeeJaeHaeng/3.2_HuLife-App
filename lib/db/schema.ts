@@ -7,7 +7,15 @@ import {
   timestamp,
   json,
   mysqlEnum,
+  customType,
 } from "drizzle-orm/mysql-core"
+
+// Custom LONGTEXT type for large Base64 images (up to 4GB)
+const longtext = customType<{ data: string; notNull: false; default: false }>({
+  dataType() {
+    return "longtext"
+  },
+})
 
 export const users = mysqlTable("users", {
   id: varchar("id", { length: 255 }).primaryKey(),
@@ -17,7 +25,7 @@ export const users = mysqlTable("users", {
   age: int("age").notNull(),
   location: varchar("location", { length: 255 }).notNull(),
   phone: varchar("phone", { length: 255 }),
-  profileImage: text("profile_image"), // ✅ LONGTEXT (최대 4GB, Base64 대용량 이미지 저장)
+  profileImage: longtext("profile_image"), // ✅ LONGTEXT (최대 4GB, Base64 대용량 이미지 저장)
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
@@ -72,11 +80,11 @@ export const posts = mysqlTable("posts", {
   id: varchar("id", { length: 255 }).primaryKey(),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
   userName: varchar("user_name", { length: 255 }).notNull(),
-  userImage: text("user_image"), // text로 변경하여 base64 지원
+  userImage: longtext("user_image"), // ✅ LONGTEXT: Base64 프로필 이미지 저장 (최대 4GB)
   title: varchar("title", { length: 255 }).notNull(),
   content: text("content").notNull(),
   category: varchar("category", { length: 255 }).notNull(),
-  images: text("images"), // ✅ LONGTEXT: JSON 배열로 Base64 이미지 저장 (최대 4GB)
+  images: longtext("images"), // ✅ LONGTEXT: JSON 배열로 Base64 이미지 저장 (최대 4GB)
   likes: int("likes").notNull().default(0),
   comments: int("comments").notNull().default(0),
   views: int("views").notNull().default(0),
@@ -208,6 +216,30 @@ export const postComments = mysqlTable("post_comments", {
   userName: varchar("user_name", { length: 255 }).notNull(),
   userImage: varchar("user_image", { length: 255 }),
   content: text("content").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+// Gallery table - User's hobby artworks
+export const galleryItems = mysqlTable("gallery_items", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
+  userName: varchar("user_name", { length: 255 }).notNull(),
+  userImage: longtext("user_image"), // Base64 profile image
+  hobbyId: varchar("hobby_id", { length: 255 }).notNull().references(() => hobbies.id),
+  hobbyName: varchar("hobby_name", { length: 255 }).notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  image: longtext("image").notNull(), // Base64 artwork image
+  likes: int("likes").notNull().default(0),
+  views: int("views").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+// Gallery likes table
+export const galleryLikes = mysqlTable("gallery_likes", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  galleryItemId: varchar("gallery_item_id", { length: 255 }).notNull().references(() => galleryItems.id),
+  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 

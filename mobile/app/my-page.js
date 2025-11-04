@@ -13,11 +13,21 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Calendar } from 'react-native-calendars';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { getCurrentUser, logoutUser } from '../api/authService';
-import { getUserCommunitiesAPI, getUserHobbiesAPI, getUserSchedulesAPI } from '../api/userService';
+import { getUserCommunitiesAPI, getUserHobbiesAPI, getUserSchedulesAPI, updateScheduleAPI, deleteScheduleAPI } from '../api/userService';
 import AddScheduleModal from '../components/AddScheduleModal';
 import EditProfileModal from '../components/EditProfileModal';
+
+// 한국어 설정
+LocaleConfig.locales['ko'] = {
+  monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+  monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+  dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+  dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+  today: '오늘'
+};
+LocaleConfig.defaultLocale = 'ko';
 
 // TabButton 컴포넌트
 const TabButton = ({ label, activeTab, setActiveTab }) => (
@@ -43,6 +53,7 @@ export default function MyPageScreen() {
   const [error, setError] = useState(null);
   const [isAddScheduleModalVisible, setIsAddScheduleModalVisible] = useState(false);
   const [isEditProfileModalVisible, setIsEditProfileModalVisible] = useState(false);
+  const [editingSchedule, setEditingSchedule] = useState(null);
 
   // Calendar states
   const [selectedDate, setSelectedDate] = useState('');
@@ -130,6 +141,54 @@ export default function MyPageScreen() {
       case 'event': return '행사';
       default: return type;
     }
+  };
+
+  // Handle schedule long press
+  const handleScheduleLongPress = (schedule) => {
+    Alert.alert(
+      '일정 관리',
+      `"${schedule.title}" 일정을 어떻게 하시겠습니까?`,
+      [
+        { text: '취소', style: 'cancel' },
+        {
+          text: '수정',
+          onPress: () => {
+            setEditingSchedule(schedule);
+            setIsAddScheduleModalVisible(true);
+          },
+        },
+        {
+          text: '삭제',
+          style: 'destructive',
+          onPress: () => handleDeleteSchedule(schedule.id),
+        },
+      ]
+    );
+  };
+
+  // Handle delete schedule
+  const handleDeleteSchedule = (scheduleId) => {
+    Alert.alert(
+      '일정 삭제',
+      '정말 이 일정을 삭제하시겠습니까?',
+      [
+        { text: '취소', style: 'cancel' },
+        {
+          text: '삭제',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await deleteScheduleAPI(scheduleId);
+              Alert.alert('성공', '일정이 삭제되었습니다.');
+              await loadMyPageData();
+            } catch (error) {
+              console.error('[일정 삭제 실패]', error);
+              Alert.alert('오류', error.message || '일정 삭제 중 오류가 발생했습니다.');
+            }
+          },
+        },
+      ]
+    );
   };
 
   // useFocusEffect 사용: 화면이 포커스를 얻을 때마다 실행
@@ -346,7 +405,10 @@ export default function MyPageScreen() {
               {/* Add Schedule Button */}
               <TouchableOpacity
                 style={styles.addScheduleButton}
-                onPress={() => setIsAddScheduleModalVisible(true)}
+                onPress={() => {
+                  setEditingSchedule(null);
+                  setIsAddScheduleModalVisible(true);
+                }}
               >
                 <Feather name="plus" size={20} color="#fff" />
                 <Text style={styles.addScheduleButtonText}>일정 추가</Text>
@@ -382,7 +444,12 @@ export default function MyPageScreen() {
                   .map(item => {
 
                     return (
-                      <View key={item.id} style={styles.scheduleCard}>
+                      <TouchableOpacity
+                        key={item.id}
+                        style={styles.scheduleCard}
+                        onLongPress={() => handleScheduleLongPress(item)}
+                        activeOpacity={0.7}
+                      >
                         <View style={[styles.typeIndicator, { backgroundColor: getTypeColor(item.type) }]} />
                         <View style={styles.scheduleContent}>
                           <View style={styles.scheduleHeader}>
@@ -417,7 +484,7 @@ export default function MyPageScreen() {
                             )}
                           </View>
                         </View>
-                      </View>
+                      </TouchableOpacity>
                     );
                   })
               ) : (
@@ -435,9 +502,14 @@ export default function MyPageScreen() {
       {/* Add Schedule Modal */}
       <AddScheduleModal
         visible={isAddScheduleModalVisible}
-        onClose={() => setIsAddScheduleModalVisible(false)}
+        onClose={() => {
+          setIsAddScheduleModalVisible(false);
+          setEditingSchedule(null);
+        }}
+        editingSchedule={editingSchedule}
         onScheduleAdded={() => {
-          loadMyPageData(); // Refresh data after adding schedule
+          loadMyPageData(); // Refresh data after adding/updating schedule
+          setEditingSchedule(null);
         }}
       />
 
