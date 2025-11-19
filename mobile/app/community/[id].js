@@ -16,6 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { getCommunityByIdAPI, requestJoinCommunityAPI } from '../../api/communityService';
 import { getCurrentUser } from '../../api/authService';
 import { logActivity, ActivityTypes } from '../../api/activityService';
+import hobbyImages from '../../assets/hobbyImages';
 
 export default function CommunityDetailPage() {
   const router = useRouter();
@@ -163,7 +164,13 @@ export default function CommunityDetailPage() {
         {/* Hero Image */}
         <View style={styles.heroContainer}>
           <Image
-            source={{ uri: community.imageUrl }}
+            source={
+              community.hobbyName && hobbyImages[community.hobbyName]
+                ? hobbyImages[community.hobbyName]
+                : community.imageUrl?.startsWith('http')
+                ? { uri: community.imageUrl }
+                : require('../../assets/icon.png')
+            }
             style={styles.heroImage}
             defaultSource={require('../../assets/icon.png')}
           />

@@ -42,7 +42,6 @@ export const hobbies = mysqlTable("hobbies", {
   videoUrl: varchar("video_url", { length: 255 }),
   benefits: json("benefits").$type<string[]>().notNull(),
   requirements: json("requirements").$type<string[]>().notNull(),
-  curriculum: json("curriculum").$type<{ week: number; title: string; content: string }[]>(),
 })
 
 export const surveyResponses = mysqlTable("survey_responses", {
@@ -66,6 +65,7 @@ export const communities = mysqlTable("communities", {
   id: varchar("id", { length: 255 }).primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
   hobbyId: varchar("hobby_id", { length: 255 }).notNull().references(() => hobbies.id),
+  hobbyName: varchar("hobby_name", { length: 255 }).notNull(), // 비정규화: 취미 이름 직접 저장 (이미지 매핑용)
   description: text("description").notNull(),
   location: varchar("location", { length: 255 }).notNull(),
   schedule: varchar("schedule", { length: 255 }).notNull(),
@@ -95,6 +95,10 @@ export const userHobbies = mysqlTable("user_hobbies", {
   id: varchar("id", { length: 255 }).primaryKey(),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
   hobbyId: varchar("hobby_id", { length: 255 }).notNull().references(() => hobbies.id),
+  hobbyName: varchar("hobby_name", { length: 255 }).notNull(), // 비정규화: 취미 이름 직접 저장
+  hobbyCategory: varchar("hobby_category", { length: 255 }).notNull(), // 비정규화: 카테고리 직접 저장
+  hobbyDescription: text("hobby_description").notNull(), // 비정규화: 설명 직접 저장
+  hobbyImage: varchar("hobby_image", { length: 255 }).notNull(), // 비정규화: 이미지 URL 직접 저장
   status: mysqlEnum("status", ["interested", "learning", "completed"]).notNull(),
   progress: int("progress").notNull().default(0),
   startedAt: timestamp("started_at").notNull().defaultNow(),
@@ -203,7 +207,7 @@ export const chatMessages = mysqlTable("chat_messages", {
   chatRoomId: varchar("chat_room_id", { length: 255 }).notNull().references(() => chatRooms.id),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
   userName: varchar("user_name", { length: 255 }).notNull(),
-  userImage: varchar("user_image", { length: 255 }),
+  userImage: longtext("user_image"), // Base64 profile image
   message: text("message").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
@@ -214,12 +218,12 @@ export const postComments = mysqlTable("post_comments", {
   postId: varchar("post_id", { length: 255 }).notNull().references(() => posts.id),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
   userName: varchar("user_name", { length: 255 }).notNull(),
-  userImage: varchar("user_image", { length: 255 }),
+  userImage: longtext("user_image"), // Base64 profile image
   content: text("content").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
-// Gallery table - User's hobby artworks
+// Gallery table - User's hobby artworks (images and videos)
 export const galleryItems = mysqlTable("gallery_items", {
   id: varchar("id", { length: 255 }).primaryKey(),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
@@ -229,7 +233,9 @@ export const galleryItems = mysqlTable("gallery_items", {
   hobbyName: varchar("hobby_name", { length: 255 }).notNull(),
   title: varchar("title", { length: 255 }).notNull(),
   description: text("description"),
-  image: longtext("image").notNull(), // Base64 artwork image
+  image: longtext("image"), // Base64 artwork image (nullable for videos)
+  videoUrl: varchar("video_url", { length: 500 }), // Video URL (for video uploads)
+  videoThumbnail: longtext("video_thumbnail"), // Base64 video thumbnail
   likes: int("likes").notNull().default(0),
   views: int("views").notNull().default(0),
   createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -240,6 +246,17 @@ export const galleryLikes = mysqlTable("gallery_likes", {
   id: varchar("id", { length: 255 }).primaryKey(),
   galleryItemId: varchar("gallery_item_id", { length: 255 }).notNull().references(() => galleryItems.id),
   userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+// Gallery comments table
+export const galleryComments = mysqlTable("gallery_comments", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  galleryItemId: varchar("gallery_item_id", { length: 255 }).notNull().references(() => galleryItems.id),
+  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
+  userName: varchar("user_name", { length: 255 }).notNull(),
+  userImage: longtext("user_image"), // Base64 profile image
+  content: text("content").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 

@@ -15,9 +15,11 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { getCurrentUser, logoutUser } from '../api/authService';
-import { getUserCommunitiesAPI, getUserHobbiesAPI, getUserSchedulesAPI, updateScheduleAPI, deleteScheduleAPI } from '../api/userService';
+import { getUserCommunitiesAPI, getUserHobbiesAPI, getUserSchedulesAPI, updateScheduleAPI, deleteScheduleAPI, removeHobbyFromUserAPI } from '../api/userService';
 import AddScheduleModal from '../components/AddScheduleModal';
 import EditProfileModal from '../components/EditProfileModal';
+import hobbyImages from '../assets/hobbyImages';
+import { API_CONFIG } from '../config/api.config';
 
 // 한국어 설정
 LocaleConfig.locales['ko'] = {
@@ -191,6 +193,31 @@ export default function MyPageScreen() {
     );
   };
 
+  // Handle remove hobby from interest
+  const handleRemoveHobby = (hobbyId, hobbyName) => {
+    Alert.alert(
+      '관심 취미 제거',
+      `"${hobbyName}"을(를) 관심 취미에서 제거하시겠습니까?`,
+      [
+        { text: '취소', style: 'cancel' },
+        {
+          text: '제거',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await removeHobbyFromUserAPI(hobbyId);
+              DeviceEventEmitter.emit('HOBBY_INTEREST_CHANGED');
+              await loadMyPageData();
+            } catch (error) {
+              console.error('[관심 취미 제거 실패]', error);
+              Alert.alert('오류', error.message || '관심 취미 제거 중 오류가 발생했습니다.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   // useFocusEffect 사용: 화면이 포커스를 얻을 때마다 실행
   useFocusEffect(
     useCallback(() => {
@@ -340,41 +367,167 @@ export default function MyPageScreen() {
         <View style={styles.tabContent}>
           {activeTab === '관심 취미' && (
             userHobbies.length > 0 ? (
-              userHobbies.map(item => (
-                item.hobby ? (
-                  <TouchableOpacity
-                    key={item.id}
-                    style={styles.listItemCard}
-                    onPress={() => router.push(`/hobbies/${item.hobbyId}`)}
-                  >
-                    <Text style={styles.listItemTitle}>{item.hobby.name || `ID: ${item.hobbyId}`}</Text>
-                    <Text style={styles.listItemSubtitle}>상태: {item.status} • 진행도: {item.progress || 0}%</Text>
-                  </TouchableOpacity>
-                ) : (
-                  <View key={item.id} style={styles.listItemCard}>
-                     <Text style={styles.listItemTitle}>취미 정보 로딩 실패 (ID: {item.hobbyId})</Text>
-                  </View>
-                )
-              ))
-            ) : <Text style={styles.emptyText}>아직 관심 취미가 없습니다.</Text>
+              <View style={styles.hobbiesGrid}>
+                {userHobbies.map(item => {
+                  if (!item.hobby) {
+                    return (
+                      <View key={item.id} style={styles.hobbyCard}>
+                        <Text style={styles.hobbyCardError}>취미 정보 로딩 실패</Text>
+                      </View>
+                    );
+                  }
+
+                  const imageSource = hobbyImages[item.hobby.name] || require('../assets/hobbies/hulife_logo.png');
+
+                  return (
+                    <View key={item.id} style={styles.hobbyCard}>
+                      <TouchableOpacity
+                        onPress={() => router.push(`/hobbies/${item.hobbyId}`)}
+                        activeOpacity={0.9}
+                      >
+                        <Image source={imageSource} style={styles.hobbyCardImage} />
+                        <View style={styles.hobbyCardContent}>
+                          <View style={styles.hobbyCardHeader}>
+                            <Text style={styles.hobbyCardCategory}>{item.hobby.category || '기타'}</Text>
+                            <TouchableOpacity
+                              onPress={() => handleRemoveHobby(item.hobbyId, item.hobby.name)}
+                              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                            >
+                              <Feather name="x" size={18} color="#9ca3af" />
+                            </TouchableOpacity>
+                          </View>
+                          <Text style={styles.hobbyCardTitle} numberOfLines={2}>
+                            {item.hobby.name}
+                          </Text>
+                          <Text style={styles.hobbyCardDescription} numberOfLines={2}>
+                            {item.hobby.description}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                })}
+              </View>
+            ) : (
+              <View style={styles.emptyStateContainer}>
+                <Feather name="heart" size={64} color="#e5e7eb" />
+                <Text style={styles.emptyStateText}>관심 취미가 없습니다</Text>
+                <Text style={styles.emptyStateSubtext}>
+                  취미를 둘러보고 마음에 드는 취미를 추가해보세요!
+                </Text>
+                <TouchableOpacity
+                  style={styles.browseButton}
+                  onPress={() => router.push('/hobbies')}
+                >
+                  <Feather name="compass" size={18} color="#fff" />
+                  <Text style={styles.browseButtonText}>취미 둘러보기</Text>
+                </TouchableOpacity>
+              </View>
+            )
           )}
 
           {activeTab === '참여 모임' && (
-             userCommunities.length > 0 ? (
-              userCommunities.map(item => (
+            userCommunities.length > 0 ? (
+              <View style={styles.communitiesGrid}>
+                {userCommunities.map(item => {
+                  const community = item.community || item;
+                  const communityName = community.name || '커뮤니티';
+                  const communityLocation = community.location || '위치 미정';
+                  const communitySchedule = community.schedule || '';
+                  const memberCount = community.memberCount || 0;
+                  const maxMembers = community.maxMembers || 0;
+
+                  // 취미 이름으로 hobbyImages에서 이미지 가져오기
+                  const getImageSource = () => {
+                    // 1. hobbyName이 있으면 hobbyImages에서 직접 찾기
+                    if (community.hobbyName && hobbyImages[community.hobbyName]) {
+                      return hobbyImages[community.hobbyName];
+                    }
+
+                    // 2. 서버 업로드 이미지인지 확인
+                    if (community.imageUrl?.includes('uploads') || community.imageUrl?.includes('public')) {
+                      const absoluteUrl = community.imageUrl.startsWith('/')
+                        ? `${API_CONFIG.API_URL}${community.imageUrl}`
+                        : `${API_CONFIG.API_URL}/${community.imageUrl}`;
+                      return { uri: absoluteUrl };
+                    }
+
+                    // 3. HTTP URL인 경우
+                    if (community.imageUrl?.startsWith('http')) {
+                      return { uri: community.imageUrl };
+                    }
+
+                    // 4. 기본 이미지 (플레이스홀더)
+                    return null;
+                  };
+
+                  const imageSource = getImageSource();
+
+                  return (
+                    <View key={item.id} style={styles.communityCard}>
+                      <TouchableOpacity
+                        onPress={() => router.push(`/community/${item.communityId || item.id}`)}
+                        activeOpacity={0.9}
+                      >
+                        {imageSource ? (
+                          <Image
+                            source={imageSource}
+                            style={styles.communityCardImage}
+                            resizeMode="cover"
+                          />
+                        ) : (
+                          <View style={[styles.communityCardImage, styles.communityImagePlaceholder]}>
+                            <Feather name="users" size={40} color="#cbd5e1" />
+                          </View>
+                        )}
+                        <View style={styles.communityCardContent}>
+                          <Text style={styles.communityCardTitle} numberOfLines={2}>
+                            {communityName}
+                          </Text>
+                          <View style={styles.communityCardInfo}>
+                            <View style={styles.communityInfoRow}>
+                              <Feather name="map-pin" size={12} color="#9ca3af" />
+                              <Text style={styles.communityInfoText} numberOfLines={1}>
+                                {communityLocation}
+                              </Text>
+                            </View>
+                            {communitySchedule && (
+                              <View style={styles.communityInfoRow}>
+                                <Feather name="clock" size={12} color="#9ca3af" />
+                                <Text style={styles.communityInfoText} numberOfLines={1}>
+                                  {communitySchedule}
+                                </Text>
+                              </View>
+                            )}
+                            <View style={styles.communityMemberBadge}>
+                              <Feather name="users" size={12} color="#FF7A5C" />
+                              <Text style={styles.communityMemberText}>
+                                {memberCount}/{maxMembers}
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                })}
+              </View>
+            ) : (
+              <View style={styles.emptyStateContainer}>
+                <Feather name="users" size={64} color="#e5e7eb" />
+                <Text style={styles.emptyStateText}>참여한 모임이 없습니다</Text>
+                <Text style={styles.emptyStateSubtext}>
+                  새로운 모임에 참여하고 취미를 함께 즐겨보세요!
+                </Text>
                 <TouchableOpacity
-                  key={item.id}
-                  style={styles.listItemCard}
-                  onPress={() => router.push(`/community/${item.communityId || item.id}`)}
+                  style={styles.browseButton}
+                  onPress={() => router.push('/community')}
                 >
-                  <Text style={styles.listItemTitle}>{item.community?.name || item.name || '커뮤니티'}</Text>
-                  <Text style={styles.listItemSubtitle}>
-                    {item.community?.location || item.location || '위치 미정'}
-                    {(item.community?.schedule || item.schedule) ? ` • ${item.community?.schedule || item.schedule}` : ''}
-                  </Text>
+                  <Feather name="search" size={18} color="#fff" />
+                  <Text style={styles.browseButtonText}>모임 찾기</Text>
                 </TouchableOpacity>
-              ))
-            ) : <Text style={styles.emptyText}>아직 참여한 모임이 없습니다.</Text>
+              </View>
+            )
           )}
 
           {activeTab === '일정' && (
@@ -666,5 +819,166 @@ const styles = StyleSheet.create({
     fontSize: 18,  // 16→18 for readability
     fontWeight: '600',
     color: '#333',
+  },
+  // Hobbies Grid Styles
+  hobbiesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  hobbyCard: {
+    width: '48%',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    marginBottom: 12,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  hobbyCardImage: {
+    width: '100%',
+    height: 120,
+    backgroundColor: '#f3f4f6',
+  },
+  hobbyCardContent: {
+    padding: 12,
+  },
+  hobbyCardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  hobbyCardCategory: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#FF7A5C',
+    backgroundColor: '#FFF5F2',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+  },
+  hobbyCardTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#111827',
+    marginBottom: 6,
+    lineHeight: 20,
+  },
+  hobbyCardDescription: {
+    fontSize: 13,
+    color: '#6b7280',
+    lineHeight: 18,
+  },
+  hobbyCardError: {
+    padding: 16,
+    textAlign: 'center',
+    color: '#ef4444',
+    fontSize: 14,
+  },
+  // Empty State Styles
+  emptyStateContainer: {
+    alignItems: 'center',
+    paddingVertical: 60,
+    paddingHorizontal: 20,
+  },
+  emptyStateText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#6b7280',
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  emptyStateSubtext: {
+    fontSize: 14,
+    color: '#9ca3af',
+    marginTop: 8,
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+  browseButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#FF7A5C',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginTop: 24,
+  },
+  browseButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  // Communities Grid Styles
+  communitiesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  communityCard: {
+    width: '48%',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    marginBottom: 12,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  communityCardImage: {
+    width: '100%',
+    height: 120,
+    backgroundColor: '#f3f4f6',
+  },
+  communityImagePlaceholder: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  communityCardContent: {
+    padding: 12,
+  },
+  communityCardTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#111827',
+    marginBottom: 8,
+    lineHeight: 20,
+  },
+  communityCardInfo: {
+    gap: 6,
+  },
+  communityInfoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  communityInfoText: {
+    fontSize: 12,
+    color: '#6b7280',
+    flex: 1,
+    lineHeight: 16,
+  },
+  communityMemberBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#FFF5F2',
+    alignSelf: 'flex-start',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+    marginTop: 4,
+  },
+  communityMemberText: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#FF7A5C',
   },
 });

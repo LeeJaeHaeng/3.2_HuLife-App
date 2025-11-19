@@ -1,0 +1,9 @@
+@echo off
+echo Adding all changes to staging area...
+git add .
+echo Committing changes...
+git commit -m "chore: Update project files"
+echo Pushing changes to the remote repository...
+git push origin main
+echo Done.
+pause

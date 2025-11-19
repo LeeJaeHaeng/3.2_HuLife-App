@@ -150,43 +150,34 @@ export default function CommunityPage() {
 
   // Render community card (컴팩트 버전)
   const renderCommunityCard = (community) => {
-    // imageUrl이 상대 경로면 hobbyImages에서 가져오기
+    // 취미 이름으로 hobbyImages에서 이미지 가져오기
     const getImageSource = () => {
-      console.log('[커뮤니티 이미지] URL:', community.imageUrl);
+      console.log('[커뮤니티 이미지] hobbyName:', community.hobbyName, 'imageUrl:', community.imageUrl);
 
-      if (community.imageUrl?.startsWith('/') || community.imageUrl?.startsWith('.')) {
-        // 상대 경로인 경우
+      // 1. hobbyName이 있으면 hobbyImages에서 직접 찾기 (가장 확실한 방법)
+      if (community.hobbyName && hobbyImages[community.hobbyName]) {
+        console.log('[커뮤니티 이미지] ✅ hobbyName으로 이미지 찾음:', community.hobbyName);
+        return hobbyImages[community.hobbyName];
+      }
 
-        // 1. 서버 업로드 이미지인지 확인 (/uploads/, /public/ 등)
-        if (community.imageUrl.includes('uploads') || community.imageUrl.includes('public')) {
-          const absoluteUrl = community.imageUrl.startsWith('/')
-            ? `${API_BASE_URL}${community.imageUrl}`
-            : `${API_BASE_URL}/${community.imageUrl}`;
-          console.log('[커뮤니티 이미지] ✅ 서버 업로드 이미지 사용:', absoluteUrl);
-          return { uri: absoluteUrl };
-        }
+      // 2. 서버 업로드 이미지인지 확인 (/uploads/, /public/ 등)
+      if (community.imageUrl?.includes('uploads') || community.imageUrl?.includes('public')) {
+        const absoluteUrl = community.imageUrl.startsWith('/')
+          ? `${API_BASE_URL}${community.imageUrl}`
+          : `${API_BASE_URL}/${community.imageUrl}`;
+        console.log('[커뮤니티 이미지] ✅ 서버 업로드 이미지 사용:', absoluteUrl);
+        return { uri: absoluteUrl };
+      }
 
-        // 2. 로컬 hobbyImages 매핑에서 찾기
-        const imageName = community.imageUrl.replace(/^\//, '').replace('.png', '').replace('.jpg', '');
-        console.log('[커뮤니티 이미지] 추출된 이미지 이름:', imageName);
-
-        const image = hobbyImages[imageName];
-        if (image) {
-          console.log('[커뮤니티 이미지] ✅ hobbyImages에서 찾음:', imageName);
-          return image;
-        } else {
-          console.log('[커뮤니티 이미지] ❌ hobbyImages에 없음, 기본 이미지 사용:', imageName);
-          return require('../assets/hobbies/hulife_logo.png');
-        }
-      } else if (community.imageUrl?.startsWith('http')) {
-        // 절대 URL인 경우
+      // 3. HTTP URL인 경우
+      if (community.imageUrl?.startsWith('http')) {
         console.log('[커뮤니티 이미지] HTTP URL 사용');
         return { uri: community.imageUrl };
-      } else {
-        // 기본 이미지
-        console.log('[커뮤니티 이미지] 기본 이미지 사용');
-        return require('../assets/hobbies/hulife_logo.png');
       }
+
+      // 4. 기본 이미지
+      console.log('[커뮤니티 이미지] ❌ 이미지를 찾을 수 없음, 기본 이미지 사용');
+      return require('../assets/hobbies/hulife_logo.png');
     };
 
     return (

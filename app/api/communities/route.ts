@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { db } from "@/lib/db"
-import { communities, communityMembers, chatRooms } from "@/lib/db/schema"
+import { communities, communityMembers, chatRooms, hobbies } from "@/lib/db/schema"
 import { eq } from "drizzle-orm"
 import { getSession } from "@/lib/auth/session"
 import { nanoid } from "nanoid"
@@ -48,12 +48,25 @@ export async function POST(request: Request) {
       )
     }
 
+    // Fetch hobby data to get hobby name for denormalization
+    const hobby = await db.query.hobbies.findFirst({
+      where: eq(hobbies.id, hobbyId)
+    })
+
+    if (!hobby) {
+      return NextResponse.json(
+        { error: "존재하지 않는 취미입니다" },
+        { status: 404 }
+      )
+    }
+
     // Create community
     const communityId = nanoid()
     const [newCommunity] = await db.insert(communities).values({
       id: communityId,
       name,
       hobbyId,
+      hobbyName: hobby.name, // Denormalize hobby name for image lookup
       description,
       location,
       schedule,

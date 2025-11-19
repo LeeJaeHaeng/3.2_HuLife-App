@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { getCurrentUser } from '../api/authService'; // 사용자 정보
 import { getRecommendationsAPI } from '../api/surveyService'; // 추천 데이터
 import { getUserCommunitiesAPI, getUserHobbiesAPI, getUserSchedulesAPI } from '../api/userService'; // 사용자 관련 데이터
+import { getAllGalleryItems } from '../api/galleryService'; // 갤러리 데이터
 import hobbyImages from '../assets/hobbyImages'; // 이미지 맵
 
 // SummaryCard 컴포넌트 (변경 없음)
@@ -34,6 +35,7 @@ export default function DashboardScreen() {
     const [userCommunities, setUserCommunities] = useState([]);
     const [userSchedules, setUserSchedules] = useState([]);
     const [recommendations, setRecommendations] = useState([]);
+    const [myGalleryItems, setMyGalleryItems] = useState([]); // 내 갤러리 작품
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -44,12 +46,13 @@ export default function DashboardScreen() {
             setLoading(true);
             setError(null);
             // 여러 API 동시 호출
-            const [userData, hobbiesData, communitiesData, schedulesData, recsData] = await Promise.all([
+            const [userData, hobbiesData, communitiesData, schedulesData, recsData, galleryData] = await Promise.all([
                 getCurrentUser(),
                 getUserHobbiesAPI(),
                 getUserCommunitiesAPI(),
                 getUserSchedulesAPI(),
-                getRecommendationsAPI() // 추천 목록 호출
+                getRecommendationsAPI(), // 추천 목록 호출
+                getAllGalleryItems().catch(() => []) // 갤러리 목록 호출 (에러 시 빈 배열)
             ]);
 
             setUser(userData);
@@ -58,6 +61,11 @@ export default function DashboardScreen() {
             setUserSchedules(Array.isArray(schedulesData) ? schedulesData : []);
             // 추천 데이터 처리 (recommendations 키 확인)
             setRecommendations(Array.isArray(recsData?.recommendations) ? recsData.recommendations : []);
+            // 내 갤러리 작품만 필터링
+            const myGallery = Array.isArray(galleryData)
+                ? galleryData.filter(item => item.userId === userData?.id)
+                : [];
+            setMyGalleryItems(myGallery);
 
         } catch (e) {
             setError("대시보드 정보를 불러오는 데 실패했습니다.");
@@ -148,8 +156,7 @@ export default function DashboardScreen() {
                     <SummaryCard icon={<Feather name="heart" size={28} color="#FF7A5C" />} value={userHobbies.length} label="관심 취미" link="/hobbies" />
                     <SummaryCard icon={<Feather name="users" size={28} color="#FF7A5C" />} value={userCommunities.length} label="참여 모임" link="/community" />
                     <SummaryCard icon={<Feather name="calendar" size={28} color="#FF7A5C" />} value={userSchedules.length} label="예정된 일정" link="/my-page" />
-                    {/* 완료한 취미는 userHobbies 데이터 구조에 따라 달라짐 (일단 0으로 표시) */}
-                    <SummaryCard icon={<Feather name="award" size={28} color="#FF7A5C" />} value={userHobbies.filter(h => h.status === 'completed').length} label="완료한 취미" link="/my-page" />
+                    <SummaryCard icon={<Feather name="image" size={28} color="#FF7A5C" />} value={myGalleryItems.length} label="갤러리 작품" link="/gallery" />
                 </View>
 
                 {/* 5. 추천 취미 (✨ 실제 추천 데이터 사용) */}
@@ -195,24 +202,39 @@ export default function DashboardScreen() {
                      </View>
                 )}
 
-                {/* 7. 학습 진행도 (✨ 실제 관심 취미 데이터 사용) */}
-                {userHobbies.length > 0 && (
+                {/* 7. 내 갤러리 (✨ 최근 업로드한 갤러리 작품 표시) */}
+                {myGalleryItems.length > 0 && (
                     <View style={styles.card}>
-                        <Text style={styles.cardTitle}>학습 진행도</Text>
-                        {userHobbies.slice(0, 5).map(item => (
-                            // hobby 객체에 JOIN된 취미 정보가 포함되어 있음
-                            <TouchableOpacity
-                                key={item.id}
-                                style={{ marginBottom: 16 }}
-                                onPress={() => router.push(`/hobbies/${item.hobbyId}`)}
-                            >
-                                <View style={styles.progressLabelContainer}>
-                                    <Text style={styles.itemTitle}>{item.hobby?.name || `취미 ID: ${item.hobbyId}`}</Text>
-                                    <Text style={styles.itemSubtitle}>{item.progress || 0}% 완료</Text>
-                                </View>
-                                <ProgressBar value={item.progress || 0} />
+                        <View style={styles.cardTitleRow}>
+                            <Text style={styles.cardTitle}>내 갤러리</Text>
+                            <TouchableOpacity onPress={() => router.push('/gallery')}>
+                                <Text style={styles.viewAllText}>전체 보기</Text>
                             </TouchableOpacity>
-                        ))}
+                        </View>
+                        <View style={styles.galleryGrid}>
+                            {myGalleryItems.slice(0, 4).map(item => (
+                                <TouchableOpacity
+                                    key={item.id}
+                                    style={styles.galleryItem}
+                                    onPress={() => router.push(`/gallery/${item.id}`)}
+                                >
+                                    <Image
+                                        source={{ uri: item.image }}
+                                        style={styles.galleryImage}
+                                        resizeMode="cover"
+                                    />
+                                    <View style={styles.galleryOverlay}>
+                                        <Text style={styles.galleryTitle} numberOfLines={1}>
+                                            {item.title}
+                                        </Text>
+                                        <View style={styles.galleryStats}>
+                                            <Feather name="heart" size={12} color="#fff" />
+                                            <Text style={styles.galleryStatText}>{item.likes || 0}</Text>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
                     </View>
                  )}
             </ScrollView>
@@ -255,5 +277,59 @@ const styles = StyleSheet.create({
     viewMoreButtonText: { color: '#FF7A5C', fontWeight: 'bold', fontSize: 16 },  // Added explicit size
     scheduleItem: { backgroundColor: '#f1f3f5', padding: 18, borderRadius: 8, marginBottom: 12 },  // 16→18, 10→12
     retryButton: { marginTop: 22, backgroundColor: '#FF7A5C', paddingVertical: 14, paddingHorizontal: 36, borderRadius: 8, minHeight: 52 },  // Larger touch area
-    retryButtonText: { color: 'white', fontSize: 18, fontWeight: 'bold', }  // 16→18
+    retryButtonText: { color: 'white', fontSize: 18, fontWeight: 'bold', },  // 16→18
+
+    // Gallery styles
+    cardTitleRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 16,
+    },
+    viewAllText: {
+        fontSize: 14,
+        color: '#FF7A5C',
+        fontWeight: '600',
+    },
+    galleryGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between', // 2-column 균등 배치
+    },
+    galleryItem: {
+        width: '48%', // 48% x 2 = 96%, 4% 여백
+        aspectRatio: 0.75, // 3:4 ratio
+        borderRadius: 12,
+        overflow: 'hidden',
+        position: 'relative',
+        backgroundColor: '#f3f4f6',
+        marginBottom: 12, // 상하 간격
+    },
+    galleryImage: {
+        width: '100%',
+        height: '100%',
+    },
+    galleryOverlay: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        padding: 8,
+    },
+    galleryTitle: {
+        fontSize: 12,
+        fontWeight: '600',
+        color: '#fff',
+        marginBottom: 4,
+    },
+    galleryStats: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+    },
+    galleryStatText: {
+        fontSize: 11,
+        color: '#fff',
+    },
 });

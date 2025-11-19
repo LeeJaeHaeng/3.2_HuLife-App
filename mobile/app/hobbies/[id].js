@@ -18,9 +18,10 @@ import { addHobbyToUserAPI, getUserHobbiesAPI, removeHobbyFromUserAPI } from '..
 import { getAllCommunitiesAPI } from '../../api/communityService';
 import { logActivity, ActivityTypes } from '../../api/activityService';
 import { getCurrentUser } from '../../api/authService';
+import { getAllGalleryItems } from '../../api/galleryService';
 import hobbyImages from '../../assets/hobbyImages';
 import AddReviewModal from '../../components/AddReviewModal';
-import ProgressSlider from '../../components/ProgressSlider';
+import UploadGalleryModal from '../../components/UploadGalleryModal';
 
 export default function HobbyDetailScreen() {
   const router = useRouter();
@@ -33,13 +34,14 @@ export default function HobbyDetailScreen() {
   const [isToggling, setIsToggling] = useState(false); // 좋아요 버튼 처리 중 로딩 상태
   const [error, setError] = useState(null);
   const [playing, setPlaying] = useState(false);
-  const [activeTab, setActiveTab] = useState('info'); // 'info', 'communities', 'reviews', 'learning'
+  const [activeTab, setActiveTab] = useState('info'); // 'info', 'gallery', 'communities', 'reviews'
   const [communities, setCommunities] = useState([]); // 관련 커뮤니티 목록
   const [reviews, setReviews] = useState([]); // 리뷰 목록
+  const [galleryItems, setGalleryItems] = useState([]); // 갤러리 작품 목록
   const [isReviewModalVisible, setIsReviewModalVisible] = useState(false); // 리뷰 작성 모달
+  const [isUploadModalVisible, setIsUploadModalVisible] = useState(false); // 갤러리 업로드 모달
   const [editingReview, setEditingReview] = useState(null); // 수정 중인 리뷰
   const [currentUser, setCurrentUser] = useState(null); // 현재 사용자
-  const [userHobbyData, setUserHobbyData] = useState(null); // 사용자의 이 취미에 대한 학습 데이터
 
   // 데이터 로딩 함수 (재사용 가능하도록 분리)
   const loadData = useCallback(async () => {
@@ -51,18 +53,20 @@ export default function HobbyDetailScreen() {
 
     try {
       setLoading(true);
-      // 상세 정보와 사용자의 관심 목록, 관련 커뮤니티, 리뷰를 동시에 요청합니다.
-      const [hobbyData, userHobbiesData, communitiesData, reviewsData, userData] = await Promise.all([
+      // 상세 정보와 사용자의 관심 목록, 관련 커뮤니티, 리뷰, 갤러리를 동시에 요청합니다.
+      const [hobbyData, userHobbiesData, communitiesData, reviewsData, galleryData, userData] = await Promise.all([
         getHobbyById(id),
         getUserHobbiesAPI(),
         getAllCommunitiesAPI(id), // 이 취미와 관련된 커뮤니티만 조회
         getHobbyReviews(id), // 리뷰 목록 조회
+        getAllGalleryItems(id), // 이 취미의 갤러리 작품 조회
         getCurrentUser().catch(() => null) // 현재 사용자 정보 (로그인 안되어있으면 null)
       ]);
 
       setHobby(hobbyData); // 취미 상세 정보 설정
       setCommunities(Array.isArray(communitiesData) ? communitiesData : []); // 커뮤니티 목록 설정
       setReviews(Array.isArray(reviewsData) ? reviewsData : []); // 리뷰 목록 설정
+      setGalleryItems(Array.isArray(galleryData) ? galleryData : []); // 갤러리 목록 설정
       setCurrentUser(userData); // 현재 사용자 정보 설정
 
       // 사용자의 관심 목록에 현재 취미가 있는지 확인합니다.
@@ -70,10 +74,9 @@ export default function HobbyDetailScreen() {
         const userHobby = userHobbiesData.find(uh => uh.hobbyId === id);
         const isAlreadyAdded = !!userHobby;
         setIsInterested(isAlreadyAdded);
-        setUserHobbyData(userHobby || null);
         console.log(`[상세 페이지] 이 취미는 관심 목록에 ${isAlreadyAdded ? '있습니다' : '없습니다'}.`);
       }
-      console.log(`[상세 페이지] 관련 커뮤니티 ${communitiesData.length}개, 리뷰 ${reviewsData.length}개 로드됨`);
+      console.log(`[상세 페이지] 관련 커뮤니티 ${communitiesData.length}개, 리뷰 ${reviewsData.length}개, 갤러리 ${galleryData.length}개 로드됨`);
     } catch (e) {
       console.error("[상세 페이지 에러]", e);
       setError("취미 정보를 불러오는 데 실패했습니다.");
@@ -148,12 +151,6 @@ export default function HobbyDetailScreen() {
     } finally {
       setIsToggling(false);
     }
-  };
-
-  // Handle progress change from ProgressSlider
-  const handleProgressChange = (updatedUserHobby) => {
-    setUserHobbyData(updatedUserHobby);
-    console.log('[학습 진행도] 업데이트됨:', updatedUserHobby);
   };
 
   // Handle review delete
@@ -256,16 +253,14 @@ export default function HobbyDetailScreen() {
             상세정보
           </Text>
         </TouchableOpacity>
-        {isInterested && (
-          <TouchableOpacity
-            style={[styles.tab, activeTab === 'learning' && styles.activeTab]}
-            onPress={() => setActiveTab('learning')}
-          >
-            <Text style={[styles.tabText, activeTab === 'learning' && styles.activeTabText]}>
-              학습하기
-            </Text>
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={[styles.tab, activeTab === 'gallery' && styles.activeTab]}
+          onPress={() => setActiveTab('gallery')}
+        >
+          <Text style={[styles.tabText, activeTab === 'gallery' && styles.activeTabText]}>
+            갤러리 ({galleryItems.length})
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={[styles.tab, activeTab === 'communities' && styles.activeTab]}
           onPress={() => setActiveTab('communities')}
@@ -285,34 +280,74 @@ export default function HobbyDetailScreen() {
       </View>
 
       <ScrollView>
-        {activeTab === 'learning' ? (
-          <View style={styles.learningContainer}>
-            {userHobbyData && (
-              <ProgressSlider
-                hobbyId={id}
-                initialProgress={userHobbyData.progress || 0}
-                initialStatus={userHobbyData.status || 'interested'}
-                onProgressChange={handleProgressChange}
-              />
-            )}
+        {activeTab === 'gallery' ? (
+          <View style={styles.galleryContainer}>
+            {/* Gallery Header */}
+            <View style={styles.galleryHeader}>
+              <Text style={styles.galleryTitle}>
+                {hobby.name} 작품 갤러리
+              </Text>
+              {currentUser && (
+                <TouchableOpacity
+                  style={styles.uploadButton}
+                  onPress={() => setIsUploadModalVisible(true)}
+                >
+                  <Feather name="upload" size={16} color="#fff" />
+                  <Text style={styles.uploadButtonText}>업로드</Text>
+                </TouchableOpacity>
+              )}
+            </View>
 
-            {/* Curriculum Section */}
-            {hobby.curriculum && hobby.curriculum.length > 0 && (
-              <View style={styles.curriculumSection}>
-                <Text style={styles.sectionTitle}>커리큘럼</Text>
-                <Text style={styles.curriculumDescription}>
-                  총 {hobby.curriculum.length}주 과정
-                </Text>
-                {hobby.curriculum.slice(0, 3).map((week, index) => (
-                  <View key={index} style={styles.curriculumWeek}>
-                    <Text style={styles.weekTitle}>Week {week.week}</Text>
-                    <Text style={styles.weekContent}>{week.content}</Text>
-                  </View>
+            {/* Gallery Grid */}
+            {galleryItems.length > 0 ? (
+              <View style={styles.galleryGrid}>
+                {galleryItems.map((item) => (
+                  <TouchableOpacity
+                    key={item.id}
+                    style={styles.galleryItem}
+                    activeOpacity={0.9}
+                    onPress={() => router.push({
+                      pathname: '/gallery/[id]',
+                      params: { id: item.id }
+                    })}
+                  >
+                    <Image
+                      source={{ uri: item.image }}
+                      style={styles.galleryItemImage}
+                      resizeMode="cover"
+                    />
+                    <View style={styles.galleryItemOverlay}>
+                      <Text style={styles.galleryItemAuthor} numberOfLines={1}>
+                        {item.userName}
+                      </Text>
+                      <Text style={styles.galleryItemTitle} numberOfLines={1}>
+                        {item.title}
+                      </Text>
+                      <View style={styles.galleryItemStats}>
+                        <Feather name="heart" size={12} color="#fff" />
+                        <Text style={styles.galleryItemStatText}>{item.likes}</Text>
+                        <Feather name="eye" size={12} color="#fff" style={{marginLeft: 8}} />
+                        <Text style={styles.galleryItemStatText}>{item.views}</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
                 ))}
-                {hobby.curriculum.length > 3 && (
-                  <Text style={styles.moreWeeks}>
-                    +{hobby.curriculum.length - 3}주 더보기
-                  </Text>
+              </View>
+            ) : (
+              <View style={styles.emptyGallery}>
+                <Feather name="image" size={48} color="#cbd5e1" />
+                <Text style={styles.emptyGalleryText}>
+                  아직 업로드된 작품이 없습니다
+                </Text>
+                {currentUser && (
+                  <TouchableOpacity
+                    style={styles.uploadFirstButton}
+                    onPress={() => setIsUploadModalVisible(true)}
+                  >
+                    <Text style={styles.uploadFirstButtonText}>
+                      첫 번째 작품 공유하기
+                    </Text>
+                  </TouchableOpacity>
                 )}
               </View>
             )}
@@ -509,6 +544,18 @@ export default function HobbyDetailScreen() {
           loadData(); // Reload data to show new/updated review
           setEditingReview(null);
         }}
+      />
+
+      {/* Upload Gallery Modal */}
+      <UploadGalleryModal
+        visible={isUploadModalVisible}
+        onClose={() => setIsUploadModalVisible(false)}
+        onUploadSuccess={() => {
+          setIsUploadModalVisible(false);
+          loadData(); // Reload data to show new gallery item
+        }}
+        hobbyId={id}
+        hobbyName={hobby?.name}
       />
     </SafeAreaView>
   );
@@ -747,47 +794,103 @@ const styles = StyleSheet.create({
     color: '#374151',
     lineHeight: 22,
   },
-  learningContainer: {
+  // Gallery styles
+  galleryContainer: {
     padding: 16,
   },
-  curriculumSection: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    marginTop: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  curriculumDescription: {
-    fontSize: 14,
-    color: '#666',
+  galleryHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 16,
   },
-  curriculumWeek: {
-    marginBottom: 12,
-    paddingBottom: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+  galleryTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#111827',
   },
-  weekTitle: {
+  uploadButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: '#FF7A5C',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  uploadButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  galleryGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  galleryItem: {
+    width: '48%',
+    aspectRatio: 0.75,
+    borderRadius: 12,
+    overflow: 'hidden',
+    backgroundColor: '#e5e7eb',
+    marginBottom: 8,
+  },
+  galleryItemImage: {
+    width: '100%',
+    height: '100%',
+  },
+  galleryItemOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 12,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  galleryItemAuthor: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#fff',
+    marginBottom: 2,
+  },
+  galleryItemTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 6,
+  },
+  galleryItemStats: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  galleryItemStatText: {
+    fontSize: 12,
+    color: '#fff',
+    fontWeight: '500',
+  },
+  emptyGallery: {
+    alignItems: 'center',
+    paddingVertical: 60,
+  },
+  emptyGalleryText: {
+    fontSize: 16,
+    color: '#999',
+    marginTop: 16,
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  uploadFirstButton: {
+    backgroundColor: '#FF7A5C',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  uploadFirstButtonText: {
+    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#FF7A5C',
-    marginBottom: 4,
-  },
-  weekContent: {
-    fontSize: 14,
-    color: '#374151',
-    lineHeight: 20,
-  },
-  moreWeeks: {
-    fontSize: 14,
-    color: '#3b82f6',
-    textAlign: 'center',
-    marginTop: 8,
   },
   emptyReviewsContainer: {
     alignItems: 'center',

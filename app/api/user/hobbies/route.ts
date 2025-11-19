@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { and, eq } from 'drizzle-orm';
 import { randomUUID } from 'crypto';
 
-// GET /api/user/hobbies - 사용자의 관심 취미 목록과 상세 정보 조회
+// GET /api/user/hobbies - 사용자의 관심 취미 목록 조회 (비정규화된 데이터 반환)
 export async function GET() {
   try {
     const session = await getSession();
@@ -13,15 +13,30 @@ export async function GET() {
       return NextResponse.json({ error: '로그인이 필요합니다.' }, { status: 401 });
     }
 
-    // ✨ with: { hobby: true } 를 추가하여 hobbies 테이블 정보도 함께 가져옵니다.
-    const userHobbyRelations = await db.query.userHobbies.findMany({
+    // 비정규화된 필드를 직접 반환 (JOIN 불필요)
+    const userHobbyList = await db.query.userHobbies.findMany({
       where: eq(userHobbies.userId, session.userId),
-      with: {
-        hobby: true, // Hobbies 테이블과 JOIN
-      }
     });
 
-    return NextResponse.json(userHobbyRelations); // JOIN된 결과 반환
+    // 기존 형식 호환성을 위해 hobby 객체 형태로 변환
+    const formattedData = userHobbyList.map(item => ({
+      id: item.id,
+      userId: item.userId,
+      hobbyId: item.hobbyId,
+      status: item.status,
+      progress: item.progress,
+      startedAt: item.startedAt,
+      completedAt: item.completedAt,
+      hobby: {
+        id: item.hobbyId,
+        name: item.hobbyName,
+        category: item.hobbyCategory,
+        description: item.hobbyDescription,
+        imageUrl: item.hobbyImage,
+      }
+    }));
+
+    return NextResponse.json(formattedData);
 
   } catch (error) {
     console.error('Get User Hobbies API error:', error);
@@ -29,7 +44,7 @@ export async function GET() {
   }
 }
 
-// POST /api/user/hobbies - 관심 취미 추가 (변경 없음)
+// POST /api/user/hobbies - 관심 취미 추가 (비정규화된 취미 정보 함께 저장)
 export async function POST(request: NextRequest) {
   try {
     const session = await getSession();
@@ -49,10 +64,24 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ message: '이미 추가된 취미입니다.' });
     }
 
+    // 취미 정보 조회 (비정규화를 위해)
+    const hobby = await db.query.hobbies.findFirst({
+      where: eq(hobbies.id, hobbyId)
+    });
+
+    if (!hobby) {
+      return NextResponse.json({ error: '존재하지 않는 취미입니다.' }, { status: 404 });
+    }
+
+    // 비정규화: 취미 정보를 userHobbies에 직접 저장
     await db.insert(userHobbies).values({
       id: randomUUID(),
       userId: session.userId,
       hobbyId: hobbyId,
+      hobbyName: hobby.name,
+      hobbyCategory: hobby.category,
+      hobbyDescription: hobby.description,
+      hobbyImage: hobby.imageUrl,
       status: status,
       progress: 0,
     });
