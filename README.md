@@ -580,10 +580,10 @@ This project is licensed under the MIT License.
 
 ```bash
 # 웹 서버 실행 (0.0.0.0:3000)
-npm run dev
+npm run dev:socket
 
 # 모바일 앱 실행
-cd mobile && npx expo start
+cd mobile && npx expo start --clear
 
 # DB 시드 (초기 데이터)
 npm run seed
