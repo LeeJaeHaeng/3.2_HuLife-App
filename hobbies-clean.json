@@ -1,0 +1,5281 @@
+[
+  {
+    "id": "015fa22d-83b8-4b19-8421-c44cce2c2a67",
+    "name": "가죽공예",
+    "category": "공예",
+    "description": "가죽으로 지갑, 가방 등을 만드는 공예. 튼튼하고 오래 쓸 수 있습니다.",
+    "difficulty": 4,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "high",
+    "imageUrl": "/가죽공예.png",
+    "videoUrl": "https://youtu.be/g0s61ohm4GA?si=i7x2kCuayGB8VR1j",
+    "benefits": [
+      "실용적 작품",
+      "내구성",
+      "수공예 가치",
+      "집중력"
+    ],
+    "requirements": [
+      "가죽",
+      "칼",
+      "바늘",
+      "실",
+      "공구"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "가죽 종류",
+        "content": "소가죽, 양가죽 등"
+      },
+      {
+        "week": 2,
+        "title": "공구 사용법",
+        "content": "커터, 펀치, 망치"
+      },
+      {
+        "week": 3,
+        "title": "재단하기",
+        "content": "형지에 맞춰 자르기"
+      },
+      {
+        "week": 4,
+        "title": "코인 지갑",
+        "content": "간단한 소품 제작"
+      },
+      {
+        "week": 5,
+        "title": "재봉하기",
+        "content": "손바느질과 기계 봉제"
+      },
+      {
+        "week": 6,
+        "title": "카드 지갑",
+        "content": "슬롯이 있는 지갑"
+      },
+      {
+        "week": 7,
+        "title": "각인과 염색",
+        "content": "가죽에 무늬 새기기"
+      },
+      {
+        "week": 8,
+        "title": "장지갑 완성",
+        "content": "실용적인 작품 제작"
+      }
+    ]
+  },
+  {
+    "id": "02cb204e-bd68-46b5-a08a-f7a5b57f25e1",
+    "name": "수경 재배",
+    "category": "자연",
+    "description": "흙 없이 물로 식물을 키우는 현대적 방법. 깨끗하고 관리가 쉽습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "individual",
+    "budget": "medium",
+    "imageUrl": "/수경재배.png",
+    "videoUrl": "https://youtu.be/HJHmkSUg1As?si=Jm_rCk106g9jx4sO",
+    "benefits": [
+      "깨끗한 재배",
+      "관리 용이",
+      "수확 가능",
+      "관찰 재미"
+    ],
+    "requirements": [
+      "수경 재배 키트",
+      "양액",
+      "조명",
+      "펌프"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "수경재배 원리",
+        "content": "흙 없이 물로 키우는 방법"
+      },
+      {
+        "week": 2,
+        "title": "시스템 구성",
+        "content": "용기, 펌프, 배지 준비"
+      },
+      {
+        "week": 3,
+        "title": "영양액 만들기",
+        "content": "비료 농도와 pH 조절"
+      },
+      {
+        "week": 4,
+        "title": "씨앗 발아",
+        "content": "스펀지에 씨 뿌려 싹 틔우기"
+      },
+      {
+        "week": 5,
+        "title": "모종 이식",
+        "content": "수경 재배기로 옮기기"
+      },
+      {
+        "week": 6,
+        "title": "관리와 점검",
+        "content": "영양액 교체와 뿌리 확인"
+      },
+      {
+        "week": 7,
+        "title": "상추 키우기",
+        "content": "잎채소 재배 실습"
+      },
+      {
+        "week": 8,
+        "title": "수확과 활용",
+        "content": "신선한 채소 수확하기"
+      }
+    ]
+  },
+  {
+    "id": "1221fd09-eba5-4168-92ce-59b79c73c1e8",
+    "name": "명상",
+    "category": "건강",
+    "description": "마음을 비우고 집중하는 정신 수련. 스트레스 해소와 정서 안정에 탁월합니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "both",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/명상.png",
+    "videoUrl": "https://youtu.be/yiysD0Jl2Wo?si=mvKdttLsiaZcoiAL",
+    "benefits": [
+      "스트레스 감소",
+      "정서 안정",
+      "집중력 향상",
+      "수면 개선"
+    ],
+    "requirements": [
+      "명상 쿠션",
+      "조용한 공간",
+      "편한 옷"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "명상의 이해",
+        "content": "명상의 목적과 효과"
+      },
+      {
+        "week": 2,
+        "title": "호흡 명상",
+        "content": "호흡에 집중하는 연습"
+      },
+      {
+        "week": 3,
+        "title": "바디스캔",
+        "content": "몸의 감각 알아차리기"
+      },
+      {
+        "week": 4,
+        "title": "마음챙김",
+        "content": "현재 순간에 머무르기"
+      },
+      {
+        "week": 5,
+        "title": "자애 명상",
+        "content": "자신과 타인에게 사랑 보내기"
+      },
+      {
+        "week": 6,
+        "title": "걷기 명상",
+        "content": "걸으며 명상하기"
+      },
+      {
+        "week": 7,
+        "title": "소리 명상",
+        "content": "소리에 귀 기울이기"
+      },
+      {
+        "week": 8,
+        "title": "일상 명상",
+        "content": "생활 속 명상 습관화"
+      }
+    ]
+  },
+  {
+    "id": "13d230c8-43f6-45fa-b5f3-0fa3a1acf318",
+    "name": "스트레칭",
+    "category": "건강",
+    "description": "몸의 유연성을 높이는 기본 운동. 부상 예방과 근육 이완에 좋습니다.",
+    "difficulty": 1,
+    "indoorOutdoor": "both",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/스트레칭.png",
+    "videoUrl": "https://youtu.be/7gR50n00rQ4?si=mWb09ph9kzR4Q3Rj",
+    "benefits": [
+      "유연성 증가",
+      "부상 예방",
+      "혈액 순환",
+      "근육 이완"
+    ],
+    "requirements": [
+      "요가 매트",
+      "편한 옷"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "스트레칭 기초",
+        "content": "정적, 동적 스트레칭 이해"
+      },
+      {
+        "week": 2,
+        "title": "목과 어깨",
+        "content": "상체 긴장 풀기"
+      },
+      {
+        "week": 3,
+        "title": "허리와 등",
+        "content": "척추 유연성 기르기"
+      },
+      {
+        "week": 4,
+        "title": "다리와 엉덩이",
+        "content": "하체 근육 이완"
+      },
+      {
+        "week": 5,
+        "title": "전신 스트레칭",
+        "content": "전체 근육 풀어주기"
+      },
+      {
+        "week": 6,
+        "title": "아침 루틴",
+        "content": "기상 후 스트레칭 습관"
+      },
+      {
+        "week": 7,
+        "title": "취침 전 루틴",
+        "content": "잠자기 전 이완 동작"
+      },
+      {
+        "week": 8,
+        "title": "통증 완화",
+        "content": "부위별 맞춤 스트레칭"
+      }
+    ]
+  },
+  {
+    "id": "147edbfb-9092-4b2e-95cf-a2820d5c6ff2",
+    "name": "한문 공부",
+    "category": "문화",
+    "description": "한자와 한문 고전을 배우며 동양 문화의 깊이를 이해합니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/한문공부.png",
+    "videoUrl": "https://youtu.be/eqi-jDQF9lA?si=U39IzI2JhlpF7qF-",
+    "benefits": [
+      "인문학적 소양",
+      "두뇌 활동",
+      "고전 이해",
+      "문화적 깊이"
+    ],
+    "requirements": [
+      "한문 교재",
+      "노트",
+      "필기구"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "한자의 기초",
+        "content": "부수와 획순, 한자의 구조"
+      },
+      {
+        "week": 2,
+        "title": "일상 한자",
+        "content": "자주 쓰는 기본 한자 100자"
+      },
+      {
+        "week": 3,
+        "title": "한자어 이해",
+        "content": "한자로 이루어진 우리말"
+      },
+      {
+        "week": 4,
+        "title": "고사성어",
+        "content": "사자성어와 그 유래"
+      },
+      {
+        "week": 5,
+        "title": "한문 문장",
+        "content": "간단한 한문 문장 읽기"
+      },
+      {
+        "week": 6,
+        "title": "천자문",
+        "content": "천자문으로 한자 익히기"
+      },
+      {
+        "week": 7,
+        "title": "명심보감",
+        "content": "고전 한문 읽고 해석하기"
+      },
+      {
+        "week": 8,
+        "title": "한시 감상",
+        "content": "한시 읽고 의미 이해하기"
+      }
+    ]
+  },
+  {
+    "id": "1534f107-2996-46dd-b2f9-0a23fb880db6",
+    "name": "독서 지도",
+    "category": "봉사",
+    "description": "아이들에게 책을 읽어주고 독서 습관을 길러주는 봉사활동입니다.",
+    "difficulty": 1,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "social",
+    "budget": "low",
+    "imageUrl": "/독서지도.png",
+    "videoUrl": "https://youtu.be/PiAJEYClBtE?si=2gPePoPlYqFDYuwm",
+    "benefits": [
+      "보람",
+      "세대 교류",
+      "지식 나눔",
+      "사회 공헌"
+    ],
+    "requirements": [
+      "동화책",
+      "열정"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "독서 지도 개요",
+        "content": "아이들과 책 읽기의 중요성"
+      },
+      {
+        "week": 2,
+        "title": "책 선정",
+        "content": "연령별 추천 도서"
+      },
+      {
+        "week": 3,
+        "title": "읽어주기",
+        "content": "효과적인 낭독 방법"
+      },
+      {
+        "week": 4,
+        "title": "질문하기",
+        "content": "생각을 키우는 질문법"
+      },
+      {
+        "week": 5,
+        "title": "독후 활동",
+        "content": "그림 그리기, 글쓰기"
+      },
+      {
+        "week": 6,
+        "title": "토론 유도",
+        "content": "책 내용 나누기"
+      },
+      {
+        "week": 7,
+        "title": "습관 만들기",
+        "content": "규칙적인 독서 시간"
+      },
+      {
+        "week": 8,
+        "title": "도서관 활용",
+        "content": "함께 도서관 가기"
+      }
+    ]
+  },
+  {
+    "id": "154babec-3895-4f4f-87aa-a8ba4df345ed",
+    "name": "박물관 탐방",
+    "category": "문화",
+    "description": "다양한 박물관과 전시관을 방문하여 문화유산을 감상하고 배웁니다.",
+    "difficulty": 1,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/박물관탐방.png",
+    "videoUrl": "https://youtu.be/ZScev_uALro?si=QI1TvIuM3gSvfocB",
+    "benefits": [
+      "교양 함양",
+      "역사 이해",
+      "문화 향유",
+      "사회적 교류"
+    ],
+    "requirements": [
+      "메모장",
+      "편한 신발",
+      "음료"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "박물관 소개",
+        "content": "박물관의 종류와 관람 예절"
+      },
+      {
+        "week": 2,
+        "title": "국립중앙박물관",
+        "content": "한국 역사 유물 관람"
+      },
+      {
+        "week": 3,
+        "title": "미술관 탐방",
+        "content": "회화, 조각 등 미술품 감상"
+      },
+      {
+        "week": 4,
+        "title": "과학관",
+        "content": "과학 기술 체험 전시 관람"
+      },
+      {
+        "week": 5,
+        "title": "민속 박물관",
+        "content": "전통 생활 문화 이해"
+      },
+      {
+        "week": 6,
+        "title": "특별 전시",
+        "content": "기획 전시와 순회 전시 관람"
+      },
+      {
+        "week": 7,
+        "title": "도슨트 투어",
+        "content": "해설사와 함께하는 관람"
+      },
+      {
+        "week": 8,
+        "title": "큐레이팅",
+        "content": "나만의 전시 기획해보기"
+      }
+    ]
+  },
+  {
+    "id": "1582be07-1916-42dc-b1b0-ee3a5beb9dfb",
+    "name": "태극권",
+    "category": "스포츠",
+    "description": "느린 동작으로 몸과 마음을 다스리는 중국 무술. 명상과 운동의 조화입니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "both",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/태극권.png",
+    "videoUrl": "https://youtu.be/uT9h2WOICUc?si=Qi0ccCEi0IGjo0CL",
+    "benefits": [
+      "균형감 향상",
+      "유연성 증대",
+      "스트레스 감소",
+      "마음 안정"
+    ],
+    "requirements": [
+      "편한 운동복",
+      "운동화",
+      "없음"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "태극권 철학",
+        "content": "음양의 원리와 태극권의 역사"
+      },
+      {
+        "week": 2,
+        "title": "기본 자세",
+        "content": "마보, 궁보 등 기본 스탠스"
+      },
+      {
+        "week": 3,
+        "title": "호흡과 이완",
+        "content": "단전호흡과 몸의 긴장 풀기"
+      },
+      {
+        "week": 4,
+        "title": "24식 태극권 1",
+        "content": "기본 24동작 중 1-8동작"
+      },
+      {
+        "week": 5,
+        "title": "24식 태극권 2",
+        "content": "9-16동작 익히기"
+      },
+      {
+        "week": 6,
+        "title": "24식 태극권 3",
+        "content": "17-24동작 완성"
+      },
+      {
+        "week": 7,
+        "title": "연속 동작",
+        "content": "24동작 흐름 있게 연결"
+      },
+      {
+        "week": 8,
+        "title": "발표와 시연",
+        "content": "배운 태극권 전체 시연"
+      }
+    ]
+  },
+  {
+    "id": "24fd8d7a-a3bf-43ae-a530-7df6be070581",
+    "name": "합창",
+    "category": "문화",
+    "description": "여러 사람이 함께 노래하는 합창단 활동. 하모니를 이루는 즐거움이 있습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "social",
+    "budget": "low",
+    "imageUrl": "/합창.png",
+    "videoUrl": "https://youtu.be/KAXxSu_Slyw?si=RsmvoBlByA6KynnS",
+    "benefits": [
+      "호흡 개선",
+      "사회적 유대",
+      "음악성 향상",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "악보",
+      "편한 옷",
+      "물"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "합창의 기초",
+        "content": "파트 구분과 하모니 이해"
+      },
+      {
+        "week": 2,
+        "title": "발성 훈련",
+        "content": "단체 발성 연습과 음정 맞추기"
+      },
+      {
+        "week": 3,
+        "title": "호흡 조절",
+        "content": "함께 호흡하며 소리 내기"
+      },
+      {
+        "week": 4,
+        "title": "2부 합창",
+        "content": "두 파트로 나뉘어 노래하기"
+      },
+      {
+        "week": 5,
+        "title": "4부 합창",
+        "content": "소프라노, 알토, 테너, 베이스"
+      },
+      {
+        "week": 6,
+        "title": "리듬과 박자",
+        "content": "지휘자 보며 정확한 템포 유지"
+      },
+      {
+        "week": 7,
+        "title": "표현력 향상",
+        "content": "곡의 감정과 다이나믹 살리기"
+      },
+      {
+        "week": 8,
+        "title": "공연 준비",
+        "content": "무대 매너와 합창 발표회"
+      }
+    ]
+  },
+  {
+    "id": "257c1b9d-a8dd-4ac0-aa9d-fddd5096fbeb",
+    "name": "장기",
+    "category": "여가",
+    "description": "한국 전통 보드 게임. 두뇌 회전과 전략적 사고를 기릅니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "both",
+    "socialIndividual": "social",
+    "budget": "low",
+    "imageUrl": "/장기.png",
+    "videoUrl": "https://youtu.be/RVVYOlqgvmA?si=qMmMMoyfXVf6k8yI",
+    "benefits": [
+      "두뇌 활동",
+      "전략 수립",
+      "사회적 교류",
+      "전통 문화"
+    ],
+    "requirements": [
+      "장기판",
+      "장기알"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "장기 규칙",
+        "content": "말의 종류와 움직임"
+      },
+      {
+        "week": 2,
+        "title": "포진법",
+        "content": "개국 시 말 배치"
+      },
+      {
+        "week": 3,
+        "title": "수읽기",
+        "content": "몇 수 앞 예측하기"
+      },
+      {
+        "week": 4,
+        "title": "공격 기술",
+        "content": "상대 말 잡는 전략"
+      },
+      {
+        "week": 5,
+        "title": "수비 기술",
+        "content": "궁 지키기와 방어"
+      },
+      {
+        "week": 6,
+        "title": "정석 배우기",
+        "content": "유명한 포진과 정석"
+      },
+      {
+        "week": 7,
+        "title": "실전 대국",
+        "content": "시간 제한 두고 두기"
+      },
+      {
+        "week": 8,
+        "title": "장기 대회",
+        "content": "토너먼트 참가"
+      }
+    ]
+  },
+  {
+    "id": "2710ee68-ddcf-4209-af22-1e4e11175c74",
+    "name": "캘리그라피",
+    "category": "미술",
+    "description": "붓으로 아름다운 손글씨를 쓰는 예술. 한글과 한자의 조형미를 살립니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "individual",
+    "budget": "low",
+    "imageUrl": "/캘리그라피.png",
+    "videoUrl": "https://youtu.be/RyzlWSFMK4k?si=44pzT6mWwYdFLU3i",
+    "benefits": [
+      "글씨체 개선",
+      "집중력 향상",
+      "예술적 감각",
+      "실용성"
+    ],
+    "requirements": [
+      "붓",
+      "먹",
+      "종이",
+      "연습장"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "캘리그라피 소개",
+        "content": "손글씨의 예술"
+      },
+      {
+        "week": 2,
+        "title": "도구 익히기",
+        "content": "붓펜, 먹, 다양한 펜"
+      },
+      {
+        "week": 3,
+        "title": "기본 획",
+        "content": "선의 강약과 리듬"
+      },
+      {
+        "week": 4,
+        "title": "한글 쓰기",
+        "content": "자음과 모음의 변형"
+      },
+      {
+        "week": 5,
+        "title": "문구 디자인",
+        "content": "짧은 문장 멋지게 쓰기"
+      },
+      {
+        "week": 6,
+        "title": "레이아웃",
+        "content": "여백과 배치의 미학"
+      },
+      {
+        "week": 7,
+        "title": "카드 만들기",
+        "content": "축하 카드 손글씨"
+      },
+      {
+        "week": 8,
+        "title": "작품 제작",
+        "content": "액자용 캘리그라피 완성"
+      }
+    ]
+  },
+  {
+    "id": "2dcbd6f3-0c97-4161-b12d-756a5f3b53af",
+    "name": "아로마테라피",
+    "category": "건강",
+    "description": "향기로운 에센셜 오일로 심신의 건강을 돕는 자연 치유법입니다.",
+    "difficulty": 1,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "individual",
+    "budget": "medium",
+    "imageUrl": "/아로마테라피.png",
+    "videoUrl": "https://youtu.be/YdDtf6oa25U?si=oNz1IkkHlNA9EhFG",
+    "benefits": [
+      "스트레스 완화",
+      "수면 개선",
+      "기분 전환",
+      "면역력 향상"
+    ],
+    "requirements": [
+      "에센셜 오일",
+      "디퓨저",
+      "캐리어 오일"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "아로마테라피 소개",
+        "content": "에센셜 오일의 효능"
+      },
+      {
+        "week": 2,
+        "title": "주요 오일 알기",
+        "content": "라벤더, 페퍼민트 등 특성"
+      },
+      {
+        "week": 3,
+        "title": "디퓨저 사용",
+        "content": "공기 중으로 향 퍼트리기"
+      },
+      {
+        "week": 4,
+        "title": "블렌딩",
+        "content": "오일 혼합하여 맞춤 향 만들기"
+      },
+      {
+        "week": 5,
+        "title": "마사지 오일",
+        "content": "캐리어 오일과 혼합하기"
+      },
+      {
+        "week": 6,
+        "title": "목욕 활용",
+        "content": "아로마 목욕으로 힐링"
+      },
+      {
+        "week": 7,
+        "title": "룸 스프레이",
+        "content": "천연 방향제 만들기"
+      },
+      {
+        "week": 8,
+        "title": "계절별 활용",
+        "content": "상황에 맞는 아로마 선택"
+      }
+    ]
+  },
+  {
+    "id": "31756b53-b3e0-4faf-b475-2bdd083567b1",
+    "name": "수묵화",
+    "category": "미술",
+    "description": "먹과 붓으로 한국의 전통 미를 표현하는 동양화. 여백의 미와 기운생동을 중요시합니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/수묵화.png",
+    "videoUrl": "https://youtu.be/_NOMkv08Kak?si=Zfx78sB29BfEasz0",
+    "benefits": [
+      "전통 문화 이해",
+      "마음의 평정",
+      "여백의 미 체득",
+      "정신 수양"
+    ],
+    "requirements": [
+      "먹",
+      "붓",
+      "화선지",
+      "벼루",
+      "물통"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "문방사우",
+        "content": "붓, 먹, 종이, 벼루 이해"
+      },
+      {
+        "week": 2,
+        "title": "먹 갈기",
+        "content": "먹 농담 조절하기"
+      },
+      {
+        "week": 3,
+        "title": "사군자 매화",
+        "content": "매화 가지와 꽃 그리기"
+      },
+      {
+        "week": 4,
+        "title": "사군자 난",
+        "content": "난초 잎과 꽃 표현"
+      },
+      {
+        "week": 5,
+        "title": "사군자 국화",
+        "content": "국화 그리기"
+      },
+      {
+        "week": 6,
+        "title": "사군자 대나무",
+        "content": "대나무 줄기와 잎"
+      },
+      {
+        "week": 7,
+        "title": "산수화",
+        "content": "산과 물 먹으로 표현"
+      },
+      {
+        "week": 8,
+        "title": "작품 낙관",
+        "content": "도장 찍고 작품 완성"
+      }
+    ]
+  },
+  {
+    "id": "349ff6fc-3f45-450b-9dd5-23a31b0c9a73",
+    "name": "오카리나",
+    "category": "음악",
+    "description": "도자기로 만든 관악기. 따뜻하고 부드러운 음색이 특징입니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "both",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/오카리나.png",
+    "videoUrl": "https://youtu.be/Ynw6xloIf08?si=CoDyF0o0ea0ktBvv",
+    "benefits": [
+      "호흡 조절",
+      "음악성",
+      "휴대성",
+      "아름다운 음색"
+    ],
+    "requirements": [
+      "오카리나",
+      "악보",
+      "손수건"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "오카리나 소개",
+        "content": "악기 구조와 종류"
+      },
+      {
+        "week": 2,
+        "title": "입김 조절",
+        "content": "바람 세기와 음색"
+      },
+      {
+        "week": 3,
+        "title": "운지법",
+        "content": "구멍 막는 손가락"
+      },
+      {
+        "week": 4,
+        "title": "음계 연습",
+        "content": "낮은 음부터 높은 음까지"
+      },
+      {
+        "week": 5,
+        "title": "동요 연주",
+        "content": "고향의 봄 등"
+      },
+      {
+        "week": 6,
+        "title": "텅잉 기법",
+        "content": "또박또박 음 구분"
+      },
+      {
+        "week": 7,
+        "title": "가요 연주",
+        "content": "아름다운 곡 연주"
+      },
+      {
+        "week": 8,
+        "title": "합주 경험",
+        "content": "여럿이 함께 연주"
+      }
+    ]
+  },
+  {
+    "id": "393ed2e1-880f-4ee2-8d3b-a4ec787d1c2c",
+    "name": "경락 마사지",
+    "category": "건강",
+    "description": "경혈을 자극하여 건강을 증진하는 동양 의학. 셀프 마사지법을 배웁니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/경락마사지.png",
+    "videoUrl": "https://youtu.be/zvoyEFZXHq8?si=5VcT-2KgepmogzKU",
+    "benefits": [
+      "혈액 순환",
+      "통증 완화",
+      "피로 회복",
+      "면역력 증진"
+    ],
+    "requirements": [
+      "마사지 도구",
+      "경락 차트",
+      "편한 옷"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "경락 이론",
+        "content": "경락과 경혈의 개념"
+      },
+      {
+        "week": 2,
+        "title": "주요 경혈점",
+        "content": "자주 사용하는 혈자리 위치"
+      },
+      {
+        "week": 3,
+        "title": "손 마사지",
+        "content": "손과 팔의 경락 자극"
+      },
+      {
+        "week": 4,
+        "title": "발 마사지",
+        "content": "발 반사구와 경혈 지압"
+      },
+      {
+        "week": 5,
+        "title": "두피 마사지",
+        "content": "머리 경혈로 두통 완화"
+      },
+      {
+        "week": 6,
+        "title": "복부 마사지",
+        "content": "배 경락으로 소화 촉진"
+      },
+      {
+        "week": 7,
+        "title": "전신 경락",
+        "content": "12경락 전체 흐름 이해"
+      },
+      {
+        "week": 8,
+        "title": "자가 마사지",
+        "content": "혼자서 할 수 있는 마사지법"
+      }
+    ]
+  },
+  {
+    "id": "3b255847-e86a-42bd-b774-b7621c70064f",
+    "name": "텃밭 가꾸기",
+    "category": "자연",
+    "description": "직접 채소와 과일을 재배하는 도시 농업. 건강한 먹거리를 얻을 수 있습니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/텃밭가꾸기.png",
+    "videoUrl": "https://youtu.be/0I6p_cHqI9o?si=3b7a5j5Ho7EsIpk-",
+    "benefits": [
+      "신체 활동",
+      "건강한 먹거리",
+      "성취감",
+      "자연 이해"
+    ],
+    "requirements": [
+      "텃밭",
+      "농기구",
+      "씨앗",
+      "비료"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "텃밭 계획",
+        "content": "작물 선택과 텃밭 디자인"
+      },
+      {
+        "week": 2,
+        "title": "땅 만들기",
+        "content": "흙 고르기와 밭 정리"
+      },
+      {
+        "week": 3,
+        "title": "씨 뿌리기",
+        "content": "계절 채소 파종"
+      },
+      {
+        "week": 4,
+        "title": "물주기와 거름",
+        "content": "관수와 비료 주기"
+      },
+      {
+        "week": 5,
+        "title": "잡초 제거",
+        "content": "잡초 뽑고 흙 북돋기"
+      },
+      {
+        "week": 6,
+        "title": "병충해 관리",
+        "content": "친환경 방제 방법"
+      },
+      {
+        "week": 7,
+        "title": "수확하기",
+        "content": "상추, 고추 등 채소 수확"
+      },
+      {
+        "week": 8,
+        "title": "다음 작물",
+        "content": "윤작과 계절별 재배 계획"
+      }
+    ]
+  },
+  {
+    "id": "3e018fe4-7f09-45cc-80d7-5192a8a677e7",
+    "name": "버섯 재배",
+    "category": "자연",
+    "description": "실내에서 버섯을 키우는 취미. 수확의 즐거움과 건강한 먹거리를 얻습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "individual",
+    "budget": "low",
+    "imageUrl": "/버섯재배.png",
+    "videoUrl": "https://youtu.be/Svf2jZGAuZA?si=9ujUfKaJ2zk3uJ09",
+    "benefits": [
+      "수확의 즐거움",
+      "건강 먹거리",
+      "관찰력",
+      "성취감"
+    ],
+    "requirements": [
+      "버섯 재배 키트",
+      "분무기",
+      "조명"
+    ],
+    "curriculum": null
+  },
+  {
+    "id": "4244414d-d6c4-4d2e-913c-04117a503887",
+    "name": "사진 촬영",
+    "category": "문화",
+    "description": "카메라로 순간을 포착하는 예술. 세상을 새로운 시각으로 바라보는 법을 배웁니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "both",
+    "socialIndividual": "both",
+    "budget": "high",
+    "imageUrl": "/사진촬영.png",
+    "videoUrl": "https://youtu.be/khOBEmvGz3A?si=FQofBTGBT0cS-tjI",
+    "benefits": [
+      "관찰력 향상",
+      "창의력 개발",
+      "추억 기록",
+      "예술적 감각"
+    ],
+    "requirements": [
+      "카메라",
+      "렌즈",
+      "삼각대",
+      "메모리 카드"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "카메라 기초",
+        "content": "조리개, 셔터속도, ISO 이해하기"
+      },
+      {
+        "week": 2,
+        "title": "구도와 프레이밍",
+        "content": "3분할 법칙, 황금비율 활용"
+      },
+      {
+        "week": 3,
+        "title": "빛의 이해",
+        "content": "자연광, 역광, 측광 촬영 기법"
+      },
+      {
+        "week": 4,
+        "title": "인물 사진",
+        "content": "표정, 각도, 배경 활용 인물 촬영"
+      },
+      {
+        "week": 5,
+        "title": "풍경 사진",
+        "content": "원근감과 계절감 담는 풍경 촬영"
+      },
+      {
+        "week": 6,
+        "title": "접사 촬영",
+        "content": "꽃과 작은 피사체 클로즈업"
+      },
+      {
+        "week": 7,
+        "title": "보정 기초",
+        "content": "스마트폰/컴퓨터로 사진 편집"
+      },
+      {
+        "week": 8,
+        "title": "포트폴리오 제작",
+        "content": "주제별 사진 시리즈 완성"
+      }
+    ]
+  },
+  {
+    "id": "4663ab38-ab1f-43ce-86f6-94297a0b8d3a",
+    "name": "유화",
+    "category": "미술",
+    "description": "유성 물감으로 캔버스에 그림을 그리는 고급 미술 기법. 깊이 있는 색감과 질감을 표현할 수 있습니다.",
+    "difficulty": 4,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "individual",
+    "budget": "high",
+    "imageUrl": "/유화.png",
+    "videoUrl": "https://youtu.be/BCKcKsCWooQ?si=qpOJP36RLAlcjh65",
+    "benefits": [
+      "예술적 표현력 향상",
+      "인내심 기르기",
+      "색채 감각 개발",
+      "작품 제작의 성취감"
+    ],
+    "requirements": [
+      "유화 물감",
+      "캔버스",
+      "붓 세트",
+      "팔레트",
+      "이젤"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "유화 재료",
+        "content": "물감, 붓, 캔버스, 오일"
+      },
+      {
+        "week": 2,
+        "title": "색채 혼합",
+        "content": "팔레트에서 색 만들기"
+      },
+      {
+        "week": 3,
+        "title": "밑그림",
+        "content": "스케치로 구도 잡기"
+      },
+      {
+        "week": 4,
+        "title": "바탕 칠하기",
+        "content": "전체 톤 깔기"
+      },
+      {
+        "week": 5,
+        "title": "세부 묘사",
+        "content": "형태와 명암 그리기"
+      },
+      {
+        "week": 6,
+        "title": "질감 표현",
+        "content": "터치로 질감 살리기"
+      },
+      {
+        "week": 7,
+        "title": "수정과 마무리",
+        "content": "세부 보완하기"
+      },
+      {
+        "week": 8,
+        "title": "완성과 건조",
+        "content": "바니시 칠하고 보관"
+      }
+    ]
+  },
+  {
+    "id": "4a8c6fb0-2eca-438c-9ae9-6326ef9c351f",
+    "name": "수채화",
+    "category": "미술",
+    "description": "물감과 붓을 이용한 아름다운 그림 그리기. 초보자도 쉽게 시작할 수 있으며, 창의력과 집중력을 향상시킵니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/수채화.png",
+    "videoUrl": "https://youtu.be/-DxZ0lf5cFQ?si=7AMObrbLv6cjwbAp",
+    "benefits": [
+      "창의력 향상",
+      "스트레스 해소",
+      "집중력 개선",
+      "소근육 발달"
+    ],
+    "requirements": [
+      "수채화 물감 세트",
+      "붓",
+      "수채화 종이",
+      "물통"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "수채화 기초",
+        "content": "물과 물감의 비율, 붓 사용법, 기본 색채 이론 학습"
+      },
+      {
+        "week": 2,
+        "title": "기본 기법 연습",
+        "content": "번지기, 그라데이션, 드라이브러시 기법 익히기"
+      },
+      {
+        "week": 3,
+        "title": "정물화 실습",
+        "content": "과일과 꽃을 주제로 한 정물화 그리기"
+      },
+      {
+        "week": 4,
+        "title": "풍경화 기초",
+        "content": "하늘, 나무, 물 표현 기법 연습"
+      },
+      {
+        "week": 5,
+        "title": "명암과 원근법",
+        "content": "빛과 그림자 표현, 원근감 있는 그림 그리기"
+      },
+      {
+        "week": 6,
+        "title": "색채 혼합",
+        "content": "다양한 색 만들기와 조화로운 배색 학습"
+      },
+      {
+        "week": 7,
+        "title": "풍경화 실습",
+        "content": "실제 풍경을 보고 수채화로 표현하기"
+      },
+      {
+        "week": 8,
+        "title": "개인 작품 제작",
+        "content": "배운 기법을 활용한 자유 주제 작품 완성"
+      }
+    ]
+  },
+  {
+    "id": "4b943b99-e0c2-4b6b-b4f1-779d0185a1a7",
+    "name": "양초 공예",
+    "category": "공예",
+    "description": "다양한 모양과 향의 양초를 만드는 취미. 인테리어 소품으로 활용됩니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/양초공예.png",
+    "videoUrl": "https://youtu.be/cqD3DOSPygI?si=myjjeQudnhehjHuZ",
+    "benefits": [
+      "창의력",
+      "인테리어",
+      "향기 치유",
+      "선물 가능"
+    ],
+    "requirements": [
+      "왁스",
+      "심지",
+      "몰드",
+      "향료",
+      "색소"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "양초 재료",
+        "content": "왁스, 심지, 향료 이해"
+      },
+      {
+        "week": 2,
+        "title": "왁스 녹이기",
+        "content": "온도 조절하기"
+      },
+      {
+        "week": 3,
+        "title": "컨테이너 캔들",
+        "content": "유리병에 양초 붓기"
+      },
+      {
+        "week": 4,
+        "title": "색 입히기",
+        "content": "염료로 색상 만들기"
+      },
+      {
+        "week": 5,
+        "title": "향초 만들기",
+        "content": "에센셜 오일 첨가"
+      },
+      {
+        "week": 6,
+        "title": "필러 캔들",
+        "content": "기둥형 양초 제작"
+      },
+      {
+        "week": 7,
+        "title": "장식 기법",
+        "content": "드라이플라워 활용"
+      },
+      {
+        "week": 8,
+        "title": "선물 세트",
+        "content": "완성품 포장하기"
+      }
+    ]
+  },
+  {
+    "id": "54c178d4-ba1f-4b85-818e-cb57a7679e29",
+    "name": "컴퓨터 활용",
+    "category": "기술",
+    "description": "워드, 엑셀, 인터넷 등 컴퓨터 기본 활용법을 배웁니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/컴퓨터활용.png",
+    "videoUrl": "https://youtu.be/4l30CXjJgyU?si=cp4ZiUcDF12llwD2",
+    "benefits": [
+      "실생활 활용",
+      "정보 접근",
+      "소통 도구",
+      "두뇌 활동"
+    ],
+    "requirements": [
+      "컴퓨터",
+      "인터넷",
+      "교재"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "컴퓨터 기초",
+        "content": "키보드, 마우스 사용법"
+      },
+      {
+        "week": 2,
+        "title": "인터넷 검색",
+        "content": "포털 사이트 활용"
+      },
+      {
+        "week": 3,
+        "title": "이메일",
+        "content": "메일 보내고 받기"
+      },
+      {
+        "week": 4,
+        "title": "문서 작성",
+        "content": "워드프로세서 사용"
+      },
+      {
+        "week": 5,
+        "title": "엑셀 기초",
+        "content": "표와 간단한 계산"
+      },
+      {
+        "week": 6,
+        "title": "사진 편집",
+        "content": "사진 자르고 보정하기"
+      },
+      {
+        "week": 7,
+        "title": "파일 관리",
+        "content": "폴더 정리와 백업"
+      },
+      {
+        "week": 8,
+        "title": "온라인 뱅킹",
+        "content": "안전한 인터넷 거래"
+      }
+    ]
+  },
+  {
+    "id": "552751d1-2383-42d9-af2e-15e832112189",
+    "name": "일본어",
+    "category": "언어",
+    "description": "일본 여행이나 문화 콘텐츠 이해에 유용한 일본어를 배웁니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/일본어.png",
+    "videoUrl": "https://youtu.be/T9EQsOqhLqs?si=iwuBHKxzyG3mlMfk",
+    "benefits": [
+      "여행 편의",
+      "문화 향유",
+      "두뇌 자극",
+      "새로운 도전"
+    ],
+    "requirements": [
+      "교재",
+      "노트",
+      "음성 파일"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "히라가나",
+        "content": "あいうえお 50음"
+      },
+      {
+        "week": 2,
+        "title": "카타카나",
+        "content": "アイウエオ 외래어"
+      },
+      {
+        "week": 3,
+        "title": "기본 인사",
+        "content": "こんにちは 등"
+      },
+      {
+        "week": 4,
+        "title": "자기소개",
+        "content": "나는 ~입니다"
+      },
+      {
+        "week": 5,
+        "title": "기본 문법",
+        "content": "조사와 동사 활용"
+      },
+      {
+        "week": 6,
+        "title": "쇼핑 회화",
+        "content": "これください 등"
+      },
+      {
+        "week": 7,
+        "title": "여행 일본어",
+        "content": "관광지에서 사용"
+      },
+      {
+        "week": 8,
+        "title": "일상 회화",
+        "content": "간단한 대화 연습"
+      }
+    ]
+  },
+  {
+    "id": "56bee3ea-b33b-4014-bf5f-ba77e85474b6",
+    "name": "요가",
+    "category": "건강",
+    "description": "몸과 마음의 균형을 찾는 운동. 유연성과 근력을 동시에 기를 수 있습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/요가.png",
+    "videoUrl": "https://youtu.be/OBTl49bVk94?si=-VZucAG0n0ZkUTIx",
+    "benefits": [
+      "유연성 향상",
+      "근력 강화",
+      "스트레스 해소",
+      "균형감각 개선"
+    ],
+    "requirements": [
+      "요가 매트",
+      "편한 운동복",
+      "요가 블록"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "요가 기본 원리",
+        "content": "호흡법과 요가의 철학 이해"
+      },
+      {
+        "week": 2,
+        "title": "기본 자세 익히기",
+        "content": "산 자세, 나무 자세, 아이 자세 등 기초 동작"
+      },
+      {
+        "week": 3,
+        "title": "유연성 향상",
+        "content": "스트레칭 중심의 동작으로 몸 풀기"
+      },
+      {
+        "week": 4,
+        "title": "균형감 기르기",
+        "content": "한 발로 서기, 워리어 자세 등 균형 동작"
+      },
+      {
+        "week": 5,
+        "title": "코어 강화",
+        "content": "복부와 허리 근력 강화 동작"
+      },
+      {
+        "week": 6,
+        "title": "호흡과 명상",
+        "content": "프라나야마 호흡법과 명상 실습"
+      },
+      {
+        "week": 7,
+        "title": "태양 경배 수련",
+        "content": "연속 동작 흐름 익히기"
+      },
+      {
+        "week": 8,
+        "title": "종합 수련",
+        "content": "배운 모든 동작을 조합한 60분 루틴"
+      }
+    ]
+  },
+  {
+    "id": "5999517c-4bfa-4035-b26a-d1680510e6e9",
+    "name": "탁구",
+    "category": "스포츠",
+    "description": "실내에서 즐기는 빠른 반응 스포츠. 두뇌 회전과 순발력을 동시에 키웁니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "social",
+    "budget": "low",
+    "imageUrl": "/탁구.png",
+    "videoUrl": "https://youtu.be/71HK3HfJmNY?si=vL2gu6FQMgvNhY1g",
+    "benefits": [
+      "반사신경 향상",
+      "두뇌 활동",
+      "전신 운동",
+      "날씨 무관"
+    ],
+    "requirements": [
+      "탁구채",
+      "탁구공",
+      "운동화",
+      "운동복"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "탁구 기본 규칙",
+        "content": "경기 방법, 점수 계산, 서브 규칙"
+      },
+      {
+        "week": 2,
+        "title": "그립과 자세",
+        "content": "라켓 잡는 법과 기본 스탠스"
+      },
+      {
+        "week": 3,
+        "title": "포핸드 스트로크",
+        "content": "앞쪽으로 치는 기본 타법 연습"
+      },
+      {
+        "week": 4,
+        "title": "백핸드 스트로크",
+        "content": "뒤쪽으로 치는 타법 익히기"
+      },
+      {
+        "week": 5,
+        "title": "서브 연습",
+        "content": "다양한 서브 기술 배우기"
+      },
+      {
+        "week": 6,
+        "title": "리시브와 랠리",
+        "content": "서브 받기와 공 주고받기 실전"
+      },
+      {
+        "week": 7,
+        "title": "스핀 기술",
+        "content": "톱스핀, 백스핀 회전 걸기"
+      },
+      {
+        "week": 8,
+        "title": "실전 경기",
+        "content": "복식과 단식 게임 경험"
+      }
+    ]
+  },
+  {
+    "id": "5bc745cf-500d-43b6-aa51-2054cf71e19a",
+    "name": "분재",
+    "category": "자연",
+    "description": "작은 화분에서 나무를 키우는 예술. 인내심과 섬세함이 필요합니다.",
+    "difficulty": 4,
+    "indoorOutdoor": "both",
+    "socialIndividual": "individual",
+    "budget": "medium",
+    "imageUrl": "/분재.png",
+    "videoUrl": "https://youtu.be/2oc9nAfmsUk?si=xHoMH0dUK4ZAUpYd",
+    "benefits": [
+      "인내심 함양",
+      "집중력",
+      "예술적 감각",
+      "정서 안정"
+    ],
+    "requirements": [
+      "분재 화분",
+      "가위",
+      "철사",
+      "분재용 흙"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "분재의 이해",
+        "content": "분재의 역사와 미학"
+      },
+      {
+        "week": 2,
+        "title": "나무 선택",
+        "content": "초보자에게 맞는 수종"
+      },
+      {
+        "week": 3,
+        "title": "화분과 흙",
+        "content": "분에 맞는 용토 고르기"
+      },
+      {
+        "week": 4,
+        "title": "물주기",
+        "content": "계절과 나무에 맞는 관수"
+      },
+      {
+        "week": 5,
+        "title": "가지치기",
+        "content": "모양 잡기 위한 전지"
+      },
+      {
+        "week": 6,
+        "title": "침엽수 분재",
+        "content": "소나무, 향나무 키우기"
+      },
+      {
+        "week": 7,
+        "title": "분갈이",
+        "content": "뿌리 정리하고 새 분으로"
+      },
+      {
+        "week": 8,
+        "title": "전시 감상",
+        "content": "분재 전시회 관람"
+      }
+    ]
+  },
+  {
+    "id": "5de92d88-4732-4cc0-a335-d26f4c215772",
+    "name": "기타",
+    "category": "음악",
+    "description": "휴대하기 좋은 현악기. 반주와 솔로 연주가 모두 가능합니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "both",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/기타.png",
+    "videoUrl": "https://youtu.be/CcQYe39RqS8?si=8iSWkhLGnmN1NxRw",
+    "benefits": [
+      "음악성 향상",
+      "창작 가능",
+      "휴대성",
+      "사회적 교류"
+    ],
+    "requirements": [
+      "기타",
+      "튜너",
+      "피크",
+      "악보"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "기타 구조와 튜닝",
+        "content": "기타 부위 이름과 조율하는 법"
+      },
+      {
+        "week": 2,
+        "title": "기본 자세와 운지법",
+        "content": "앉는 자세, 왼손 오른손 기본 동작"
+      },
+      {
+        "week": 3,
+        "title": "개방현 코드",
+        "content": "C, G, Am, Em 등 기본 코드"
+      },
+      {
+        "week": 4,
+        "title": "스트로밍 패턴",
+        "content": "다양한 리듬으로 치는 연습"
+      },
+      {
+        "week": 5,
+        "title": "바레 코드",
+        "content": "검지로 여러 줄 누르는 기술"
+      },
+      {
+        "week": 6,
+        "title": "핑거스타일 기초",
+        "content": "손가락으로 뜯는 주법"
+      },
+      {
+        "week": 7,
+        "title": "쉬운 곡 연주",
+        "content": "동요나 가요 1-2곡 완성"
+      },
+      {
+        "week": 8,
+        "title": "반주와 노래",
+        "content": "노래하며 기타 반주하기"
+      }
+    ]
+  },
+  {
+    "id": "5f5e0e95-44b7-4570-a48e-990cb285a116",
+    "name": "수영",
+    "category": "스포츠",
+    "description": "관절에 무리가 적은 최고의 전신 운동. 사계절 내내 즐길 수 있습니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/수영.png",
+    "videoUrl": "https://youtu.be/DC8MYG6uzSs?si=FwreV7jXE1Ie-QP1",
+    "benefits": [
+      "전신 근력 강화",
+      "심폐 기능 향상",
+      "관절 보호",
+      "체중 조절"
+    ],
+    "requirements": [
+      "수영복",
+      "수경",
+      "수모",
+      "수건"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "물 적응",
+        "content": "물에 대한 두려움 극복, 호흡 연습"
+      },
+      {
+        "week": 2,
+        "title": "자유형 킥",
+        "content": "다리 차기 기본 동작"
+      },
+      {
+        "week": 3,
+        "title": "자유형 팔 동작",
+        "content": "팔 젓기와 호흡 결합"
+      },
+      {
+        "week": 4,
+        "title": "자유형 완성",
+        "content": "25m 자유형 완주"
+      },
+      {
+        "week": 5,
+        "title": "배영 기초",
+        "content": "등을 대고 수영하기"
+      },
+      {
+        "week": 6,
+        "title": "평영 배우기",
+        "content": "개구리 차기와 팔 동작"
+      },
+      {
+        "week": 7,
+        "title": "접영 체험",
+        "content": "접영의 기본 동작 이해"
+      },
+      {
+        "week": 8,
+        "title": "지구력 향상",
+        "content": "여러 영법으로 장거리 수영"
+      }
+    ]
+  },
+  {
+    "id": "6017e5ba-93f9-4b58-a3ca-ef5f50aa0213",
+    "name": "낚시",
+    "category": "여가",
+    "description": "자연 속에서 물고기를 잡는 여유로운 취미. 기다림의 미학을 배웁니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/낚시.png",
+    "videoUrl": "https://youtu.be/aY9rH4gZ0UQ?si=6V7AqcI-k20LQ1xN",
+    "benefits": [
+      "여유",
+      "인내심",
+      "자연 교감",
+      "신선한 먹거리"
+    ],
+    "requirements": [
+      "낚싯대",
+      "릴",
+      "미끼",
+      "의자"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "낚시 도구",
+        "content": "낚싯대, 릴, 미끼 준비"
+      },
+      {
+        "week": 2,
+        "title": "채비 만들기",
+        "content": "바늘, 찌, 봉돌 연결"
+      },
+      {
+        "week": 3,
+        "title": "캐스팅 연습",
+        "content": "낚싯줄 던지기"
+      },
+      {
+        "week": 4,
+        "title": "붕어낚시",
+        "content": "민물낚시 실습"
+      },
+      {
+        "week": 5,
+        "title": "입질 보기",
+        "content": "찌의 움직임 읽기"
+      },
+      {
+        "week": 6,
+        "title": "바다낚시",
+        "content": "방파제 낚시 체험"
+      },
+      {
+        "week": 7,
+        "title": "손질과 요리",
+        "content": "잡은 물고기 손질하기"
+      },
+      {
+        "week": 8,
+        "title": "낚시 여행",
+        "content": "유명 낚시터 방문"
+      }
+    ]
+  },
+  {
+    "id": "638ce6cb-b269-4fef-8de1-fc88ec5499c8",
+    "name": "춤",
+    "category": "건강",
+    "description": "음악에 맞춰 몸을 움직이는 즐거운 운동. 라인댄스, 사교댄스 등 다양합니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "social",
+    "budget": "low",
+    "imageUrl": "/춤.png",
+    "videoUrl": "https://youtu.be/cqkIJRxXPEE?si=xo70MS3wOLYev4pC",
+    "benefits": [
+      "전신 운동",
+      "리듬감 향상",
+      "사회적 교류",
+      "즐거움"
+    ],
+    "requirements": [
+      "운동화",
+      "편한 옷",
+      "물"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "리듬 익히기",
+        "content": "음악에 맞춰 박자 타기"
+      },
+      {
+        "week": 2,
+        "title": "기본 스텝",
+        "content": "앞뒤좌우 발 움직임"
+      },
+      {
+        "week": 3,
+        "title": "라인댄스",
+        "content": "일렬로 같은 동작 추기"
+      },
+      {
+        "week": 4,
+        "title": "지루박",
+        "content": "전통 춤사위 배우기"
+      },
+      {
+        "week": 5,
+        "title": "왈츠 기초",
+        "content": "3박자에 맞춘 춤"
+      },
+      {
+        "week": 6,
+        "title": "트로트 댄스",
+        "content": "트로트 음악에 맞춘 춤"
+      },
+      {
+        "week": 7,
+        "title": "안무 배우기",
+        "content": "한 곡 완성하기"
+      },
+      {
+        "week": 8,
+        "title": "공연 발표",
+        "content": "무대에서 춤 선보이기"
+      }
+    ]
+  },
+  {
+    "id": "65aaf4f5-497c-453d-9bd3-8c3a65e3866d",
+    "name": "중국어",
+    "category": "언어",
+    "description": "가까운 이웃 나라의 언어를 배웁니다. 중국 문화 이해에도 도움이 됩니다.",
+    "difficulty": 4,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/중국어.png",
+    "videoUrl": "https://youtu.be/vorPfGrDzWA?si=QB6EZunI3rPuEho5",
+    "benefits": [
+      "새로운 언어",
+      "문화 이해",
+      "두뇌 활동",
+      "소통"
+    ],
+    "requirements": [
+      "교재",
+      "사전",
+      "음성 파일"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "발음 기초",
+        "content": "성조와 병음 익히기"
+      },
+      {
+        "week": 2,
+        "title": "기본 인사",
+        "content": "你好, 谢谢 등"
+      },
+      {
+        "week": 3,
+        "title": "자기소개",
+        "content": "나를 소개하는 문장"
+      },
+      {
+        "week": 4,
+        "title": "숫자와 날짜",
+        "content": "시간 말하기"
+      },
+      {
+        "week": 5,
+        "title": "쇼핑 표현",
+        "content": "얼마예요? 깎아주세요"
+      },
+      {
+        "week": 6,
+        "title": "음식 주문",
+        "content": "식당에서 사용하는 중국어"
+      },
+      {
+        "week": 7,
+        "title": "방향과 교통",
+        "content": "길 묻고 답하기"
+      },
+      {
+        "week": 8,
+        "title": "간단한 대화",
+        "content": "일상 회화 연습"
+      }
+    ]
+  },
+  {
+    "id": "68f202da-6f44-460f-8eac-e47ea393cd40",
+    "name": "노래교실",
+    "category": "음악",
+    "description": "발성법과 가창법을 배우는 수업. 좋아하는 노래를 멋지게 부를 수 있습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "social",
+    "budget": "medium",
+    "imageUrl": "/노래교실.png",
+    "videoUrl": "https://youtu.be/C67qarY7xzY?si=bQ6Rio3fCwFUkfj6",
+    "benefits": [
+      "호흡 개선",
+      "자신감 향상",
+      "스트레스 해소",
+      "사회적 교류"
+    ],
+    "requirements": [
+      "없음 (또는 개인 마이크)",
+      "악보",
+      "물"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "발성 기초",
+        "content": "복식호흡과 바른 발성법 익히기"
+      },
+      {
+        "week": 2,
+        "title": "음정과 박자",
+        "content": "음계 부르기와 리듬 맞추기"
+      },
+      {
+        "week": 3,
+        "title": "트로트 기초",
+        "content": "한국 전통 가요 부르기"
+      },
+      {
+        "week": 4,
+        "title": "가요 연습",
+        "content": "7080 세대 인기곡 배우기"
+      },
+      {
+        "week": 5,
+        "title": "호흡 조절",
+        "content": "긴 음표 부르기와 숨 쉬는 타이밍"
+      },
+      {
+        "week": 6,
+        "title": "감정 표현",
+        "content": "노래에 감정 담아 부르기"
+      },
+      {
+        "week": 7,
+        "title": "마이크 사용법",
+        "content": "노래방에서 잘 부르는 기술"
+      },
+      {
+        "week": 8,
+        "title": "발표회",
+        "content": "배운 곡 무대에서 발표하기"
+      }
+    ]
+  },
+  {
+    "id": "69d31235-1089-4a58-bab5-e693babc4e5e",
+    "name": "독서토론",
+    "category": "문화",
+    "description": "좋은 책을 함께 읽고 토론하는 모임. 다양한 관점을 나누며 사고를 확장합니다.",
+    "difficulty": 1,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "social",
+    "budget": "low",
+    "imageUrl": "/독서토론.png",
+    "videoUrl": "https://youtu.be/7hqDzvXf1FE?si=eyobGOQUhKQSYPQn",
+    "benefits": [
+      "지식 확장",
+      "사회적 교류",
+      "비판적 사고",
+      "소통 능력"
+    ],
+    "requirements": [
+      "선정 도서",
+      "노트",
+      "펜"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "독서토론 소개",
+        "content": "토론의 목적과 진행 방식 이해"
+      },
+      {
+        "week": 2,
+        "title": "책 선정과 읽기",
+        "content": "함께 읽을 도서 선택과 독서"
+      },
+      {
+        "week": 3,
+        "title": "질문 만들기",
+        "content": "책 내용에 대한 토론 질문 준비"
+      },
+      {
+        "week": 4,
+        "title": "의견 나누기",
+        "content": "자신의 생각 정리하고 발표하기"
+      },
+      {
+        "week": 5,
+        "title": "경청과 반론",
+        "content": "타인 의견 듣고 존중하며 반박하기"
+      },
+      {
+        "week": 6,
+        "title": "논리적 사고",
+        "content": "근거를 들어 주장 펼치기"
+      },
+      {
+        "week": 7,
+        "title": "다양한 관점",
+        "content": "여러 해석과 시각 이해하기"
+      },
+      {
+        "week": 8,
+        "title": "종합 토론",
+        "content": "심화 주제로 자유 토론 진행"
+      }
+    ]
+  },
+  {
+    "id": "71cdcf70-acf7-48fc-ac9a-726b2c4afd7a",
+    "name": "야생화 관찰",
+    "category": "자연",
+    "description": "계절마다 피는 야생화를 찾아다니며 관찰하고 기록합니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/야생화관찰.png",
+    "videoUrl": "https://youtu.be/xG4MRYHaV1s?si=JmIB56BNcxVZje_M",
+    "benefits": [
+      "자연 이해",
+      "건강한 외출",
+      "관찰력",
+      "계절 감각"
+    ],
+    "requirements": [
+      "야생화 도감",
+      "카메라",
+      "노트",
+      "등산화"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "야생화 소개",
+        "content": "야생화의 종류와 특징"
+      },
+      {
+        "week": 2,
+        "title": "봄꽃 관찰",
+        "content": "진달래, 개나리 등 찾기"
+      },
+      {
+        "week": 3,
+        "title": "여름꽃",
+        "content": "원추리, 백합 등 관찰"
+      },
+      {
+        "week": 4,
+        "title": "가을꽃",
+        "content": "구절초, 쑥부쟁이 등"
+      },
+      {
+        "week": 5,
+        "title": "꽃 이름 알기",
+        "content": "도감 보며 종 동정"
+      },
+      {
+        "week": 6,
+        "title": "사진 촬영",
+        "content": "야생화 아름답게 찍기"
+      },
+      {
+        "week": 7,
+        "title": "탐사 여행",
+        "content": "야생화 군락지 방문"
+      },
+      {
+        "week": 8,
+        "title": "보호와 보전",
+        "content": "자연 보호의 중요성"
+      }
+    ]
+  },
+  {
+    "id": "75b2d3b3-b01a-4193-8bd0-50201544ebf7",
+    "name": "블로그 운영",
+    "category": "기술",
+    "description": "개인 블로그를 만들어 일상과 취미를 기록하고 공유합니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "individual",
+    "budget": "low",
+    "imageUrl": "/블로그운영.png",
+    "videoUrl": "https://youtu.be/nz_6Il-l4Rw?si=7FYbNQ76h01Mssrq",
+    "benefits": [
+      "기록 보존",
+      "소통",
+      "정보 공유",
+      "자기 표현"
+    ],
+    "requirements": [
+      "컴퓨터",
+      "인터넷",
+      "카메라"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "블로그 시작",
+        "content": "플랫폼 선택과 개설"
+      },
+      {
+        "week": 2,
+        "title": "글쓰기 기초",
+        "content": "제목과 본문 작성법"
+      },
+      {
+        "week": 3,
+        "title": "사진 올리기",
+        "content": "이미지 편집과 업로드"
+      },
+      {
+        "week": 4,
+        "title": "카테고리 분류",
+        "content": "주제별 정리하기"
+      },
+      {
+        "week": 5,
+        "title": "방문자 늘리기",
+        "content": "검색 최적화"
+      },
+      {
+        "week": 6,
+        "title": "댓글 소통",
+        "content": "이웃과 교류하기"
+      },
+      {
+        "week": 7,
+        "title": "블로그 꾸미기",
+        "content": "레이아웃과 디자인"
+      },
+      {
+        "week": 8,
+        "title": "꾸준한 운영",
+        "content": "정기 포스팅 습관"
+      }
+    ]
+  },
+  {
+    "id": "77457d42-ed98-4eed-aeff-df6ae5edab8e",
+    "name": "영화 감상",
+    "category": "문화",
+    "description": "다양한 장르의 영화를 보며 문화적 소양을 넓히고 감성을 풍부하게 합니다.",
+    "difficulty": 1,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/영화감상.png",
+    "videoUrl": "https://youtu.be/0pmUjkZr8mQ?si=qeV3WwCRZxhaCuBE",
+    "benefits": [
+      "문화 향유",
+      "정서 함양",
+      "사회적 교류",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "없음"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "영화의 이해",
+        "content": "영화 문법과 용어 배우기"
+      },
+      {
+        "week": 2,
+        "title": "고전 명화",
+        "content": "흑백 영화와 영화사의 걸작"
+      },
+      {
+        "week": 3,
+        "title": "장르별 감상",
+        "content": "드라마, 코미디, 스릴러 등"
+      },
+      {
+        "week": 4,
+        "title": "감독과 스타일",
+        "content": "거장 감독의 작품 세계"
+      },
+      {
+        "week": 5,
+        "title": "영화 분석",
+        "content": "촬영 기법, 편집, 음악 분석"
+      },
+      {
+        "week": 6,
+        "title": "한국 영화",
+        "content": "한국 영화의 역사와 명작"
+      },
+      {
+        "week": 7,
+        "title": "토론과 비평",
+        "content": "영화 감상 후 의견 나누기"
+      },
+      {
+        "week": 8,
+        "title": "영화제 체험",
+        "content": "영화제 관람 또는 특별 상영"
+      }
+    ]
+  },
+  {
+    "id": "78c6182d-6a93-4bc8-aaa8-c35db92d4059",
+    "name": "퍼즐",
+    "category": "여가",
+    "description": "직소 퍼즐이나 큐브 등 다양한 퍼즐을 맞추며 집중력을 기릅니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "individual",
+    "budget": "low",
+    "imageUrl": "/퍼즐.png",
+    "videoUrl": "https://youtu.be/1FzurKEYtS8?si=4iUtpRojnxAkFBNx",
+    "benefits": [
+      "집중력",
+      "인내심",
+      "성취감",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "퍼즐"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "퍼즐 종류",
+        "content": "직소, 스도쿠, 낱말 등"
+      },
+      {
+        "week": 2,
+        "title": "직소 퍼즐",
+        "content": "그림 맞추기 요령"
+      },
+      {
+        "week": 3,
+        "title": "스도쿠",
+        "content": "숫자 논리 퍼즐"
+      },
+      {
+        "week": 4,
+        "title": "낱말 퍼즐",
+        "content": "십자말풀이"
+      },
+      {
+        "week": 5,
+        "title": "탱그램",
+        "content": "도형 조각 맞추기"
+      },
+      {
+        "week": 6,
+        "title": "큐브 퍼즐",
+        "content": "루빅스 큐브 등"
+      },
+      {
+        "week": 7,
+        "title": "고난도 퍼즐",
+        "content": "복잡한 퍼즐 도전"
+      },
+      {
+        "week": 8,
+        "title": "퍼즐 대회",
+        "content": "속도 경쟁 참가"
+      }
+    ]
+  },
+  {
+    "id": "795429d6-ae49-4069-92cf-ad095ce41971",
+    "name": "뜨개질",
+    "category": "공예",
+    "description": "털실로 옷이나 소품을 만드는 손뜨개. 실용적이고 창의적인 작품을 만들 수 있습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/뜨개질.png",
+    "videoUrl": "https://youtu.be/G17milU0gSI?si=baBSSpcJrYcud9oc",
+    "benefits": [
+      "손재주 향상",
+      "실용적 작품",
+      "집중력",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "뜨개바늘",
+      "털실",
+      "패턴북"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "뜨개질 도구",
+        "content": "바늘과 실 선택"
+      },
+      {
+        "week": 2,
+        "title": "코 만들기",
+        "content": "사슬뜨기, 코 늘리기"
+      },
+      {
+        "week": 3,
+        "title": "겉뜨기 안뜨기",
+        "content": "기본 뜨기 방법"
+      },
+      {
+        "week": 4,
+        "title": "스카프 만들기",
+        "content": "긴 직사각형 뜨기"
+      },
+      {
+        "week": 5,
+        "title": "모자 뜨기",
+        "content": "원형으로 모자 제작"
+      },
+      {
+        "week": 6,
+        "title": "코 줄이기",
+        "content": "모양 만들기"
+      },
+      {
+        "week": 7,
+        "title": "조끼 만들기",
+        "content": "몸판과 어깨 연결"
+      },
+      {
+        "week": 8,
+        "title": "작품 완성",
+        "content": "마무리와 단추 달기"
+      }
+    ]
+  },
+  {
+    "id": "80486f20-01be-4891-92f3-e478daa59280",
+    "name": "영어 회화",
+    "category": "언어",
+    "description": "실생활에서 사용하는 영어 회화를 배웁니다. 여행이나 외국인과의 소통에 유용합니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/영어회화.png",
+    "videoUrl": "https://youtu.be/TFnThlz9gaQ?si=0ga1u65bnP6avb6m",
+    "benefits": [
+      "의사소통",
+      "여행 편의",
+      "두뇌 활동",
+      "자신감"
+    ],
+    "requirements": [
+      "교재",
+      "노트",
+      "음성 파일"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "기본 인사",
+        "content": "Hello, How are you 등"
+      },
+      {
+        "week": 2,
+        "title": "자기소개",
+        "content": "이름, 나이, 직업 말하기"
+      },
+      {
+        "week": 3,
+        "title": "일상 표현",
+        "content": "감사, 사과, 부탁 등"
+      },
+      {
+        "week": 4,
+        "title": "쇼핑 영어",
+        "content": "가격 묻고 물건 사기"
+      },
+      {
+        "week": 5,
+        "title": "레스토랑",
+        "content": "주문하고 계산하기"
+      },
+      {
+        "week": 6,
+        "title": "길 묻기",
+        "content": "방향과 위치 표현"
+      },
+      {
+        "week": 7,
+        "title": "전화 영어",
+        "content": "전화로 대화하기"
+      },
+      {
+        "week": 8,
+        "title": "자유 대화",
+        "content": "관심사 이야기하기"
+      }
+    ]
+  },
+  {
+    "id": "80aee870-95b1-4289-b286-0f51e5498540",
+    "name": "한지공예",
+    "category": "공예",
+    "description": "전통 한지로 소품과 작품을 만드는 공예. 한국의 미를 담습니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/한지공예.png",
+    "videoUrl": "https://youtu.be/MXCBe8obnUM?si=-cPiopOgisl6y_o4",
+    "benefits": [
+      "전통 문화",
+      "섬세함",
+      "예술 작품",
+      "집중력"
+    ],
+    "requirements": [
+      "한지",
+      "풀",
+      "가위",
+      "도구"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "한지의 특성",
+        "content": "전통 종이의 아름다움"
+      },
+      {
+        "week": 2,
+        "title": "한지 염색",
+        "content": "자연 염료로 물들이기"
+      },
+      {
+        "week": 3,
+        "title": "지승 꼬기",
+        "content": "한지로 노끈 만들기"
+      },
+      {
+        "week": 4,
+        "title": "바구니 만들기",
+        "content": "지승으로 엮기"
+      },
+      {
+        "week": 5,
+        "title": "한지 인형",
+        "content": "종이 인형 만들기"
+      },
+      {
+        "week": 6,
+        "title": "조명 만들기",
+        "content": "한지 갓 제작"
+      },
+      {
+        "week": 7,
+        "title": "한지 액자",
+        "content": "그림이나 글 배접하기"
+      },
+      {
+        "week": 8,
+        "title": "작품 전시",
+        "content": "완성품 선보이기"
+      }
+    ]
+  },
+  {
+    "id": "83025b62-fee0-40c9-8b10-32248996ad58",
+    "name": "파크골프",
+    "category": "스포츠",
+    "description": "공원에서 즐기는 간편한 골프. 일반 골프보다 쉽고 부담 없이 즐길 수 있습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/파크골프.png",
+    "videoUrl": "https://youtu.be/bFhNCmapzcM?si=gLJ66h6kZiS3EQas",
+    "benefits": [
+      "야외 활동",
+      "적당한 운동",
+      "집중력 향상",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "파크골프 클럽",
+      "공",
+      "운동화",
+      "장갑"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "파크골프 소개",
+        "content": "규칙과 에티켓, 장비 이해"
+      },
+      {
+        "week": 2,
+        "title": "기본 자세",
+        "content": "그립, 스탠스, 어드레스"
+      },
+      {
+        "week": 3,
+        "title": "퍼팅 연습",
+        "content": "짧은 거리 정확하게 치기"
+      },
+      {
+        "week": 4,
+        "title": "롱샷",
+        "content": "긴 거리 비거리 내기"
+      },
+      {
+        "week": 5,
+        "title": "어프로치",
+        "content": "홀 근처 접근 샷"
+      },
+      {
+        "week": 6,
+        "title": "경사와 방향",
+        "content": "지형 읽고 방향 조절"
+      },
+      {
+        "week": 7,
+        "title": "18홀 라운딩",
+        "content": "코스 완주 경험"
+      },
+      {
+        "week": 8,
+        "title": "친선 대회",
+        "content": "조별 경기와 시상"
+      }
+    ]
+  },
+  {
+    "id": "858f4805-6952-4c9c-a541-656288b284e4",
+    "name": "바둑",
+    "category": "여가",
+    "description": "흑과 백의 대결, 깊은 전략이 필요한 두뇌 게임입니다.",
+    "difficulty": 4,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "social",
+    "budget": "low",
+    "imageUrl": "/바둑.png",
+    "videoUrl": "https://youtu.be/TEp_hxTHbV0?si=Uko6Rrq14hXhoMco",
+    "benefits": [
+      "전략적 사고",
+      "집중력",
+      "인내심",
+      "사회적 교류"
+    ],
+    "requirements": [
+      "바둑판",
+      "바둑돌"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "바둑 규칙",
+        "content": "바둑판 이해, 돌 놓는 법, 기본 규칙"
+      },
+      {
+        "week": 2,
+        "title": "돌의 삶과 죽음",
+        "content": "집과 눈, 돌이 사는 조건"
+      },
+      {
+        "week": 3,
+        "title": "기본 정석",
+        "content": "모서리 포석의 기초 수순"
+      },
+      {
+        "week": 4,
+        "title": "수읽기 연습",
+        "content": "몇 수 앞을 내다보는 연습"
+      },
+      {
+        "week": 5,
+        "title": "집 계산",
+        "content": "영역 계산과 승부 판단"
+      },
+      {
+        "week": 6,
+        "title": "중반 전략",
+        "content": "공격과 수비 타이밍 익히기"
+      },
+      {
+        "week": 7,
+        "title": "끝내기",
+        "content": "요세와 마무리 기술"
+      },
+      {
+        "week": 8,
+        "title": "실전 대국",
+        "content": "19줄판 정식 대국 경험"
+      }
+    ]
+  },
+  {
+    "id": "86a7448b-bff4-41ce-ba5d-53d597e16cd2",
+    "name": "영상 편집",
+    "category": "기술",
+    "description": "동영상을 촬영하고 편집하여 작품을 만듭니다. 유튜브 등에 활용 가능합니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/영상편집.png",
+    "videoUrl": "https://youtu.be/lxoKHcalhp4?si=mtzBK5U28_alXOlq",
+    "benefits": [
+      "창작 활동",
+      "추억 보존",
+      "소통",
+      "두뇌 활동"
+    ],
+    "requirements": [
+      "컴퓨터",
+      "편집 프로그램",
+      "카메라"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "편집 프로그램",
+        "content": "기본 인터페이스 익히기"
+      },
+      {
+        "week": 2,
+        "title": "영상 자르기",
+        "content": "트리밍과 분할"
+      },
+      {
+        "week": 3,
+        "title": "영상 이어붙이기",
+        "content": "클립 연결과 전환"
+      },
+      {
+        "week": 4,
+        "title": "자막 넣기",
+        "content": "텍스트 삽입과 타이밍"
+      },
+      {
+        "week": 5,
+        "title": "음악 삽입",
+        "content": "배경 음악과 효과음"
+      },
+      {
+        "week": 6,
+        "title": "색보정",
+        "content": "밝기, 대비, 채도 조절"
+      },
+      {
+        "week": 7,
+        "title": "내보내기",
+        "content": "최종 영상 저장하기"
+      },
+      {
+        "week": 8,
+        "title": "유튜브 업로드",
+        "content": "영상 공유하기"
+      }
+    ]
+  },
+  {
+    "id": "88cbead5-f3cb-417e-a842-e27017e94248",
+    "name": "배드민턴",
+    "category": "스포츠",
+    "description": "가볍고 재미있는 라켓 스포츠. 관절에 무리가 적어 시니어에게 적합합니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "both",
+    "socialIndividual": "social",
+    "budget": "low",
+    "imageUrl": "/배드민턴.png",
+    "videoUrl": "https://youtu.be/JZOeAeIkrgY?si=2BHeHFdysZQNWKED",
+    "benefits": [
+      "전신 운동",
+      "유연성 향상",
+      "사교 활동",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "배드민턴 라켓",
+      "셔틀콕",
+      "운동화",
+      "운동복"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "배드민턴 규칙",
+        "content": "경기 방법과 점수 계산"
+      },
+      {
+        "week": 2,
+        "title": "그립과 자세",
+        "content": "라켓 잡는 법과 기본 스텐스"
+      },
+      {
+        "week": 3,
+        "title": "언더핸드 스트로크",
+        "content": "아래에서 치는 서브와 클리어"
+      },
+      {
+        "week": 4,
+        "title": "오버헤드 스트로크",
+        "content": "머리 위로 치는 스매싱"
+      },
+      {
+        "week": 5,
+        "title": "헤어핀과 드롭샷",
+        "content": "네트 근처 섬세한 타구"
+      },
+      {
+        "week": 6,
+        "title": "푸시와 드라이브",
+        "content": "빠른 공격 타법"
+      },
+      {
+        "week": 7,
+        "title": "복식 전략",
+        "content": "파트너와 호흡 맞추기"
+      },
+      {
+        "week": 8,
+        "title": "실전 경기",
+        "content": "토너먼트 게임 진행"
+      }
+    ]
+  },
+  {
+    "id": "8a1e2362-b184-4667-bd17-817e671e89a9",
+    "name": "드럼",
+    "category": "음악",
+    "description": "리듬의 중심이 되는 타악기. 스트레스 해소에 탁월합니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "high",
+    "imageUrl": "/드럼.png",
+    "videoUrl": "https://youtu.be/ipfa_NUdaNY?si=-Q7JviQ6jfiPo85i",
+    "benefits": [
+      "스트레스 해소",
+      "리듬감",
+      "전신 운동",
+      "집중력"
+    ],
+    "requirements": [
+      "드럼 세트",
+      "스틱",
+      "방음 시설"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "드럼 구성",
+        "content": "킥, 스네어, 심벌 등"
+      },
+      {
+        "week": 2,
+        "title": "스틱 잡기",
+        "content": "그립과 기본 자세"
+      },
+      {
+        "week": 3,
+        "title": "기본 비트",
+        "content": "8비트 리듬"
+      },
+      {
+        "week": 4,
+        "title": "킥 드럼 연습",
+        "content": "발로 베이스 드럼 치기"
+      },
+      {
+        "week": 5,
+        "title": "16비트",
+        "content": "빠른 리듬 연습"
+      },
+      {
+        "week": 6,
+        "title": "필인",
+        "content": "곡의 변화 연결"
+      },
+      {
+        "week": 7,
+        "title": "곡 연주",
+        "content": "노래에 맞춰 드럼"
+      },
+      {
+        "week": 8,
+        "title": "밴드 합주",
+        "content": "다른 악기와 협연"
+      }
+    ]
+  },
+  {
+    "id": "8a4d09d5-1e14-45ab-8ecf-43d74a86a0a4",
+    "name": "필라테스",
+    "category": "건강",
+    "description": "코어 근육을 강화하는 운동. 자세 교정과 통증 완화에 효과적입니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/필라테스.png",
+    "videoUrl": "https://youtu.be/ZRWSc-Uc7-c?si=d9u74ufjIuxI1aBl",
+    "benefits": [
+      "코어 강화",
+      "자세 교정",
+      "통증 완화",
+      "신체 인식"
+    ],
+    "requirements": [
+      "요가 매트",
+      "운동복",
+      "소도구"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "필라테스 원리",
+        "content": "호흡, 집중, 조절, 정확성"
+      },
+      {
+        "week": 2,
+        "title": "기본 자세",
+        "content": "중립 척추와 코어 활성화"
+      },
+      {
+        "week": 3,
+        "title": "매트 운동 1",
+        "content": "헌드레드, 롤업 등 기본 동작"
+      },
+      {
+        "week": 4,
+        "title": "매트 운동 2",
+        "content": "레그서클, 롤오버 등"
+      },
+      {
+        "week": 5,
+        "title": "코어 강화",
+        "content": "복부와 골반 근육 집중 훈련"
+      },
+      {
+        "week": 6,
+        "title": "유연성 향상",
+        "content": "스트레칭 중심 동작"
+      },
+      {
+        "week": 7,
+        "title": "소도구 활용",
+        "content": "볼, 밴드를 이용한 운동"
+      },
+      {
+        "week": 8,
+        "title": "전신 루틴",
+        "content": "50분 풀 루틴 완성"
+      }
+    ]
+  },
+  {
+    "id": "8c69086f-b6d2-4f61-9a84-0b33df821442",
+    "name": "종이접기",
+    "category": "공예",
+    "description": "종이 한 장으로 다양한 형태를 만드는 오리가미. 두뇌 활동에 좋습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/종이접기.png",
+    "videoUrl": "https://youtu.be/JacQYzrkp4A?si=_2ZDUNKo0CzcLhum",
+    "benefits": [
+      "두뇌 활동",
+      "집중력",
+      "손재주",
+      "창의력"
+    ],
+    "requirements": [
+      "종이",
+      "풀",
+      "가위"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "기본 기호",
+        "content": "접기 기호와 용어"
+      },
+      {
+        "week": 2,
+        "title": "기본 접기",
+        "content": "학, 배 등 간단한 작품"
+      },
+      {
+        "week": 3,
+        "title": "동물 접기",
+        "content": "강아지, 고양이 등"
+      },
+      {
+        "week": 4,
+        "title": "꽃 접기",
+        "content": "장미, 백합 등"
+      },
+      {
+        "week": 5,
+        "title": "상자 만들기",
+        "content": "실용적인 소품"
+      },
+      {
+        "week": 6,
+        "title": "복잡한 작품",
+        "content": "다단 접기"
+      },
+      {
+        "week": 7,
+        "title": "모듈 오리가미",
+        "content": "여러 장 조립하기"
+      },
+      {
+        "week": 8,
+        "title": "작품 전시",
+        "content": "완성품 꾸미기"
+      }
+    ]
+  },
+  {
+    "id": "8cb1a7ff-94ed-4784-add4-40168d114d69",
+    "name": "퀼트",
+    "category": "공예",
+    "description": "천 조각을 이어 붙여 만드는 패치워크. 실용적이고 따뜻한 작품을 만듭니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/퀄트.png",
+    "videoUrl": "https://youtu.be/m2gZb7iHRCs?si=vS2Y8i9h0ZsYwF_u",
+    "benefits": [
+      "창의력",
+      "실용성",
+      "집중력",
+      "성취감"
+    ],
+    "requirements": [
+      "천",
+      "바늘",
+      "실",
+      "재봉틀"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "퀼트 소개",
+        "content": "패치워크와 퀼팅"
+      },
+      {
+        "week": 2,
+        "title": "천 자르기",
+        "content": "정확한 재단 연습"
+      },
+      {
+        "week": 3,
+        "title": "피스 잇기",
+        "content": "천 조각 박음질"
+      },
+      {
+        "week": 4,
+        "title": "기본 블록",
+        "content": "사각형, 삼각형 블록"
+      },
+      {
+        "week": 5,
+        "title": "디자인 배치",
+        "content": "색과 패턴 조합"
+      },
+      {
+        "week": 6,
+        "title": "퀼팅 기법",
+        "content": "누빔 바느질"
+      },
+      {
+        "week": 7,
+        "title": "테이블 러너",
+        "content": "실용적인 작품 제작"
+      },
+      {
+        "week": 8,
+        "title": "퀼트 완성",
+        "content": "가장자리 마무리"
+      }
+    ]
+  },
+  {
+    "id": "8cdc94e8-cbea-4d92-b178-811eb48def59",
+    "name": "국악",
+    "category": "문화",
+    "description": "전통 악기로 우리 음악을 배우는 취미. 가야금, 거문고, 대금 등 다양합니다.",
+    "difficulty": 4,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "high",
+    "imageUrl": "/국악.png",
+    "videoUrl": "https://youtu.be/bJS8C5XLBy8?si=yPPQ_9hIrLvsr7Gc",
+    "benefits": [
+      "전통 문화 계승",
+      "음악적 소양",
+      "집중력",
+      "정서 함양"
+    ],
+    "requirements": [
+      "악기 (가야금 등)",
+      "교재",
+      "조율기"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "국악 개론",
+        "content": "국악의 종류와 역사 이해"
+      },
+      {
+        "week": 2,
+        "title": "장단 익히기",
+        "content": "기본 장단(중중모리, 자진모리 등)"
+      },
+      {
+        "week": 3,
+        "title": "판소리 감상",
+        "content": "춘향가, 심청가 등 명창 듣기"
+      },
+      {
+        "week": 4,
+        "title": "민요 부르기",
+        "content": "아리랑, 도라지 등 지역 민요"
+      },
+      {
+        "week": 5,
+        "title": "농악 체험",
+        "content": "꽹과리, 장구 등 타악기 연주"
+      },
+      {
+        "week": 6,
+        "title": "사물놀이",
+        "content": "네 가지 악기 앙상블 배우기"
+      },
+      {
+        "week": 7,
+        "title": "전통 춤",
+        "content": "국악에 맞춰 춤사위 익히기"
+      },
+      {
+        "week": 8,
+        "title": "종합 공연",
+        "content": "국악 공연 관람 또는 발표"
+      }
+    ]
+  },
+  {
+    "id": "8d3c2574-f324-4bc8-8c1e-61dda3de6fc4",
+    "name": "걷기",
+    "category": "스포츠",
+    "description": "가장 쉽고 안전한 운동. 매일 꾸준히 하면 건강 증진에 탁월합니다.",
+    "difficulty": 1,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/걷기.png",
+    "videoUrl": "https://youtu.be/kghyht4dBys?si=sqgztWdcSNTW6Gwl",
+    "benefits": [
+      "심혈관 건강",
+      "뼈 건강",
+      "체중 조절",
+      "정신 건강"
+    ],
+    "requirements": [
+      "편한 신발",
+      "운동복",
+      "물통"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "올바른 걷기 자세",
+        "content": "자세, 팔 흔들기, 보폭 배우기"
+      },
+      {
+        "week": 2,
+        "title": "준비운동",
+        "content": "걷기 전후 스트레칭"
+      },
+      {
+        "week": 3,
+        "title": "하루 30분 걷기",
+        "content": "규칙적인 걷기 습관 만들기"
+      },
+      {
+        "week": 4,
+        "title": "빠르게 걷기",
+        "content": "속도를 높여 유산소 운동"
+      },
+      {
+        "week": 5,
+        "title": "언덕 걷기",
+        "content": "경사로에서 근력 강화"
+      },
+      {
+        "week": 6,
+        "title": "하루 1만보",
+        "content": "만보 걷기 도전"
+      },
+      {
+        "week": 7,
+        "title": "둘레길 탐방",
+        "content": "서울 성곽길 등 코스 걷기"
+      },
+      {
+        "week": 8,
+        "title": "걷기 대회",
+        "content": "단체 걷기 행사 참여"
+      }
+    ]
+  },
+  {
+    "id": "93d37f3c-1ea4-41d7-bf7c-796f695418f3",
+    "name": "아크릴화",
+    "category": "미술",
+    "description": "빠르게 마르는 아크릴 물감으로 다양한 표현이 가능한 회화. 수채화와 유화의 중간 성격을 지닙니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/아크릴화.png",
+    "videoUrl": "https://youtu.be/xNRbp0rcRAA?si=viy6EbsNdOkAb198",
+    "benefits": [
+      "빠른 작업 가능",
+      "다양한 기법 활용",
+      "창의력 발달",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "아크릴 물감",
+      "캔버스 또는 종이",
+      "붓",
+      "팔레트"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "아크릴 특성",
+        "content": "빠른 건조와 발색"
+      },
+      {
+        "week": 2,
+        "title": "기본 기법",
+        "content": "평붓, 둥글붓 사용법"
+      },
+      {
+        "week": 3,
+        "title": "그라데이션",
+        "content": "색 번짐과 혼합"
+      },
+      {
+        "week": 4,
+        "title": "정물 그리기",
+        "content": "과일과 꽃 표현"
+      },
+      {
+        "week": 5,
+        "title": "풍경 그리기",
+        "content": "하늘, 나무, 바다"
+      },
+      {
+        "week": 6,
+        "title": "추상 표현",
+        "content": "자유로운 색과 형태"
+      },
+      {
+        "week": 7,
+        "title": "혼합 재료",
+        "content": "콜라주나 미디엄 활용"
+      },
+      {
+        "week": 8,
+        "title": "개인 작품",
+        "content": "자유 주제 완성"
+      }
+    ]
+  },
+  {
+    "id": "955a59ca-e552-42e1-9877-21cc6fbed469",
+    "name": "발효 음식",
+    "category": "요리",
+    "description": "김치, 장류 등 발효 음식을 만듭니다. 건강에 좋고 보관도 가능합니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/발표음식.png",
+    "videoUrl": "https://youtu.be/J-akDmUfCs8?si=YtaKBT0LSClHcuBx",
+    "benefits": [
+      "건강식",
+      "장기 보관",
+      "전통 계승",
+      "경제적"
+    ],
+    "requirements": [
+      "항아리",
+      "재료",
+      "레시피",
+      "보관 공간"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "발효의 원리",
+        "content": "미생물과 발효 과정"
+      },
+      {
+        "week": 2,
+        "title": "김치 담그기",
+        "content": "배추김치 만들기"
+      },
+      {
+        "week": 3,
+        "title": "장 담그기",
+        "content": "된장, 고추장 이해"
+      },
+      {
+        "week": 4,
+        "title": "요거트",
+        "content": "유산균 배양하기"
+      },
+      {
+        "week": 5,
+        "title": "피클",
+        "content": "채소 절임 만들기"
+      },
+      {
+        "week": 6,
+        "title": "효소",
+        "content": "과일 효소 담그기"
+      },
+      {
+        "week": 7,
+        "title": "식초 만들기",
+        "content": "천연 발효 식초"
+      },
+      {
+        "week": 8,
+        "title": "발효 활용",
+        "content": "발효 음식 요리하기"
+      }
+    ]
+  },
+  {
+    "id": "9b980beb-3f7d-4fd2-a475-c64b027e55a1",
+    "name": "단전호흡",
+    "category": "건강",
+    "description": "복식 호흡으로 기를 단련하는 한국 전통 건강법. 체력과 정신력을 기릅니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "both",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/단전호흡.png",
+    "videoUrl": "https://youtu.be/WymrfA20VRk?si=NuguWRneYrlHol-1",
+    "benefits": [
+      "폐활량 증가",
+      "정신 집중",
+      "기력 회복",
+      "면역력 향상"
+    ],
+    "requirements": [
+      "편한 옷",
+      "조용한 공간"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "단전의 이해",
+        "content": "단전의 위치와 중요성"
+      },
+      {
+        "week": 2,
+        "title": "복식호흡",
+        "content": "배로 숨 쉬는 연습"
+      },
+      {
+        "week": 3,
+        "title": "깊은 호흡",
+        "content": "천천히 깊게 들이마시기"
+      },
+      {
+        "week": 4,
+        "title": "호흡 리듬",
+        "content": "들숨 날숨 비율 조절"
+      },
+      {
+        "week": 5,
+        "title": "기운 느끼기",
+        "content": "단전에 기운 모으기"
+      },
+      {
+        "week": 6,
+        "title": "명상과 결합",
+        "content": "호흡하며 명상하기"
+      },
+      {
+        "week": 7,
+        "title": "일상 활용",
+        "content": "스트레스 상황에서 호흡법"
+      },
+      {
+        "week": 8,
+        "title": "건강 증진",
+        "content": "꾸준한 수련으로 건강 관리"
+      }
+    ]
+  },
+  {
+    "id": "9df584bf-13c5-4214-887f-ecea5f27418b",
+    "name": "색연필화",
+    "category": "미술",
+    "description": "색연필로 섬세하고 부드러운 그림을 그리는 취미. 준비물이 간단하고 어디서나 즐길 수 있습니다.",
+    "difficulty": 1,
+    "indoorOutdoor": "both",
+    "socialIndividual": "individual",
+    "budget": "low",
+    "imageUrl": "/색연필화.png",
+    "videoUrl": "https://youtu.be/zGxghHW8IPA?si=piy0iERqrU6zcExZ",
+    "benefits": [
+      "손쉬운 시작",
+      "휴대성 좋음",
+      "섬세한 표현력",
+      "집중력 향상"
+    ],
+    "requirements": [
+      "색연필 세트",
+      "스케치북",
+      "지우개"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "색연필 종류",
+        "content": "유성, 수성 색연필 비교"
+      },
+      {
+        "week": 2,
+        "title": "기본 터치",
+        "content": "선 긋기와 면 칠하기"
+      },
+      {
+        "week": 3,
+        "title": "그라데이션",
+        "content": "색 변화 자연스럽게"
+      },
+      {
+        "week": 4,
+        "title": "혼색 기법",
+        "content": "여러 색 겹쳐 칠하기"
+      },
+      {
+        "week": 5,
+        "title": "정물 스케치",
+        "content": "사실적으로 그리기"
+      },
+      {
+        "week": 6,
+        "title": "인물 그리기",
+        "content": "얼굴과 피부 표현"
+      },
+      {
+        "week": 7,
+        "title": "풍경 스케치",
+        "content": "야외에서 그리기"
+      },
+      {
+        "week": 8,
+        "title": "작품 제작",
+        "content": "완성도 높은 그림 완성"
+      }
+    ]
+  },
+  {
+    "id": "9fd7b4b7-f8b0-4c83-9903-132b80250461",
+    "name": "조류 관찰",
+    "category": "여가",
+    "description": "쌍안경으로 새를 관찰하고 기록하는 버드워칭입니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/조류관찰.png",
+    "videoUrl": "https://youtu.be/aL960sxUJ0E?si=M6EcEXgJ6g6kvd5r",
+    "benefits": [
+      "자연 이해",
+      "관찰력",
+      "야외 활동",
+      "평화로움"
+    ],
+    "requirements": [
+      "쌍안경",
+      "조류 도감",
+      "노트",
+      "카메라"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "조류 관찰 입문",
+        "content": "쌍안경 사용법과 준비물"
+      },
+      {
+        "week": 2,
+        "title": "텃새 알기",
+        "content": "도시 주변 흔한 새"
+      },
+      {
+        "week": 3,
+        "title": "철새 관찰",
+        "content": "계절별 찾아오는 새"
+      },
+      {
+        "week": 4,
+        "title": "울음소리",
+        "content": "새 소리로 종 구분"
+      },
+      {
+        "week": 5,
+        "title": "둥지와 번식",
+        "content": "새의 생태 이해"
+      },
+      {
+        "week": 6,
+        "title": "탐조 여행",
+        "content": "습지나 산으로 탐조"
+      },
+      {
+        "week": 7,
+        "title": "사진 촬영",
+        "content": "조류 사진 찍기"
+      },
+      {
+        "week": 8,
+        "title": "새 보호",
+        "content": "멸종 위기종과 보전"
+      }
+    ]
+  },
+  {
+    "id": "a14e57df-f4f2-483e-bfcb-5d88371bfbe6",
+    "name": "차 문화",
+    "category": "요리",
+    "description": "다양한 차를 우리고 음미하는 취미. 여유와 건강을 동시에 얻습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/차문화.png",
+    "videoUrl": "https://youtu.be/uow0kT-UJJY?si=v0B57zQOeQczqu9S",
+    "benefits": [
+      "정서 안정",
+      "건강 증진",
+      "문화 이해",
+      "여유"
+    ],
+    "requirements": [
+      "다기",
+      "차",
+      "주전자",
+      "잔"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "차의 종류",
+        "content": "녹차, 홍차, 허브차 등"
+      },
+      {
+        "week": 2,
+        "title": "다구 알기",
+        "content": "찻잔, 다관, 다호"
+      },
+      {
+        "week": 3,
+        "title": "물 온도",
+        "content": "차에 맞는 적정 온도"
+      },
+      {
+        "week": 4,
+        "title": "우리기",
+        "content": "우리는 시간과 횟수"
+      },
+      {
+        "week": 5,
+        "title": "다도 예절",
+        "content": "전통 다례 배우기"
+      },
+      {
+        "week": 6,
+        "title": "블렌딩",
+        "content": "차 섞어 만들기"
+      },
+      {
+        "week": 7,
+        "title": "페어링",
+        "content": "차와 음식 조합"
+      },
+      {
+        "week": 8,
+        "title": "티 타임",
+        "content": "다회 개최하기"
+      }
+    ]
+  },
+  {
+    "id": "a1989151-4bbd-4ca0-adb6-f6cb04c68f8e",
+    "name": "커피 로스팅",
+    "category": "요리",
+    "description": "생두를 직접 볶아 나만의 커피를 만듭니다. 향과 맛을 조절할 수 있습니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/커피로스팅.png",
+    "videoUrl": "https://youtu.be/r2HKT-o5DE0?si=H-gNkBEKRjPsbU3M",
+    "benefits": [
+      "향미 체험",
+      "경제적",
+      "취향 저격",
+      "여유"
+    ],
+    "requirements": [
+      "로스터",
+      "생두",
+      "그라인더",
+      "드립 도구"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "커피 생두",
+        "content": "산지별 특징 이해"
+      },
+      {
+        "week": 2,
+        "title": "로스팅 기초",
+        "content": "열과 시간의 관계"
+      },
+      {
+        "week": 3,
+        "title": "로스팅 단계",
+        "content": "라이트, 미디엄, 다크"
+      },
+      {
+        "week": 4,
+        "title": "홈 로스팅",
+        "content": "팬이나 기계로 볶기"
+      },
+      {
+        "week": 5,
+        "title": "쿨링과 보관",
+        "content": "식히고 숙성하기"
+      },
+      {
+        "week": 6,
+        "title": "커핑",
+        "content": "맛과 향 평가하기"
+      },
+      {
+        "week": 7,
+        "title": "블렌딩",
+        "content": "생두 섞어 볶기"
+      },
+      {
+        "week": 8,
+        "title": "추출하기",
+        "content": "다양한 방식으로 내리기"
+      }
+    ]
+  },
+  {
+    "id": "a26ad616-5032-4364-8864-00bd73cdccf2",
+    "name": "등산",
+    "category": "스포츠",
+    "description": "자연 속에서 즐기는 건강한 운동. 심폐 기능 향상과 함께 아름다운 경치를 감상할 수 있습니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/등산.png",
+    "videoUrl": "https://youtu.be/Q-dcjX6xkeE?si=NSxrmJXwkq-4m9kw",
+    "benefits": [
+      "심폐 기능 향상",
+      "근력 강화",
+      "자연 치유",
+      "사회적 교류"
+    ],
+    "requirements": [
+      "등산화",
+      "등산복",
+      "배낭",
+      "등산 스틱"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "등산 장비와 복장",
+        "content": "등산화, 배낭, 옷차림 선택 가이드"
+      },
+      {
+        "week": 2,
+        "title": "기초 체력 훈련",
+        "content": "계단 오르기, 걷기로 체력 기르기"
+      },
+      {
+        "week": 3,
+        "title": "저지대 산 실습",
+        "content": "3시간 이내 코스로 등산 경험"
+      },
+      {
+        "week": 4,
+        "title": "등산 안전 수칙",
+        "content": "날씨 확인, 응급처치, 조난 대비법"
+      },
+      {
+        "week": 5,
+        "title": "트레킹 폴 사용법",
+        "content": "스틱 활용으로 무릎 보호하기"
+      },
+      {
+        "week": 6,
+        "title": "중급 코스 도전",
+        "content": "5시간 정도 소요되는 산 오르기"
+      },
+      {
+        "week": 7,
+        "title": "산행 예절과 환경",
+        "content": "자연 보호와 등산 문화 배우기"
+      },
+      {
+        "week": 8,
+        "title": "종주 산행",
+        "content": "하루 종일 걷는 긴 코스 완주"
+      }
+    ]
+  },
+  {
+    "id": "a393d11d-da8f-4939-b63c-585155604491",
+    "name": "스마트폰 활용",
+    "category": "기술",
+    "description": "스마트폰의 다양한 기능과 앱 사용법을 배웁니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/스마트폰활용.png",
+    "videoUrl": "https://youtu.be/V4hNBU2UEgc?si=8Rf-ViVEE9TQ0esv",
+    "benefits": [
+      "편리한 생활",
+      "소통",
+      "정보 활용",
+      "자립"
+    ],
+    "requirements": [
+      "스마트폰",
+      "충전기"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "기본 기능",
+        "content": "전화, 문자, 연락처"
+      },
+      {
+        "week": 2,
+        "title": "설정 이해",
+        "content": "와이파이, 소리, 화면"
+      },
+      {
+        "week": 3,
+        "title": "카카오톡",
+        "content": "대화방과 사진 보내기"
+      },
+      {
+        "week": 4,
+        "title": "인터넷 검색",
+        "content": "모바일 웹 사용법"
+      },
+      {
+        "week": 5,
+        "title": "사진과 동영상",
+        "content": "촬영하고 앨범 정리"
+      },
+      {
+        "week": 6,
+        "title": "지도 앱",
+        "content": "길 찾기와 내비게이션"
+      },
+      {
+        "week": 7,
+        "title": "유용한 앱",
+        "content": "날씨, 뉴스, 쇼핑 앱"
+      },
+      {
+        "week": 8,
+        "title": "보안과 백업",
+        "content": "안전하게 사용하기"
+      }
+    ]
+  },
+  {
+    "id": "a43307f4-22b7-4f1c-ba5f-77bb45cb9523",
+    "name": "한식 요리",
+    "category": "요리",
+    "description": "전통 한식을 배우고 만드는 취미. 건강하고 맛있는 음식을 직접 만듭니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/한식요리.png",
+    "videoUrl": "https://youtu.be/uzsqVvwHloA?si=1kF5YHw0_FB3wWvR",
+    "benefits": [
+      "건강한 식사",
+      "전통 계승",
+      "가족 만족",
+      "실용적"
+    ],
+    "requirements": [
+      "조리 도구",
+      "재료",
+      "레시피"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "한식 기초",
+        "content": "기본 양념장 만들기"
+      },
+      {
+        "week": 2,
+        "title": "국과 찌개",
+        "content": "된장찌개, 김치찌개"
+      },
+      {
+        "week": 3,
+        "title": "나물 반찬",
+        "content": "시금치, 콩나물 무치기"
+      },
+      {
+        "week": 4,
+        "title": "조림 요리",
+        "content": "감자조림, 두부조림"
+      },
+      {
+        "week": 5,
+        "title": "볶음 요리",
+        "content": "제육볶음, 오징어볶음"
+      },
+      {
+        "week": 6,
+        "title": "전 부치기",
+        "content": "김치전, 파전 만들기"
+      },
+      {
+        "week": 7,
+        "title": "찜 요리",
+        "content": "갈비찜, 생선찜"
+      },
+      {
+        "week": 8,
+        "title": "한상 차리기",
+        "content": "밥상 완성하기"
+      }
+    ]
+  },
+  {
+    "id": "a77a188f-3137-4b61-a360-8a40c370641c",
+    "name": "꽃꽂이",
+    "category": "자연",
+    "description": "꽃과 식물로 아름다운 작품을 만드는 예술. 한국 전통 꽃꽂이도 배울 수 있습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/꽃꽂이.png",
+    "videoUrl": "https://youtu.be/Rm4l8ld3AHI?si=uCk-UayrCLd47ipe",
+    "benefits": [
+      "미적 감각",
+      "창의력",
+      "집중력",
+      "계절 감각"
+    ],
+    "requirements": [
+      "꽃",
+      "화병",
+      "가위",
+      "꽃꽂이 도구"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "꽃꽂이 기초",
+        "content": "도구와 재료 알아보기"
+      },
+      {
+        "week": 2,
+        "title": "꽃 다루기",
+        "content": "꽃 자르기와 물올림"
+      },
+      {
+        "week": 3,
+        "title": "기본 삼각형",
+        "content": "안정감 있는 구도 만들기"
+      },
+      {
+        "week": 4,
+        "title": "선의 아름다움",
+        "content": "가지와 잎으로 선 표현"
+      },
+      {
+        "week": 5,
+        "title": "색 배합",
+        "content": "조화로운 색 조합"
+      },
+      {
+        "week": 6,
+        "title": "계절 꽃꽂이",
+        "content": "봄, 여름 꽃으로 작품"
+      },
+      {
+        "week": 7,
+        "title": "동양식 꽃꽂이",
+        "content": "한국 전통 꽂이"
+      },
+      {
+        "week": 8,
+        "title": "자유 작품",
+        "content": "개성 있는 작품 만들기"
+      }
+    ]
+  },
+  {
+    "id": "b0b07b4c-6b13-49d9-bffc-db2f13a7f9fc",
+    "name": "사진",
+    "category": "예술",
+    "description": "카메라로 순간을 포착하는 예술. 세상을 새로운 시각으로 바라보는 법을 배웁니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "both",
+    "socialIndividual": "individual",
+    "budget": "high",
+    "imageUrl": "/사진촬영.png",
+    "videoUrl": "https://youtu.be/khOBEmvGz3A?si=FQofBTGBT0cS-tjI",
+    "benefits": [
+      "관찰력 향상",
+      "창의력 개발",
+      "추억 기록",
+      "예술적 감각"
+    ],
+    "requirements": [
+      "카메라",
+      "렌즈",
+      "삼각대",
+      "메모리 카드"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "카메라 기초",
+        "content": "조리개, 셔터속도, ISO"
+      },
+      {
+        "week": 2,
+        "title": "구도와 프레이밍",
+        "content": "3분할 법칙 활용"
+      },
+      {
+        "week": 3,
+        "title": "빛의 이해",
+        "content": "자연광 활용법"
+      },
+      {
+        "week": 4,
+        "title": "인물 사진",
+        "content": "표정과 각도 포착"
+      },
+      {
+        "week": 5,
+        "title": "풍경 사진",
+        "content": "원근감 살리기"
+      },
+      {
+        "week": 6,
+        "title": "접사 촬영",
+        "content": "작은 피사체 클로즈업"
+      },
+      {
+        "week": 7,
+        "title": "보정 기초",
+        "content": "사진 편집하기"
+      },
+      {
+        "week": 8,
+        "title": "포트폴리오",
+        "content": "주제별 사진 시리즈"
+      }
+    ]
+  },
+  {
+    "id": "b6c126d8-fba1-43c9-97ee-47d101dc389a",
+    "name": "목공예",
+    "category": "공예",
+    "description": "나무를 깎고 다듬어 가구나 소품을 만듭니다. 남성에게 인기가 많습니다.",
+    "difficulty": 4,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "high",
+    "imageUrl": "/목공예.png",
+    "videoUrl": "https://youtu.be/4YoASyLgKQM?si=dNsGokmI4JRSwptf",
+    "benefits": [
+      "실용적",
+      "성취감",
+      "신체 활동",
+      "창의력"
+    ],
+    "requirements": [
+      "목재",
+      "공구",
+      "작업대",
+      "안전 장비"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "목공 도구",
+        "content": "톱, 망치, 대패 사용법"
+      },
+      {
+        "week": 2,
+        "title": "나무 선택",
+        "content": "소나무, 참나무 등 특성"
+      },
+      {
+        "week": 3,
+        "title": "재단하기",
+        "content": "직선과 곡선 자르기"
+      },
+      {
+        "week": 4,
+        "title": "조립 기법",
+        "content": "못, 나사, 접착제"
+      },
+      {
+        "week": 5,
+        "title": "연필꽂이 만들기",
+        "content": "간단한 소품 제작"
+      },
+      {
+        "week": 6,
+        "title": "사포질",
+        "content": "표면 매끄럽게 다듬기"
+      },
+      {
+        "week": 7,
+        "title": "도색과 코팅",
+        "content": "오일이나 페인트 칠하기"
+      },
+      {
+        "week": 8,
+        "title": "선반 만들기",
+        "content": "실용적인 가구 완성"
+      }
+    ]
+  },
+  {
+    "id": "b8074e6a-5931-4316-983b-9c31783ff83a",
+    "name": "역사 공부",
+    "category": "문화",
+    "description": "우리나라와 세계의 역사를 배우며 현재를 이해하는 통찰력을 기릅니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/역사공부.png",
+    "videoUrl": "https://youtu.be/CaG7fR0q-4A?si=QAlzoFFDR5Af0_Rn",
+    "benefits": [
+      "교양 함양",
+      "역사 의식",
+      "비판적 사고",
+      "문화 이해"
+    ],
+    "requirements": [
+      "역사책",
+      "노트",
+      "필기구"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "한국사 개관",
+        "content": "고조선부터 현대까지 흐름"
+      },
+      {
+        "week": 2,
+        "title": "삼국시대",
+        "content": "고구려, 백제, 신라의 역사"
+      },
+      {
+        "week": 3,
+        "title": "고려시대",
+        "content": "고려의 건국과 문화유산"
+      },
+      {
+        "week": 4,
+        "title": "조선시대",
+        "content": "조선 500년의 역사와 문화"
+      },
+      {
+        "week": 5,
+        "title": "근현대사",
+        "content": "개화기부터 대한민국 건국까지"
+      },
+      {
+        "week": 6,
+        "title": "역사 유적지",
+        "content": "문화재와 유적지 탐방"
+      },
+      {
+        "week": 7,
+        "title": "인물 탐구",
+        "content": "역사 속 주요 인물 연구"
+      },
+      {
+        "week": 8,
+        "title": "역사 토론",
+        "content": "역사적 사건에 대한 토론"
+      }
+    ]
+  },
+  {
+    "id": "b826eddb-f668-44be-a298-ff50a3044aac",
+    "name": "도자기 공예",
+    "category": "미술",
+    "description": "흙을 빚어 도자기를 만드는 전통 공예. 물레를 돌리고 가마에서 굽는 전 과정을 체험합니다.",
+    "difficulty": 4,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "high",
+    "imageUrl": "/도자기공예.png",
+    "videoUrl": "https://youtu.be/Dj3nIVP37Sw?si=euPldKBrIVXwya99",
+    "benefits": [
+      "손재주 향상",
+      "집중력 극대화",
+      "실용적인 작품",
+      "전통 공예 체험"
+    ],
+    "requirements": [
+      "도자기 물레",
+      "흙",
+      "가마 사용권",
+      "조각 도구"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "도자기 역사",
+        "content": "도자기의 종류와 기법"
+      },
+      {
+        "week": 2,
+        "title": "물레 익히기",
+        "content": "물레 돌리며 센터링"
+      },
+      {
+        "week": 3,
+        "title": "그릇 만들기",
+        "content": "컵이나 접시 성형"
+      },
+      {
+        "week": 4,
+        "title": "손으로 빚기",
+        "content": "코일이나 판 기법"
+      },
+      {
+        "week": 5,
+        "title": "장식 기법",
+        "content": "조각, 음각, 상감"
+      },
+      {
+        "week": 6,
+        "title": "초벌 소성",
+        "content": "가마에 넣어 굽기"
+      },
+      {
+        "week": 7,
+        "title": "유약 바르기",
+        "content": "색과 광택 입히기"
+      },
+      {
+        "week": 8,
+        "title": "재벌 완성",
+        "content": "본 소성 후 작품 완성"
+      }
+    ]
+  },
+  {
+    "id": "b8b141b2-4f08-4fad-8f91-61f2f656ff45",
+    "name": "하모니카",
+    "category": "음악",
+    "description": "주머니에 넣고 다니는 관악기. 언제 어디서나 연주할 수 있습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "both",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/하모니카.png",
+    "videoUrl": "https://youtu.be/_822V_i9FIQ?si=oowHfWCF24HVs9ov",
+    "benefits": [
+      "폐활량 증가",
+      "휴대성",
+      "쉬운 시작",
+      "다양한 장르"
+    ],
+    "requirements": [
+      "하모니카",
+      "교본",
+      "케이스"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "하모니카 종류",
+        "content": "복음, 단음, 크로매틱"
+      },
+      {
+        "week": 2,
+        "title": "입 모양과 호흡",
+        "content": "바른 연주법"
+      },
+      {
+        "week": 3,
+        "title": "음계 연습",
+        "content": "도레미파솔라시도 불기"
+      },
+      {
+        "week": 4,
+        "title": "단음 내기",
+        "content": "한 음만 정확하게"
+      },
+      {
+        "week": 5,
+        "title": "쉬운 멜로디",
+        "content": "학교종, 작은별 등"
+      },
+      {
+        "week": 6,
+        "title": "벤딩 기법",
+        "content": "음 높이 조절"
+      },
+      {
+        "week": 7,
+        "title": "가요 연주",
+        "content": "익숙한 곡 불기"
+      },
+      {
+        "week": 8,
+        "title": "합주와 발표",
+        "content": "함께 연주하기"
+      }
+    ]
+  },
+  {
+    "id": "bead321e-8062-4495-9952-2981b13a92bd",
+    "name": "조경",
+    "category": "자연",
+    "description": "정원을 아름답게 꾸미는 활동. 공간을 디자인하고 식물을 배치합니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "both",
+    "budget": "high",
+    "imageUrl": "/조경.png",
+    "videoUrl": "https://youtu.be/l-I4YecXWV4?si=T2WgqmGnS8ZACP-X",
+    "benefits": [
+      "창의력",
+      "신체 활동",
+      "미적 감각",
+      "공간 디자인"
+    ],
+    "requirements": [
+      "정원 도구",
+      "식물",
+      "디자인 지식",
+      "자재"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "조경 디자인",
+        "content": "정원 설계의 기초"
+      },
+      {
+        "week": 2,
+        "title": "식재 계획",
+        "content": "나무와 꽃 배치"
+      },
+      {
+        "week": 3,
+        "title": "잔디 관리",
+        "content": "잔디 깎기와 시비"
+      },
+      {
+        "week": 4,
+        "title": "관목 전정",
+        "content": "나무 가지치기"
+      },
+      {
+        "week": 5,
+        "title": "화단 만들기",
+        "content": "테두리와 배수 설치"
+      },
+      {
+        "week": 6,
+        "title": "정원 소품",
+        "content": "의자, 조명 등 배치"
+      },
+      {
+        "week": 7,
+        "title": "수목 관리",
+        "content": "계절별 나무 돌보기"
+      },
+      {
+        "week": 8,
+        "title": "정원 완성",
+        "content": "나만의 정원 가꾸기"
+      }
+    ]
+  },
+  {
+    "id": "c658eef4-3d59-4d3c-b669-5aac2b133be1",
+    "name": "베이킹",
+    "category": "요리",
+    "description": "빵과 과자를 굽는 취미. 달콤한 향기와 맛있는 결과물이 기다립니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/베이킹.png",
+    "videoUrl": "https://youtu.be/vnfAmqrrppQ?si=srmPzKgDJZh2QLny",
+    "benefits": [
+      "창작의 즐거움",
+      "맛있는 결과",
+      "선물 가능",
+      "가족과 함께"
+    ],
+    "requirements": [
+      "오븐",
+      "재료",
+      "도구",
+      "레시피"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "베이킹 기초",
+        "content": "계량과 오븐 사용법"
+      },
+      {
+        "week": 2,
+        "title": "쿠키 만들기",
+        "content": "버터 쿠키 굽기"
+      },
+      {
+        "week": 3,
+        "title": "머핀",
+        "content": "블루베리 머핀 제작"
+      },
+      {
+        "week": 4,
+        "title": "스콘",
+        "content": "영국식 스콘 굽기"
+      },
+      {
+        "week": 5,
+        "title": "파운드 케이크",
+        "content": "기본 케이크 만들기"
+      },
+      {
+        "week": 6,
+        "title": "빵 반죽",
+        "content": "이스트 발효 빵"
+      },
+      {
+        "week": 7,
+        "title": "타르트",
+        "content": "과일 타르트 만들기"
+      },
+      {
+        "week": 8,
+        "title": "케이크 데코",
+        "content": "생크림 장식하기"
+      }
+    ]
+  },
+  {
+    "id": "c6db7f18-8248-423f-bd7a-c8c6c9ce1cdf",
+    "name": "민화",
+    "category": "미술",
+    "description": "조선시대부터 전해 내려오는 한국 전통 그림. 밝고 화려한 색채와 상징적 의미가 담겨 있습니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/민화.png",
+    "videoUrl": "https://youtu.be/HeVd1UvsFQM?si=0f4P0VhYHNLPeuoK",
+    "benefits": [
+      "전통 문화 계승",
+      "색채 감각 개발",
+      "문화재 이해",
+      "창작의 즐거움"
+    ],
+    "requirements": [
+      "민화 물감",
+      "한지",
+      "붓",
+      "밑그림"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "민화의 이해",
+        "content": "한국 전통 그림의 의미"
+      },
+      {
+        "week": 2,
+        "title": "모본 따라 그리기",
+        "content": "밑그림 연습"
+      },
+      {
+        "week": 3,
+        "title": "채색 기법",
+        "content": "전통 안료 사용법"
+      },
+      {
+        "week": 4,
+        "title": "까치호랑이",
+        "content": "해학적인 민화 그리기"
+      },
+      {
+        "week": 5,
+        "title": "화조도",
+        "content": "꽃과 새 그리기"
+      },
+      {
+        "week": 6,
+        "title": "책거리",
+        "content": "책과 문방구 배치"
+      },
+      {
+        "week": 7,
+        "title": "십장생",
+        "content": "장수를 상징하는 그림"
+      },
+      {
+        "week": 8,
+        "title": "작품 완성",
+        "content": "액자나 족자로 마무리"
+      }
+    ]
+  },
+  {
+    "id": "d40476a9-1a33-4ab6-8671-d309f08b4605",
+    "name": "여행",
+    "category": "여가",
+    "description": "국내외 여행을 다니며 새로운 경험을 쌓습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "both",
+    "budget": "high",
+    "imageUrl": "/여행.png",
+    "videoUrl": "https://youtu.be/tdXCTsDpzB8?si=n6ruzcQiHe8ij1mb",
+    "benefits": [
+      "새로운 경험",
+      "문화 이해",
+      "추억 쌓기",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "여행 가방",
+      "카메라",
+      "편한 신발"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "여행 계획",
+        "content": "목적지 선정과 일정 짜기"
+      },
+      {
+        "week": 2,
+        "title": "국내 여행",
+        "content": "경주, 제주 등 명소"
+      },
+      {
+        "week": 3,
+        "title": "문화 탐방",
+        "content": "사찰, 궁궐, 고궁 여행"
+      },
+      {
+        "week": 4,
+        "title": "자연 여행",
+        "content": "섬, 산, 바다 여행"
+      },
+      {
+        "week": 5,
+        "title": "해외 여행 준비",
+        "content": "여권, 환전, 짐 싸기"
+      },
+      {
+        "week": 6,
+        "title": "단체 여행",
+        "content": "패키지 투어 경험"
+      },
+      {
+        "week": 7,
+        "title": "여행 사진",
+        "content": "추억 남기는 촬영법"
+      },
+      {
+        "week": 8,
+        "title": "여행기 쓰기",
+        "content": "여행 기록 정리"
+      }
+    ]
+  },
+  {
+    "id": "d55f331b-716b-4858-8186-7943f2f7de3a",
+    "name": "환경 보호",
+    "category": "봉사",
+    "description": "지역 청소, 분리수거 캠페인 등 환경을 지키는 활동입니다.",
+    "difficulty": 1,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "social",
+    "budget": "low",
+    "imageUrl": "/환경보호.png",
+    "videoUrl": "https://youtu.be/qRjbcRuEYBQ?si=Cxo2w9nEgrIGiTBq",
+    "benefits": [
+      "사회 공헌",
+      "운동 효과",
+      "보람",
+      "공동체 의식"
+    ],
+    "requirements": [
+      "장갑",
+      "집게",
+      "쓰레기봉투"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "환경 문제 인식",
+        "content": "기후변화와 오염 이해"
+      },
+      {
+        "week": 2,
+        "title": "분리수거",
+        "content": "올바른 재활용 방법"
+      },
+      {
+        "week": 3,
+        "title": "플라스틱 줄이기",
+        "content": "일회용품 대체하기"
+      },
+      {
+        "week": 4,
+        "title": "에너지 절약",
+        "content": "전기, 물 아끼기"
+      },
+      {
+        "week": 5,
+        "title": "친환경 제품",
+        "content": "지속 가능한 소비"
+      },
+      {
+        "week": 6,
+        "title": "캠페인 참여",
+        "content": "환경 운동 동참"
+      },
+      {
+        "week": 7,
+        "title": "정화 활동",
+        "content": "쓰레기 줍기, 하천 정화"
+      },
+      {
+        "week": 8,
+        "title": "실천 습관",
+        "content": "일상 속 환경 보호"
+      }
+    ]
+  },
+  {
+    "id": "dc4cef08-0482-427a-b065-3b8f2fbf641c",
+    "name": "비누 만들기",
+    "category": "공예",
+    "description": "천연 재료로 피부에 좋은 비누를 직접 만듭니다. 선물용으로도 좋습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/비누만들기.png",
+    "videoUrl": "https://youtu.be/eWGwM_rdHXM?si=4yQe7lyfkfXn4NGG",
+    "benefits": [
+      "실용적",
+      "창의력",
+      "천연 제품",
+      "선물 가능"
+    ],
+    "requirements": [
+      "비누 베이스",
+      "에센셜 오일",
+      "몰드",
+      "색소"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "비누 제작 원리",
+        "content": "천연 재료와 첨가물"
+      },
+      {
+        "week": 2,
+        "title": "MP 비누",
+        "content": "녹여붓기 방식"
+      },
+      {
+        "week": 3,
+        "title": "색소와 향",
+        "content": "천연 색과 에센셜 오일"
+      },
+      {
+        "week": 4,
+        "title": "모양 만들기",
+        "content": "몰드 활용"
+      },
+      {
+        "week": 5,
+        "title": "허브 비누",
+        "content": "허브 첨가 비누"
+      },
+      {
+        "week": 6,
+        "title": "CP 비누 소개",
+        "content": "냉침법 비누 만들기"
+      },
+      {
+        "week": 7,
+        "title": "숙성과 건조",
+        "content": "비누 관리하기"
+      },
+      {
+        "week": 8,
+        "title": "포장과 선물",
+        "content": "예쁘게 포장하기"
+      }
+    ]
+  },
+  {
+    "id": "dd693683-0770-4315-a282-3e15315efb4f",
+    "name": "게이트볼",
+    "category": "스포츠",
+    "description": "시니어들에게 인기 있는 구기 종목. 전략적 사고와 팀워크가 중요합니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "social",
+    "budget": "low",
+    "imageUrl": "/게이트볼.png",
+    "videoUrl": "https://youtu.be/sTBIxlfYAXU?si=m2iJ8rQeVUIN8KgI",
+    "benefits": [
+      "전략적 사고",
+      "팀워크 향상",
+      "적당한 운동량",
+      "사회적 교류"
+    ],
+    "requirements": [
+      "게이트볼 스틱",
+      "공",
+      "운동화",
+      "모자"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "게이트볼 규칙",
+        "content": "경기 방법과 팀 구성"
+      },
+      {
+        "week": 2,
+        "title": "스틱 사용법",
+        "content": "스틱 잡고 공 치는 자세"
+      },
+      {
+        "week": 3,
+        "title": "게이트 통과",
+        "content": "문 통과 기술 연습"
+      },
+      {
+        "week": 4,
+        "title": "터치와 스파크",
+        "content": "공 맞추고 튕겨내기"
+      },
+      {
+        "week": 5,
+        "title": "전략 이해",
+        "content": "팀 작전과 순서 활용"
+      },
+      {
+        "week": 6,
+        "title": "골폴 타격",
+        "content": "골대 맞추는 연습"
+      },
+      {
+        "week": 7,
+        "title": "실전 연습",
+        "content": "5:5 팀 게임 진행"
+      },
+      {
+        "week": 8,
+        "title": "친선 대회",
+        "content": "토너먼트 경기 참가"
+      }
+    ]
+  },
+  {
+    "id": "dd79992e-7b88-46fe-8997-fba86b002141",
+    "name": "자전거",
+    "category": "스포츠",
+    "description": "페달을 밟으며 자연을 누비는 유산소 운동. 무릎에 부담이 적습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/자전거.png",
+    "videoUrl": "https://youtu.be/Zuveh98J9a8?si=ZEX3aqTCyb-GtJ-M",
+    "benefits": [
+      "유산소 운동",
+      "하체 근력",
+      "관절 부담 적음",
+      "여행과 결합"
+    ],
+    "requirements": [
+      "자전거",
+      "헬멧",
+      "장갑",
+      "안전 장비"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "자전거 점검",
+        "content": "안장 높이, 타이어, 브레이크 확인"
+      },
+      {
+        "week": 2,
+        "title": "기본 주행",
+        "content": "페달링과 균형 잡기"
+      },
+      {
+        "week": 3,
+        "title": "변속 사용법",
+        "content": "기어 변속으로 힘 조절하기"
+      },
+      {
+        "week": 4,
+        "title": "안전 수칙",
+        "content": "도로 주행 시 안전 규칙"
+      },
+      {
+        "week": 5,
+        "title": "근교 라이딩",
+        "content": "10-20km 짧은 코스 라이딩"
+      },
+      {
+        "week": 6,
+        "title": "체력 향상",
+        "content": "언덕길과 긴 거리 주행"
+      },
+      {
+        "week": 7,
+        "title": "자전거 도로",
+        "content": "한강이나 자전거 길 투어"
+      },
+      {
+        "week": 8,
+        "title": "장거리 라이딩",
+        "content": "50km 이상 코스 완주"
+      }
+    ]
+  },
+  {
+    "id": "dde8a66a-55fe-4449-9db8-66cfb169cb09",
+    "name": "천체 관측",
+    "category": "여가",
+    "description": "망원경으로 별과 달, 행성을 관찰하는 낭만적인 취미입니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "outdoor",
+    "socialIndividual": "both",
+    "budget": "high",
+    "imageUrl": "/천체관측.png",
+    "videoUrl": "https://youtu.be/KHFF6ql9qpE?si=eYNKUekPy5d9xANQ",
+    "benefits": [
+      "우주 이해",
+      "낭만",
+      "관찰력",
+      "지적 호기심"
+    ],
+    "requirements": [
+      "망원경",
+      "성도",
+      "의자",
+      "손전등"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "별자리 이해",
+        "content": "계절별 주요 별자리"
+      },
+      {
+        "week": 2,
+        "title": "육안 관측",
+        "content": "망원경 없이 별 보기"
+      },
+      {
+        "week": 3,
+        "title": "망원경 사용",
+        "content": "천체 망원경 조작법"
+      },
+      {
+        "week": 4,
+        "title": "달 관측",
+        "content": "달의 위상과 표면"
+      },
+      {
+        "week": 5,
+        "title": "행성 관측",
+        "content": "금성, 목성, 토성 보기"
+      },
+      {
+        "week": 6,
+        "title": "별 사진",
+        "content": "장노출로 별 찍기"
+      },
+      {
+        "week": 7,
+        "title": "천문대 방문",
+        "content": "과학관이나 천문대 관람"
+      },
+      {
+        "week": 8,
+        "title": "유성우 관측",
+        "content": "별똥별 보러 가기"
+      }
+    ]
+  },
+  {
+    "id": "e28b42a7-ef66-414e-8387-869a674a1dd6",
+    "name": "볼링",
+    "category": "스포츠",
+    "description": "실내에서 즐기는 대표적인 레저 스포츠. 정확성과 집중력이 필요합니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "medium",
+    "imageUrl": "/볼링.png",
+    "videoUrl": "https://youtu.be/Aw7YX_fep-Y?si=XbCWbhkvxA6UJXA-",
+    "benefits": [
+      "집중력 향상",
+      "전신 운동",
+      "사교 활동",
+      "성취감"
+    ],
+    "requirements": [
+      "볼링화 (대여)",
+      "편한 옷",
+      "손목 보호대"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "볼링 규칙",
+        "content": "점수 계산과 경기 방식"
+      },
+      {
+        "week": 2,
+        "title": "공 선택과 그립",
+        "content": "자신에게 맞는 공 고르기"
+      },
+      {
+        "week": 3,
+        "title": "어드레스와 스텝",
+        "content": "서는 위치와 4스텝 동작"
+      },
+      {
+        "week": 4,
+        "title": "스윙과 릴리스",
+        "content": "팔 휘두르기와 공 놓는 타이밍"
+      },
+      {
+        "week": 5,
+        "title": "스페어 처리",
+        "content": "남은 핀 쓰러뜨리기"
+      },
+      {
+        "week": 6,
+        "title": "훅볼 배우기",
+        "content": "공에 회전 주어 커브 만들기"
+      },
+      {
+        "week": 7,
+        "title": "스트라이크 노리기",
+        "content": "정확한 포켓 공략법"
+      },
+      {
+        "week": 8,
+        "title": "리그 게임",
+        "content": "팀 대항전 경기 경험"
+      }
+    ]
+  },
+  {
+    "id": "e38d4440-eabc-4d3e-80f0-55d3a39b7ecc",
+    "name": "멘토링",
+    "category": "봉사",
+    "description": "자신의 경험과 지식을 젊은 세대와 나누는 활동입니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "both",
+    "socialIndividual": "social",
+    "budget": "low",
+    "imageUrl": "/멘토링.png",
+    "videoUrl": "https://youtu.be/ZqE-pbja0lc?si=CypYAZmqcJA4UyA-",
+    "benefits": [
+      "보람",
+      "경험 공유",
+      "세대 소통",
+      "자존감"
+    ],
+    "requirements": [
+      "경험",
+      "소통 능력"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "멘토의 역할",
+        "content": "경험 나누고 조언하기"
+      },
+      {
+        "week": 2,
+        "title": "경청 기술",
+        "content": "상대방 이야기 듣기"
+      },
+      {
+        "week": 3,
+        "title": "질문 기법",
+        "content": "생각 이끌어내는 질문"
+      },
+      {
+        "week": 4,
+        "title": "목표 설정",
+        "content": "멘티와 함께 계획 세우기"
+      },
+      {
+        "week": 5,
+        "title": "피드백",
+        "content": "건설적인 조언 주기"
+      },
+      {
+        "week": 6,
+        "title": "동기 부여",
+        "content": "격려와 칭찬"
+      },
+      {
+        "week": 7,
+        "title": "문제 해결",
+        "content": "어려움 함께 극복하기"
+      },
+      {
+        "week": 8,
+        "title": "장기 관계",
+        "content": "지속적인 멘토링"
+      }
+    ]
+  },
+  {
+    "id": "e43ecbe3-1de5-4088-b571-5d78289f65d8",
+    "name": "피아노",
+    "category": "음악",
+    "description": "건반 악기의 대표주자. 클래식부터 대중음악까지 다양한 장르를 연주할 수 있습니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "individual",
+    "budget": "high",
+    "imageUrl": "/피아노.png",
+    "videoUrl": "https://youtu.be/yHj_4mDUFq8?si=0YYFo9C6VsW23Grh",
+    "benefits": [
+      "두뇌 활동",
+      "손가락 운동",
+      "음악적 소양",
+      "정서 안정"
+    ],
+    "requirements": [
+      "피아노 또는 전자 피아노",
+      "악보",
+      "의자"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "건반 이해",
+        "content": "도레미파솔라시도 위치"
+      },
+      {
+        "week": 2,
+        "title": "손가락 번호",
+        "content": "올바른 운지법"
+      },
+      {
+        "week": 3,
+        "title": "오른손 멜로디",
+        "content": "간단한 곡 연주"
+      },
+      {
+        "week": 4,
+        "title": "왼손 화음",
+        "content": "반주 넣기"
+      },
+      {
+        "week": 5,
+        "title": "양손 합주",
+        "content": "멜로디와 반주 동시에"
+      },
+      {
+        "week": 6,
+        "title": "리듬 연습",
+        "content": "박자 정확하게 치기"
+      },
+      {
+        "week": 7,
+        "title": "쉬운 곡",
+        "content": "동요나 가요 1곡 완성"
+      },
+      {
+        "week": 8,
+        "title": "발표 연주",
+        "content": "배운 곡 들려주기"
+      }
+    ]
+  },
+  {
+    "id": "e9cd68cb-4b35-484a-8069-2251b87307f6",
+    "name": "자수",
+    "category": "공예",
+    "description": "천에 바늘과 실로 그림을 그리는 전통 공예. 섬세하고 아름다운 작품이 탄생합니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/자수.png",
+    "videoUrl": "https://youtu.be/3brFkrxUFo4?si=8ldK1wHNW7VqbQ9Q",
+    "benefits": [
+      "집중력 극대화",
+      "섬세함",
+      "예술 작품",
+      "인내심"
+    ],
+    "requirements": [
+      "자수실",
+      "바늘",
+      "천",
+      "자수틀"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "자수 도구",
+        "content": "바늘, 실, 수틀 준비"
+      },
+      {
+        "week": 2,
+        "title": "기본 스티치",
+        "content": "백스티치, 체인스티치 등"
+      },
+      {
+        "week": 3,
+        "title": "도안 옮기기",
+        "content": "천에 그림 그리기"
+      },
+      {
+        "week": 4,
+        "title": "꽃 수놓기",
+        "content": "간단한 꽃무늬 자수"
+      },
+      {
+        "week": 5,
+        "title": "프랑스 매듭",
+        "content": "입체감 있는 기법"
+      },
+      {
+        "week": 6,
+        "title": "레터링 자수",
+        "content": "문구 새기기"
+      },
+      {
+        "week": 7,
+        "title": "소품 만들기",
+        "content": "손수건이나 파우치 장식"
+      },
+      {
+        "week": 8,
+        "title": "작품 완성",
+        "content": "액자 장착하기"
+      }
+    ]
+  },
+  {
+    "id": "ecd6f121-6f94-426d-8490-ed576e3a2dd0",
+    "name": "서예",
+    "category": "문화",
+    "description": "붓과 먹으로 아름다운 글씨를 쓰는 전통 예술. 마음의 평화와 집중력을 기를 수 있습니다.",
+    "difficulty": 3,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "individual",
+    "budget": "medium",
+    "imageUrl": "/서예(중복).png",
+    "videoUrl": "https://youtu.be/UCr0xxcTy9E?si=MViJtZM-3xj9WofO",
+    "benefits": [
+      "집중력 향상",
+      "마음의 평화",
+      "전통 문화 이해",
+      "손글씨 개선"
+    ],
+    "requirements": [
+      "붓",
+      "먹",
+      "벼루",
+      "한지"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "서예 도구와 자세",
+        "content": "붓, 먹, 벼루 사용법과 올바른 집필 자세"
+      },
+      {
+        "week": 2,
+        "title": "기본 획 연습",
+        "content": "가로획, 세로획, 삐침, 꺾임 등 기본 획 익히기"
+      },
+      {
+        "week": 3,
+        "title": "한글 서예 기초",
+        "content": "자음과 모음의 기본 쓰기 연습"
+      },
+      {
+        "week": 4,
+        "title": "한자 서예 기초",
+        "content": "간단한 한자 쓰기와 필순 익히기"
+      },
+      {
+        "week": 5,
+        "title": "글씨체 연습",
+        "content": "정자체와 흘림체 비교 학습"
+      },
+      {
+        "week": 6,
+        "title": "시와 문구 쓰기",
+        "content": "짧은 시나 명언을 서예로 작성"
+      },
+      {
+        "week": 7,
+        "title": "작품 구성",
+        "content": "낙관과 여백의 아름다움 이해하기"
+      },
+      {
+        "week": 8,
+        "title": "완성 작품 제작",
+        "content": "족자나 액자용 서예 작품 완성"
+      }
+    ]
+  },
+  {
+    "id": "ed28d0bd-f923-4e75-850f-8d1d79f782a1",
+    "name": "우쿨렐레",
+    "category": "음악",
+    "description": "작고 귀여운 4현 악기. 배우기 쉬워 초보자에게 인기가 많습니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "both",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/우쿨렐레.png",
+    "videoUrl": "https://youtu.be/_KkD3Ivc1sA?si=adwk8gDxXyLUhlfO",
+    "benefits": [
+      "쉬운 학습",
+      "휴대성",
+      "밝은 음색",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "우쿨렐레",
+      "튜너",
+      "악보"
+    ],
+    "curriculum": [
+      {
+        "week": 1,
+        "title": "우쿨렐레 구조",
+        "content": "악기 부위와 튜닝"
+      },
+      {
+        "week": 2,
+        "title": "기본 자세",
+        "content": "안는 자세와 손 위치"
+      },
+      {
+        "week": 3,
+        "title": "3코드",
+        "content": "C, F, G7 코드"
+      },
+      {
+        "week": 4,
+        "title": "스트럼 패턴",
+        "content": "다운 업 리듬 치기"
+      },
+      {
+        "week": 5,
+        "title": "쉬운 곡 1",
+        "content": "동요 연주하기"
+      },
+      {
+        "week": 6,
+        "title": "추가 코드",
+        "content": "Am, Dm, Em 등"
+      },
+      {
+        "week": 7,
+        "title": "노래 반주",
+        "content": "노래하며 연주하기"
+      },
+      {
+        "week": 8,
+        "title": "발표 공연",
+        "content": "배운 곡 선보이기"
+      }
+    ]
+  },
+  {
+    "id": "f0e0f3b2-c19b-4a81-b71d-17abc4730263",
+    "name": "시 쓰기",
+    "category": "문화",
+    "description": "일상의 감동을 시로 표현하는 문학 창작. 내면의 감정을 승화시킵니다.",
+    "difficulty": 2,
+    "indoorOutdoor": "indoor",
+    "socialIndividual": "both",
+    "budget": "low",
+    "imageUrl": "/시쓰기.png",
+    "videoUrl": "https://youtu.be/1a4cSitXpUA?si=Lud2Va4W-ta_bx2h",
+    "benefits": [
+      "감성 표현",
+      "언어 능력",
+      "정서 안정",
+      "창작의 기쁨"
+    ],
+    "requirements": [
+      "노트",
+      "펜",
+      "시집"
+    ],
+    "curriculum": null
+  }
+]

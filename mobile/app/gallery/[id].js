@@ -29,6 +29,7 @@ import {
 } from '../../api/galleryService';
 import { getCurrentUser } from '../../api/authService';
 import UploadGalleryModal from '../../components/UploadGalleryModal';
+import hobbyImages from '../../assets/hobbyImages';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -174,27 +175,29 @@ const GalleryReelItem = ({ item, currentUser, onLike, onEdit, onDelete, isActive
         />
       ) : (
         <Image
-          source={{ uri: item.image }}
+          source={
+            // 1순위: hobbyName으로 로컬 이미지 찾기
+            item.hobbyName && hobbyImages[item.hobbyName]
+              ? hobbyImages[item.hobbyName]
+              // 2순위: Base64 또는 URL 이미지
+              : item.image && item.image.length > 0
+              ? { uri: item.image }
+              // 3순위: placeholder
+              : require('../../assets/icon.png')
+          }
           style={styles.media}
           resizeMode="cover"
+          defaultSource={require('../../assets/icon.png')}
+          onError={(e) => {
+            console.error('[갤러리 릴스] 이미지 로드 실패:', item.title, e.nativeEvent.error);
+            if (item.hobbyName) {
+              console.log('[갤러리 릴스] 취미 이름:', item.hobbyName, '/ 이미지 존재:', !!hobbyImages[item.hobbyName]);
+            }
+          }}
         />
       )}
 
-      {/* 우측 액션 버튼 */}
-      <View style={styles.rightActions}>
-        {/* 본인 작품이 아닐 때만 좋아요 버튼 표시 */}
-        {!isOwner && (
-          <TouchableOpacity style={styles.actionButtonWithBg} onPress={handleLike}>
-            <Feather
-              name="heart"
-              size={32}
-              color={isLiked ? '#FF7A5C' : '#fff'}
-              fill={isLiked ? '#FF7A5C' : 'transparent'}
-            />
-            <Text style={styles.actionTextBold}>{likeCount}</Text>
-          </TouchableOpacity>
-        )}
-      </View>
+      {/* 우측 액션 버튼 제거 - 하단 메타 영역으로 통일 */}
 
       {/* 동영상 프로그레스 바 */}
       {isVideo && duration > 0 && (
@@ -241,21 +244,21 @@ const GalleryReelItem = ({ item, currentUser, onLike, onEdit, onDelete, isActive
               </View>
             </View>
 
-            {/* 본인 작품일 때 좋아요 + 수정 버튼 */}
-            {isOwner && (
-              <View style={styles.ownerControls}>
-                {/* 좋아요 (읽기 전용) */}
-                <TouchableOpacity style={styles.ownerControlButton} onPress={handleLike}>
-                  <Feather
-                    name="heart"
-                    size={18}
-                    color={isLiked ? '#FF7A5C' : 'rgba(255,255,255,0.9)'}
-                    fill={isLiked ? '#FF7A5C' : 'transparent'}
-                  />
-                  <Text style={styles.ownerControlText}>{likeCount}</Text>
-                </TouchableOpacity>
+            {/* 모든 작품에 좋아요 + 본인 작품일 때 수정 버튼 추가 (통일된 UI) */}
+            <View style={styles.ownerControls}>
+              {/* 좋아요 (모든 작품에 표시) */}
+              <TouchableOpacity style={styles.ownerControlButton} onPress={handleLike}>
+                <Feather
+                  name="heart"
+                  size={18}
+                  color={isLiked ? '#FF7A5C' : 'rgba(255,255,255,0.9)'}
+                  fill={isLiked ? '#FF7A5C' : 'transparent'}
+                />
+                <Text style={styles.ownerControlText}>{likeCount}</Text>
+              </TouchableOpacity>
 
-                {/* 수정 */}
+              {/* 수정 (본인 작품만) */}
+              {isOwner && (
                 <TouchableOpacity
                   style={styles.ownerControlButton}
                   onPress={() => {
@@ -268,8 +271,8 @@ const GalleryReelItem = ({ item, currentUser, onLike, onEdit, onDelete, isActive
                 >
                   <Feather name="more-horizontal" size={18} color="rgba(255,255,255,0.9)" />
                 </TouchableOpacity>
-              </View>
-            )}
+              )}
+            </View>
           </View>
 
           {/* 댓글 버튼 */}

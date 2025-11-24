@@ -392,7 +392,7 @@ export default function CommunityPage() {
             {/* Category Filter for Posts */}
             <View style={styles.filterContainer}>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.locationFilters}>
-                {['all', '공지', '자유', '질문', '후기', '모집'].map(category => (
+                {['all', '자유게시판', '질문/답변', '정보공유'].map(category => (
                   <TouchableOpacity
                     key={category}
                     style={[

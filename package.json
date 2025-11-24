@@ -12,7 +12,12 @@
     "start:mobile": "cd mobile && npx expo start --clear",
     "migrate:comments": "tsx scripts/add-post-comments-table.ts",
     "check:tables": "tsx scripts/check-tables.ts",
-    "check:posts": "tsx scripts/check-posts-table.ts"
+    "check:posts": "tsx scripts/check-posts-table.ts",
+    "seed": "tsx scripts/seed.ts",
+    "create-test-user": "tsx scripts/create-test-user.ts",
+    "import-hobbies": "tsx scripts/import-all-hobbies.ts",
+    "seed-all": "tsx scripts/seed-all.ts",
+    "update-gallery-images": "tsx scripts/update-gallery-images.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -53,6 +58,7 @@
     "date-fns": "latest",
     "drizzle-orm": "^0.44.6",
     "embla-carousel-react": "8.5.1",
+    "expo-server-sdk": "^4.0.0",
     "geist": "latest",
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",

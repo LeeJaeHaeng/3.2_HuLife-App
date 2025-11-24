@@ -232,7 +232,7 @@ export default function HobbiesScreen() {
   // Get unique filter values from hobbies - 실제 데이터로부터 동적 생성 (한글 변환)
   const categories = ['전체', ...new Set(hobbies.map(h => h.category).filter(Boolean))];
   // 난이도는 고정된 3개 값만 사용 (데이터 정합성 보장)
-  const difficulties = ['전체', '쉬움', '중간', '어려움'];
+  const difficulties = ['전체', '쉬움', '보통', '어려움'];
   const indoorOutdoorOptions = ['전체', ...new Set(hobbies.map(h => getLocationLabel(h.indoorOutdoor)).filter(Boolean))];
   const budgetOptions = ['전체', ...new Set(hobbies.map(h => getBudgetLabel(h.budget)).filter(Boolean))];
 

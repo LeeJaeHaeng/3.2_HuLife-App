@@ -15,6 +15,7 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { getAllGalleryItems, toggleGalleryLike } from '../api/galleryService';
 import * as SecureStore from 'expo-secure-store';
+import hobbyImages from '../assets/hobbyImages';
 
 // 갤러리 카드 컴포넌트 (2-column grid)
 const GalleryCard = ({ item, onPress, onLike, currentUserId }) => {
@@ -24,7 +25,7 @@ const GalleryCard = ({ item, onPress, onLike, currentUserId }) => {
   // 동영상 여부 확인
   const isVideo = item.videoUrl || item.image?.includes('video') || item.image?.includes('.mp4');
 
-  // 이미지 소스 결정
+  // 이미지 소스 결정 (취미 이미지 우선 사용)
   let imageSource;
   if (isVideo) {
     // 동영상: videoThumbnail 사용, 없으면 placeholder
@@ -34,8 +35,19 @@ const GalleryCard = ({ item, onPress, onLike, currentUserId }) => {
       imageSource = require('../assets/icon.png');
     }
   } else {
-    // 이미지: image URL 사용
-    imageSource = { uri: item.image };
+    // 1순위: hobbyName으로 로컬 이미지 찾기
+    if (item.hobbyName && hobbyImages[item.hobbyName]) {
+      imageSource = hobbyImages[item.hobbyName];
+      console.log('[갤러리 카드] 취미 이미지 사용:', item.hobbyName);
+    }
+    // 2순위: Base64 또는 URL 이미지
+    else if (item.image && item.image.length > 0) {
+      imageSource = { uri: item.image };
+    }
+    // 3순위: placeholder
+    else {
+      imageSource = require('../assets/icon.png');
+    }
   }
 
   const handleLike = async () => {
@@ -52,6 +64,8 @@ const GalleryCard = ({ item, onPress, onLike, currentUserId }) => {
         source={imageSource}
         style={styles.cardImage}
         resizeMode="cover"
+        defaultSource={require('../assets/icon.png')}
+        onError={(e) => console.error('[갤러리 카드] 이미지 로드 실패:', item.title, e.nativeEvent.error)}
       />
 
       {/* 동영상 표시 아이콘 */}

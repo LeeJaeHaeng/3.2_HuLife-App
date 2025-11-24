@@ -61,9 +61,9 @@ export default function DashboardScreen() {
             setUserSchedules(Array.isArray(schedulesData) ? schedulesData : []);
             // 추천 데이터 처리 (recommendations 키 확인)
             setRecommendations(Array.isArray(recsData?.recommendations) ? recsData.recommendations : []);
-            // 내 갤러리 작품만 필터링
+            // 모든 갤러리 작품 (회원들의 작품)
             const myGallery = Array.isArray(galleryData)
-                ? galleryData.filter(item => item.userId === userData?.id)
+                ? galleryData
                 : [];
             setMyGalleryItems(myGallery);
 
@@ -202,11 +202,11 @@ export default function DashboardScreen() {
                      </View>
                 )}
 
-                {/* 7. 내 갤러리 (✨ 최근 업로드한 갤러리 작품 표시) */}
+                {/* 7. 회원들의 작품 (✨ 최근 업로드한 갤러리 작품 표시) */}
                 {myGalleryItems.length > 0 && (
                     <View style={styles.card}>
                         <View style={styles.cardTitleRow}>
-                            <Text style={styles.cardTitle}>내 갤러리</Text>
+                            <Text style={styles.cardTitle}>회원들의 작품 보기</Text>
                             <TouchableOpacity onPress={() => router.push('/gallery')}>
                                 <Text style={styles.viewAllText}>전체 보기</Text>
                             </TouchableOpacity>
@@ -219,7 +219,16 @@ export default function DashboardScreen() {
                                     onPress={() => router.push(`/gallery/${item.id}`)}
                                 >
                                     <Image
-                                        source={{ uri: item.image }}
+                                        source={
+                                            // 1순위: hobbyName으로 로컬 이미지
+                                            item.hobbyName && hobbyImages[item.hobbyName]
+                                                ? hobbyImages[item.hobbyName]
+                                                // 2순위: Base64/URL 이미지
+                                                : item.image && item.image.length > 0
+                                                ? { uri: item.image }
+                                                // 3순위: placeholder
+                                                : require('../assets/hobbies/hulife_logo.png')
+                                        }
                                         style={styles.galleryImage}
                                         resizeMode="cover"
                                     />

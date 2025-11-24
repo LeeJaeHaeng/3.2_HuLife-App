@@ -16,6 +16,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { getCurrentUser, logoutUser } from '../api/authService';
 import { getUserCommunitiesAPI, getUserHobbiesAPI, getUserSchedulesAPI, updateScheduleAPI, deleteScheduleAPI, removeHobbyFromUserAPI } from '../api/userService';
+import { getAllGalleryItems } from '../api/galleryService';
+import { getAllPostsAPI } from '../api/communityService';
 import AddScheduleModal from '../components/AddScheduleModal';
 import EditProfileModal from '../components/EditProfileModal';
 import hobbyImages from '../assets/hobbyImages';
@@ -46,11 +48,14 @@ const TabButton = ({ label, activeTab, setActiveTab }) => (
 export default function MyPageScreen() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('관심 취미');
+  const [myContentSubTab, setMyContentSubTab] = useState('내 작품'); // 내글 탭의 서브탭
 
   const [user, setUser] = useState(null);
   const [userHobbies, setUserHobbies] = useState([]);
   const [userCommunities, setUserCommunities] = useState([]);
   const [userSchedules, setUserSchedules] = useState([]);
+  const [myGalleryItems, setMyGalleryItems] = useState([]); // 내 갤러리 작품
+  const [myPosts, setMyPosts] = useState([]); // 내 게시판 글
   const [loading, setLoading] = useState(true); // 로딩 상태 (초기 + 새로고침 통합)
   const [error, setError] = useState(null);
   const [isAddScheduleModalVisible, setIsAddScheduleModalVisible] = useState(false);
@@ -71,23 +76,40 @@ export default function MyPageScreen() {
       setError(null);
       console.log("[마이페이지] 데이터 로딩 시작...");
 
-      const [userData, hobbiesData, communitiesData, schedulesData] = await Promise.all([
+      const [userData, hobbiesData, communitiesData, schedulesData, galleryData, postsData] = await Promise.all([
         getCurrentUser(),
         getUserHobbiesAPI(),
         getUserCommunitiesAPI(),
-        getUserSchedulesAPI()
+        getUserSchedulesAPI(),
+        getAllGalleryItems().catch(() => []), // 갤러리 목록 (에러 시 빈 배열)
+        getAllPostsAPI().catch(() => []) // 게시글 목록 (에러 시 빈 배열)
       ]);
 
       console.log("[마이페이지] 받은 사용자 데이터:", userData ? 'OK' : '실패');
       console.log("[마이페이지] 받은 관심 취미 데이터:", JSON.stringify(hobbiesData, null, 2));
       console.log("[마이페이지] 받은 참여 모임 데이터:", communitiesData ? `${communitiesData.length}개` : '실패');
       console.log("[마이페이지] 받은 일정 데이터:", schedulesData ? `${schedulesData.length}개` : '실패');
+      console.log("[마이페이지] 받은 갤러리 데이터:", galleryData ? `${galleryData.length}개` : '실패');
+      console.log("[마이페이지] 받은 게시글 데이터:", postsData ? `${postsData.length}개` : '실패');
 
       // 상태 업데이트
       setUser(userData);
       setUserHobbies(Array.isArray(hobbiesData) ? hobbiesData : []);
       setUserCommunities(Array.isArray(communitiesData) ? communitiesData : []);
       setUserSchedules(Array.isArray(schedulesData) ? schedulesData : []);
+
+      // 내 갤러리 작품 필터링
+      const myGallery = Array.isArray(galleryData)
+        ? galleryData.filter(item => item.userId === userData?.id)
+        : [];
+      setMyGalleryItems(myGallery);
+
+      // 내 게시글 필터링
+      const myPostsList = Array.isArray(postsData)
+        ? postsData.filter(post => post.userId === userData?.id)
+        : [];
+      setMyPosts(myPostsList);
+
       console.log("[마이페이지] 데이터 로딩 및 상태 업데이트 성공.");
 
     } catch (e) {
@@ -360,6 +382,7 @@ export default function MyPageScreen() {
         <View style={styles.tabContainer}>
            <TabButton label="관심 취미" activeTab={activeTab} setActiveTab={setActiveTab} />
            <TabButton label="참여 모임" activeTab={activeTab} setActiveTab={setActiveTab} />
+           <TabButton label="내글" activeTab={activeTab} setActiveTab={setActiveTab} />
            <TabButton label="일정" activeTab={activeTab} setActiveTab={setActiveTab} />
         </View>
 
@@ -530,6 +553,174 @@ export default function MyPageScreen() {
             )
           )}
 
+          {activeTab === '내글' && (
+            <>
+              {/* 서브 탭 */}
+              <View style={styles.subTabContainer}>
+                <TouchableOpacity
+                  style={[
+                    styles.subTabButton,
+                    myContentSubTab === '내 작품' && styles.subTabButtonActive
+                  ]}
+                  onPress={() => setMyContentSubTab('내 작품')}
+                >
+                  <Text style={[
+                    styles.subTabText,
+                    myContentSubTab === '내 작품' && styles.subTabTextActive
+                  ]}>
+                    내 작품
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.subTabButton,
+                    myContentSubTab === '내 게시판 글' && styles.subTabButtonActive
+                  ]}
+                  onPress={() => setMyContentSubTab('내 게시판 글')}
+                >
+                  <Text style={[
+                    styles.subTabText,
+                    myContentSubTab === '내 게시판 글' && styles.subTabTextActive
+                  ]}>
+                    내 게시판 글
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* 내 작품 */}
+              {myContentSubTab === '내 작품' && (
+                myGalleryItems.length > 0 ? (
+                  <View style={styles.myGalleryGrid}>
+                    {myGalleryItems.map(item => {
+                      // 취미 이름으로 이미지 가져오기 (3단계 우선순위)
+                      const getImageSource = () => {
+                        // 1. hobbyName으로 hobbyImages에서 찾기
+                        if (item.hobbyName && hobbyImages[item.hobbyName]) {
+                          return hobbyImages[item.hobbyName];
+                        }
+                        // 2. Base64 또는 URL 이미지
+                        if (item.image && item.image.length > 0) {
+                          return { uri: item.image };
+                        }
+                        // 3. 기본 이미지
+                        return require('../assets/hobbies/hulife_logo.png');
+                      };
+
+                      return (
+                        <TouchableOpacity
+                          key={item.id}
+                          style={styles.myGalleryCard}
+                          onPress={() => router.push(`/gallery/${item.id}`)}
+                          activeOpacity={0.9}
+                        >
+                          <Image
+                            source={getImageSource()}
+                            style={styles.myGalleryImage}
+                            resizeMode="cover"
+                          />
+                          <View style={styles.myGalleryOverlay}>
+                            <Text style={styles.myGalleryTitle} numberOfLines={1}>
+                              {item.title}
+                            </Text>
+                            <View style={styles.myGalleryMeta}>
+                              <View style={styles.myGalleryMetaItem}>
+                                <Feather name="heart" size={12} color="#fff" />
+                                <Text style={styles.myGalleryMetaText}>{item.likes || 0}</Text>
+                              </View>
+                              <View style={styles.myGalleryMetaItem}>
+                                <Feather name="eye" size={12} color="#fff" />
+                                <Text style={styles.myGalleryMetaText}>{item.views || 0}</Text>
+                              </View>
+                            </View>
+                          </View>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                ) : (
+                  <View style={styles.emptyStateContainer}>
+                    <Feather name="image" size={64} color="#e5e7eb" />
+                    <Text style={styles.emptyStateText}>작성한 작품이 없습니다</Text>
+                    <Text style={styles.emptyStateSubtext}>
+                      갤러리에 첫 번째 작품을 공유해보세요!
+                    </Text>
+                    <TouchableOpacity
+                      style={styles.browseButton}
+                      onPress={() => router.push('/gallery')}
+                    >
+                      <Feather name="plus-circle" size={18} color="#fff" />
+                      <Text style={styles.browseButtonText}>작품 업로드</Text>
+                    </TouchableOpacity>
+                  </View>
+                )
+              )}
+
+              {/* 내 게시판 글 */}
+              {myContentSubTab === '내 게시판 글' && (
+                myPosts.length > 0 ? (
+                  <View style={styles.myPostsList}>
+                    {myPosts.map(post => (
+                      <TouchableOpacity
+                        key={post.id}
+                        style={styles.myPostCard}
+                        onPress={() => router.push(`/community/posts/${post.id}`)}
+                        activeOpacity={0.9}
+                      >
+                        <View style={styles.myPostHeader}>
+                          <View style={styles.myPostCategoryBadge}>
+                            <Text style={styles.myPostCategoryText}>{post.category}</Text>
+                          </View>
+                          <Text style={styles.myPostDate}>
+                            {new Date(post.createdAt).toLocaleDateString('ko-KR', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            })}
+                          </Text>
+                        </View>
+                        <Text style={styles.myPostTitle} numberOfLines={2}>
+                          {post.title}
+                        </Text>
+                        <Text style={styles.myPostContent} numberOfLines={2}>
+                          {post.content}
+                        </Text>
+                        <View style={styles.myPostStats}>
+                          <View style={styles.myPostStatItem}>
+                            <Feather name="heart" size={14} color="#9ca3af" />
+                            <Text style={styles.myPostStatText}>{post.likes || 0}</Text>
+                          </View>
+                          <View style={styles.myPostStatItem}>
+                            <Feather name="message-circle" size={14} color="#9ca3af" />
+                            <Text style={styles.myPostStatText}>{post.comments || 0}</Text>
+                          </View>
+                          <View style={styles.myPostStatItem}>
+                            <Feather name="eye" size={14} color="#9ca3af" />
+                            <Text style={styles.myPostStatText}>{post.views || 0}</Text>
+                          </View>
+                        </View>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                ) : (
+                  <View style={styles.emptyStateContainer}>
+                    <Feather name="file-text" size={64} color="#e5e7eb" />
+                    <Text style={styles.emptyStateText}>작성한 게시글이 없습니다</Text>
+                    <Text style={styles.emptyStateSubtext}>
+                      커뮤니티에 첫 번째 게시글을 작성해보세요!
+                    </Text>
+                    <TouchableOpacity
+                      style={styles.browseButton}
+                      onPress={() => router.push('/community')}
+                    >
+                      <Feather name="edit" size={18} color="#fff" />
+                      <Text style={styles.browseButtonText}>게시글 작성</Text>
+                    </TouchableOpacity>
+                  </View>
+                )
+              )}
+            </>
+          )}
+
           {activeTab === '일정' && (
             <>
               {/* Calendar */}
@@ -537,6 +728,7 @@ export default function MyPageScreen() {
                 <Calendar
                   markingType={'multi-dot'}
                   markedDates={markedDates}
+                  monthFormat={'yyyy년 MM월'}
                   onDayPress={(day) => {
                     setSelectedDate(day.dateString);
                   }}
@@ -711,12 +903,52 @@ const styles = StyleSheet.create({
   statsItem: { flexDirection: 'row', alignItems: 'center' },
   statsLabel: { marginLeft: 10, color: '#4B5563', fontSize: 16 },  // 8→10, darker color, explicit size
   statsValue: { fontSize: 18, fontWeight: 'bold' },  // 16→18
-  tabContainer: { flexDirection: 'row', backgroundColor: 'white', marginHorizontal: 16, borderRadius: 12, padding: 6, },  // 4→6
-  tab: { flex: 1, padding: 14, borderRadius: 8, alignItems: 'center', minHeight: 52 },  // 12→14, added minHeight
-  activeTab: { backgroundColor: '#FF7A5C' },
-  tabText: { fontSize: 18, fontWeight: '600', color: 'black' },  // 16→18
-  activeTabText: { color: 'white' },
-  tabContent: { marginHorizontal: 16, marginTop: 18 },  // 16→18
+  tabContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    marginHorizontal: 16,
+    marginBottom: 20,
+    borderRadius: 16,
+    padding: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 3,
+    gap: 6,
+  },
+  tab: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 48,
+    backgroundColor: 'transparent',
+  },
+  activeTab: {
+    backgroundColor: '#FF7A5C',
+    shadowColor: '#FF7A5C',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  tabText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#9ca3af',
+    letterSpacing: -0.3,
+  },
+  activeTabText: {
+    color: '#ffffff',
+    fontWeight: '700',
+  },
+  tabContent: {
+    marginHorizontal: 16,
+    marginTop: 0,
+  },
   listItemCard: { backgroundColor: 'white', padding: 18, borderRadius: 12, marginBottom: 14, },  // 16→18, 12→14
   listItemTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 6, lineHeight: 26 },  // 18→20, added line height
   listItemSubtitle: { color: '#4B5563', fontSize: 16, marginBottom: 10 },  // 14→16, darker color
@@ -980,5 +1212,145 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '600',
     color: '#FF7A5C',
+  },
+  // 내글 탭 스타일
+  subTabContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 4,
+    marginBottom: 16,
+    gap: 8,
+  },
+  subTabButton: {
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  subTabButtonActive: {
+    backgroundColor: '#FFF5F2',
+  },
+  subTabText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#9ca3af',
+  },
+  subTabTextActive: {
+    color: '#FF7A5C',
+  },
+  // 내 작품 그리드
+  myGalleryGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  myGalleryCard: {
+    width: '48%',
+    aspectRatio: 0.75,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    marginBottom: 12,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  myGalleryImage: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#f3f4f6',
+  },
+  myGalleryOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 12,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  myGalleryTitle: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#fff',
+    marginBottom: 6,
+  },
+  myGalleryMeta: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  myGalleryMetaItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  myGalleryMetaText: {
+    fontSize: 11,
+    color: '#fff',
+    fontWeight: '500',
+  },
+  // 내 게시판 글
+  myPostsList: {
+    gap: 12,
+  },
+  myPostCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  myPostHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  myPostCategoryBadge: {
+    backgroundColor: '#FFF5F2',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+  myPostCategoryText: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#FF7A5C',
+  },
+  myPostDate: {
+    fontSize: 12,
+    color: '#9ca3af',
+  },
+  myPostTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1f2937',
+    marginBottom: 8,
+  },
+  myPostContent: {
+    fontSize: 14,
+    color: '#6b7280',
+    lineHeight: 20,
+    marginBottom: 12,
+  },
+  myPostStats: {
+    flexDirection: 'row',
+    gap: 16,
+  },
+  myPostStatItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  myPostStatText: {
+    fontSize: 12,
+    color: '#9ca3af',
+    fontWeight: '500',
   },
 });
