@@ -18,9 +18,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { getAllCommunitiesAPI, getAllPostsAPI, requestJoinCommunityAPI } from '../api/communityService';
 import { logActivity, ActivityTypes } from '../api/activityService';
 import hobbyImages from '../assets/hobbyImages';
+import { API_URL } from '../api/apiClient';
 
-// API Base URL for image resolution
-const API_BASE_URL = 'http://192.168.0.40:3000';
+// Image URLs are now resolved using API_URL from apiClient
 
 export default function CommunityPage() {
   const router = useRouter();
@@ -163,8 +163,8 @@ export default function CommunityPage() {
       // 2. 서버 업로드 이미지인지 확인 (/uploads/, /public/ 등)
       if (community.imageUrl?.includes('uploads') || community.imageUrl?.includes('public')) {
         const absoluteUrl = community.imageUrl.startsWith('/')
-          ? `${API_BASE_URL}${community.imageUrl}`
-          : `${API_BASE_URL}/${community.imageUrl}`;
+          ? `${API_URL}${community.imageUrl}`
+          : `${API_URL}/${community.imageUrl}`;
         console.log('[커뮤니티 이미지] ✅ 서버 업로드 이미지 사용:', absoluteUrl);
         return { uri: absoluteUrl };
       }

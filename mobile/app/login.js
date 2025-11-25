@@ -17,6 +17,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { loginUser } from '../api/authService';
+import { API_URL } from '../api/apiClient';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -62,8 +63,7 @@ export default function LoginScreen() {
         {
           text: '브라우저 열기',
           onPress: async () => {
-            const apiUrl = 'http://192.168.0.40:3000'; // API URL
-            const authUrl = `${apiUrl}/api/auth/${provider}`;
+            const authUrl = `${API_URL}/api/auth/${provider}`;
 
             try {
               await Linking.openURL(authUrl);

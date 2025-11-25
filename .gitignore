@@ -1,38 +1,29 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# debug
+# Node
+node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+pnpm-lock.yaml
 
-# env files (except .env.example)
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+# Expo
+.expo/
+dist/
+.idea/
+
+# Next.js
+.next/
+
+# Environment variables
+.env*
 !.env.example
 
-# vercel
-.vercel
+# Backups
+*.backup
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts.env
+# OS-specific
+.DS_Store
+Thumbs.db
 
-# uploaded files
-/public/uploads/
-
-# 임시 폴더
-HuLifeExpoApp/
+# Logs
+*.log
+logs/

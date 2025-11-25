@@ -1,0 +1,1919 @@
+[
+  {
+    "id": "015fa22d-83b8-4b19-8421-c44cce2c2a67",
+    "name": "가죽공예",
+    "category": "공예",
+    "description": "가죽으로 지갑, 가방 등을 만드는 공예. 튼튼하고 오래 쓸 수 있습니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "high",
+    "image_url": "/가죽공예.png",
+    "video_url": "https://youtu.be/g0s61ohm4GA?si=i7x2kCuayGB8VR1j",
+    "benefits": [
+      "실용적 작품",
+      "내구성",
+      "수공예 가치",
+      "집중력"
+    ],
+    "requirements": [
+      "가죽",
+      "칼",
+      "바늘",
+      "실",
+      "공구"
+    ]
+  },
+  {
+    "id": "02cb204e-bd68-46b5-a08a-f7a5b57f25e1",
+    "name": "수경 재배",
+    "category": "자연",
+    "description": "흙 없이 물로 식물을 키우는 현대적 방법. 깨끗하고 관리가 쉽습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "individual",
+    "budget": "medium",
+    "image_url": "/수경재배.png",
+    "video_url": "https://youtu.be/HJHmkSUg1As?si=Jm_rCk106g9jx4sO",
+    "benefits": [
+      "깨끗한 재배",
+      "관리 용이",
+      "수확 가능",
+      "관찰 재미"
+    ],
+    "requirements": [
+      "수경 재배 키트",
+      "양액",
+      "조명",
+      "펌프"
+    ]
+  },
+  {
+    "id": "1221fd09-eba5-4168-92ce-59b79c73c1e8",
+    "name": "명상",
+    "category": "건강",
+    "description": "마음을 비우고 집중하는 정신 수련. 스트레스 해소와 정서 안정에 탁월합니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "both",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/명상.png",
+    "video_url": "https://youtu.be/yiysD0Jl2Wo?si=mvKdttLsiaZcoiAL",
+    "benefits": [
+      "스트레스 감소",
+      "정서 안정",
+      "집중력 향상",
+      "수면 개선"
+    ],
+    "requirements": [
+      "명상 쿠션",
+      "조용한 공간",
+      "편한 옷"
+    ]
+  },
+  {
+    "id": "13d230c8-43f6-45fa-b5f3-0fa3a1acf318",
+    "name": "스트레칭",
+    "category": "건강",
+    "description": "몸의 유연성을 높이는 기본 운동. 부상 예방과 근육 이완에 좋습니다.",
+    "difficulty": 1,
+    "indoor_outdoor": "both",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/스트레칭.png",
+    "video_url": "https://youtu.be/7gR50n00rQ4?si=mWb09ph9kzR4Q3Rj",
+    "benefits": [
+      "유연성 증가",
+      "부상 예방",
+      "혈액 순환",
+      "근육 이완"
+    ],
+    "requirements": [
+      "요가 매트",
+      "편한 옷"
+    ]
+  },
+  {
+    "id": "147edbfb-9092-4b2e-95cf-a2820d5c6ff2",
+    "name": "한문 공부",
+    "category": "문화",
+    "description": "한자와 한문 고전을 배우며 동양 문화의 깊이를 이해합니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/한문공부.png",
+    "video_url": "https://youtu.be/eqi-jDQF9lA?si=U39IzI2JhlpF7qF-",
+    "benefits": [
+      "인문학적 소양",
+      "두뇌 활동",
+      "고전 이해",
+      "문화적 깊이"
+    ],
+    "requirements": [
+      "한문 교재",
+      "노트",
+      "필기구"
+    ]
+  },
+  {
+    "id": "1534f107-2996-46dd-b2f9-0a23fb880db6",
+    "name": "독서 지도",
+    "category": "봉사",
+    "description": "아이들에게 책을 읽어주고 독서 습관을 길러주는 봉사활동입니다.",
+    "difficulty": 1,
+    "indoor_outdoor": "indoor",
+    "social_individual": "social",
+    "budget": "low",
+    "image_url": "/독서지도.png",
+    "video_url": "https://youtu.be/PiAJEYClBtE?si=2gPePoPlYqFDYuwm",
+    "benefits": [
+      "보람",
+      "세대 교류",
+      "지식 나눔",
+      "사회 공헌"
+    ],
+    "requirements": [
+      "동화책",
+      "열정"
+    ]
+  },
+  {
+    "id": "154babec-3895-4f4f-87aa-a8ba4df345ed",
+    "name": "박물관 탐방",
+    "category": "문화",
+    "description": "다양한 박물관과 전시관을 방문하여 문화유산을 감상하고 배웁니다.",
+    "difficulty": 1,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/박물관탐방.png",
+    "video_url": "https://youtu.be/ZScev_uALro?si=QI1TvIuM3gSvfocB",
+    "benefits": [
+      "교양 함양",
+      "역사 이해",
+      "문화 향유",
+      "사회적 교류"
+    ],
+    "requirements": [
+      "메모장",
+      "편한 신발",
+      "음료"
+    ]
+  },
+  {
+    "id": "1582be07-1916-42dc-b1b0-ee3a5beb9dfb",
+    "name": "태극권",
+    "category": "스포츠",
+    "description": "느린 동작으로 몸과 마음을 다스리는 중국 무술. 명상과 운동의 조화입니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "both",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/태극권.png",
+    "video_url": "https://youtu.be/uT9h2WOICUc?si=Qi0ccCEi0IGjo0CL",
+    "benefits": [
+      "균형감 향상",
+      "유연성 증대",
+      "스트레스 감소",
+      "마음 안정"
+    ],
+    "requirements": [
+      "편한 운동복",
+      "운동화",
+      "없음"
+    ]
+  },
+  {
+    "id": "24fd8d7a-a3bf-43ae-a530-7df6be070581",
+    "name": "합창",
+    "category": "문화",
+    "description": "여러 사람이 함께 노래하는 합창단 활동. 하모니를 이루는 즐거움이 있습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "social",
+    "budget": "low",
+    "image_url": "/합창.png",
+    "video_url": "https://youtu.be/KAXxSu_Slyw?si=RsmvoBlByA6KynnS",
+    "benefits": [
+      "호흡 개선",
+      "사회적 유대",
+      "음악성 향상",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "악보",
+      "편한 옷",
+      "물"
+    ]
+  },
+  {
+    "id": "257c1b9d-a8dd-4ac0-aa9d-fddd5096fbeb",
+    "name": "장기",
+    "category": "여가",
+    "description": "한국 전통 보드 게임. 두뇌 회전과 전략적 사고를 기릅니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "both",
+    "social_individual": "social",
+    "budget": "low",
+    "image_url": "/장기.png",
+    "video_url": "https://youtu.be/RVVYOlqgvmA?si=qMmMMoyfXVf6k8yI",
+    "benefits": [
+      "두뇌 활동",
+      "전략 수립",
+      "사회적 교류",
+      "전통 문화"
+    ],
+    "requirements": [
+      "장기판",
+      "장기알"
+    ]
+  },
+  {
+    "id": "2710ee68-ddcf-4209-af22-1e4e11175c74",
+    "name": "캘리그라피",
+    "category": "미술",
+    "description": "붓으로 아름다운 손글씨를 쓰는 예술. 한글과 한자의 조형미를 살립니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "individual",
+    "budget": "low",
+    "image_url": "/캘리그라피.png",
+    "video_url": "https://youtu.be/RyzlWSFMK4k?si=44pzT6mWwYdFLU3i",
+    "benefits": [
+      "글씨체 개선",
+      "집중력 향상",
+      "예술적 감각",
+      "실용성"
+    ],
+    "requirements": [
+      "붓",
+      "먹",
+      "종이",
+      "연습장"
+    ]
+  },
+  {
+    "id": "2dcbd6f3-0c97-4161-b12d-756a5f3b53af",
+    "name": "아로마테라피",
+    "category": "건강",
+    "description": "향기로운 에센셜 오일로 심신의 건강을 돕는 자연 치유법입니다.",
+    "difficulty": 1,
+    "indoor_outdoor": "indoor",
+    "social_individual": "individual",
+    "budget": "medium",
+    "image_url": "/아로마테라피.png",
+    "video_url": "https://youtu.be/YdDtf6oa25U?si=oNz1IkkHlNA9EhFG",
+    "benefits": [
+      "스트레스 완화",
+      "수면 개선",
+      "기분 전환",
+      "면역력 향상"
+    ],
+    "requirements": [
+      "에센셜 오일",
+      "디퓨저",
+      "캐리어 오일"
+    ]
+  },
+  {
+    "id": "31756b53-b3e0-4faf-b475-2bdd083567b1",
+    "name": "수묵화",
+    "category": "미술",
+    "description": "먹과 붓으로 한국의 전통 미를 표현하는 동양화. 여백의 미와 기운생동을 중요시합니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/수묵화.png",
+    "video_url": "https://youtu.be/_NOMkv08Kak?si=Zfx78sB29BfEasz0",
+    "benefits": [
+      "전통 문화 이해",
+      "마음의 평정",
+      "여백의 미 체득",
+      "정신 수양"
+    ],
+    "requirements": [
+      "먹",
+      "붓",
+      "화선지",
+      "벼루",
+      "물통"
+    ]
+  },
+  {
+    "id": "349ff6fc-3f45-450b-9dd5-23a31b0c9a73",
+    "name": "오카리나",
+    "category": "음악",
+    "description": "도자기로 만든 관악기. 따뜻하고 부드러운 음색이 특징입니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "both",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/오카리나.png",
+    "video_url": "https://youtu.be/Ynw6xloIf08?si=CoDyF0o0ea0ktBvv",
+    "benefits": [
+      "호흡 조절",
+      "음악성",
+      "휴대성",
+      "아름다운 음색"
+    ],
+    "requirements": [
+      "오카리나",
+      "악보",
+      "손수건"
+    ]
+  },
+  {
+    "id": "393ed2e1-880f-4ee2-8d3b-a4ec787d1c2c",
+    "name": "경락 마사지",
+    "category": "건강",
+    "description": "경혈을 자극하여 건강을 증진하는 동양 의학. 셀프 마사지법을 배웁니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/경락마사지.png",
+    "video_url": "https://youtu.be/zvoyEFZXHq8?si=5VcT-2KgepmogzKU",
+    "benefits": [
+      "혈액 순환",
+      "통증 완화",
+      "피로 회복",
+      "면역력 증진"
+    ],
+    "requirements": [
+      "마사지 도구",
+      "경락 차트",
+      "편한 옷"
+    ]
+  },
+  {
+    "id": "3b255847-e86a-42bd-b774-b7621c70064f",
+    "name": "텃밭 가꾸기",
+    "category": "자연",
+    "description": "직접 채소와 과일을 재배하는 도시 농업. 건강한 먹거리를 얻을 수 있습니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/텃밭가꾸기.png",
+    "video_url": "https://youtu.be/0I6p_cHqI9o?si=3b7a5j5Ho7EsIpk-",
+    "benefits": [
+      "신체 활동",
+      "건강한 먹거리",
+      "성취감",
+      "자연 이해"
+    ],
+    "requirements": [
+      "텃밭",
+      "농기구",
+      "씨앗",
+      "비료"
+    ]
+  },
+  {
+    "id": "3e018fe4-7f09-45cc-80d7-5192a8a677e7",
+    "name": "버섯 재배",
+    "category": "자연",
+    "description": "실내에서 버섯을 키우는 취미. 수확의 즐거움과 건강한 먹거리를 얻습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "individual",
+    "budget": "low",
+    "image_url": "/버섯재배.png",
+    "video_url": "https://youtu.be/Svf2jZGAuZA?si=9ujUfKaJ2zk3uJ09",
+    "benefits": [
+      "수확의 즐거움",
+      "건강 먹거리",
+      "관찰력",
+      "성취감"
+    ],
+    "requirements": [
+      "버섯 재배 키트",
+      "분무기",
+      "조명"
+    ]
+  },
+  {
+    "id": "4244414d-d6c4-4d2e-913c-04117a503887",
+    "name": "사진 촬영",
+    "category": "문화",
+    "description": "카메라로 순간을 포착하는 예술. 세상을 새로운 시각으로 바라보는 법을 배웁니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "both",
+    "social_individual": "both",
+    "budget": "high",
+    "image_url": "/사진촬영.png",
+    "video_url": "https://youtu.be/khOBEmvGz3A?si=FQofBTGBT0cS-tjI",
+    "benefits": [
+      "관찰력 향상",
+      "창의력 개발",
+      "추억 기록",
+      "예술적 감각"
+    ],
+    "requirements": [
+      "카메라",
+      "렌즈",
+      "삼각대",
+      "메모리 카드"
+    ]
+  },
+  {
+    "id": "4663ab38-ab1f-43ce-86f6-94297a0b8d3a",
+    "name": "유화",
+    "category": "미술",
+    "description": "유성 물감으로 캔버스에 그림을 그리는 고급 미술 기법. 깊이 있는 색감과 질감을 표현할 수 있습니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "individual",
+    "budget": "high",
+    "image_url": "/유화.png",
+    "video_url": "https://youtu.be/BCKcKsCWooQ?si=qpOJP36RLAlcjh65",
+    "benefits": [
+      "예술적 표현력 향상",
+      "인내심 기르기",
+      "색채 감각 개발",
+      "작품 제작의 성취감"
+    ],
+    "requirements": [
+      "유화 물감",
+      "캔버스",
+      "붓 세트",
+      "팔레트",
+      "이젤"
+    ]
+  },
+  {
+    "id": "4a8c6fb0-2eca-438c-9ae9-6326ef9c351f",
+    "name": "수채화",
+    "category": "미술",
+    "description": "물감과 붓을 이용한 아름다운 그림 그리기. 초보자도 쉽게 시작할 수 있으며, 창의력과 집중력을 향상시킵니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/수채화.png",
+    "video_url": "https://youtu.be/-DxZ0lf5cFQ?si=7AMObrbLv6cjwbAp",
+    "benefits": [
+      "창의력 향상",
+      "스트레스 해소",
+      "집중력 개선",
+      "소근육 발달"
+    ],
+    "requirements": [
+      "수채화 물감 세트",
+      "붓",
+      "수채화 종이",
+      "물통"
+    ]
+  },
+  {
+    "id": "4b943b99-e0c2-4b6b-b4f1-779d0185a1a7",
+    "name": "양초 공예",
+    "category": "공예",
+    "description": "다양한 모양과 향의 양초를 만드는 취미. 인테리어 소품으로 활용됩니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/양초공예.png",
+    "video_url": "https://youtu.be/cqD3DOSPygI?si=myjjeQudnhehjHuZ",
+    "benefits": [
+      "창의력",
+      "인테리어",
+      "향기 치유",
+      "선물 가능"
+    ],
+    "requirements": [
+      "왁스",
+      "심지",
+      "몰드",
+      "향료",
+      "색소"
+    ]
+  },
+  {
+    "id": "54c178d4-ba1f-4b85-818e-cb57a7679e29",
+    "name": "컴퓨터 활용",
+    "category": "기술",
+    "description": "워드, 엑셀, 인터넷 등 컴퓨터 기본 활용법을 배웁니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/컴퓨터활용.png",
+    "video_url": "https://youtu.be/4l30CXjJgyU?si=cp4ZiUcDF12llwD2",
+    "benefits": [
+      "실생활 활용",
+      "정보 접근",
+      "소통 도구",
+      "두뇌 활동"
+    ],
+    "requirements": [
+      "컴퓨터",
+      "인터넷",
+      "교재"
+    ]
+  },
+  {
+    "id": "552751d1-2383-42d9-af2e-15e832112189",
+    "name": "일본어",
+    "category": "언어",
+    "description": "일본 여행이나 문화 콘텐츠 이해에 유용한 일본어를 배웁니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/일본어.png",
+    "video_url": "https://youtu.be/T9EQsOqhLqs?si=iwuBHKxzyG3mlMfk",
+    "benefits": [
+      "여행 편의",
+      "문화 향유",
+      "두뇌 자극",
+      "새로운 도전"
+    ],
+    "requirements": [
+      "교재",
+      "노트",
+      "음성 파일"
+    ]
+  },
+  {
+    "id": "56bee3ea-b33b-4014-bf5f-ba77e85474b6",
+    "name": "요가",
+    "category": "건강",
+    "description": "몸과 마음의 균형을 찾는 운동. 유연성과 근력을 동시에 기를 수 있습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/요가.png",
+    "video_url": "https://youtu.be/OBTl49bVk94?si=-VZucAG0n0ZkUTIx",
+    "benefits": [
+      "유연성 향상",
+      "근력 강화",
+      "스트레스 해소",
+      "균형감각 개선"
+    ],
+    "requirements": [
+      "요가 매트",
+      "편한 운동복",
+      "요가 블록"
+    ]
+  },
+  {
+    "id": "5999517c-4bfa-4035-b26a-d1680510e6e9",
+    "name": "탁구",
+    "category": "스포츠",
+    "description": "실내에서 즐기는 빠른 반응 스포츠. 두뇌 회전과 순발력을 동시에 키웁니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "social",
+    "budget": "low",
+    "image_url": "/탁구.png",
+    "video_url": "https://youtu.be/71HK3HfJmNY?si=vL2gu6FQMgvNhY1g",
+    "benefits": [
+      "반사신경 향상",
+      "두뇌 활동",
+      "전신 운동",
+      "날씨 무관"
+    ],
+    "requirements": [
+      "탁구채",
+      "탁구공",
+      "운동화",
+      "운동복"
+    ]
+  },
+  {
+    "id": "5bc745cf-500d-43b6-aa51-2054cf71e19a",
+    "name": "분재",
+    "category": "자연",
+    "description": "작은 화분에서 나무를 키우는 예술. 인내심과 섬세함이 필요합니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "both",
+    "social_individual": "individual",
+    "budget": "medium",
+    "image_url": "/분재.png",
+    "video_url": "https://youtu.be/2oc9nAfmsUk?si=xHoMH0dUK4ZAUpYd",
+    "benefits": [
+      "인내심 함양",
+      "집중력",
+      "예술적 감각",
+      "정서 안정"
+    ],
+    "requirements": [
+      "분재 화분",
+      "가위",
+      "철사",
+      "분재용 흙"
+    ]
+  },
+  {
+    "id": "5de92d88-4732-4cc0-a335-d26f4c215772",
+    "name": "기타",
+    "category": "음악",
+    "description": "휴대하기 좋은 현악기. 반주와 솔로 연주가 모두 가능합니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "both",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/기타.png",
+    "video_url": "https://youtu.be/CcQYe39RqS8?si=8iSWkhLGnmN1NxRw",
+    "benefits": [
+      "음악성 향상",
+      "창작 가능",
+      "휴대성",
+      "사회적 교류"
+    ],
+    "requirements": [
+      "기타",
+      "튜너",
+      "피크",
+      "악보"
+    ]
+  },
+  {
+    "id": "5f5e0e95-44b7-4570-a48e-990cb285a116",
+    "name": "수영",
+    "category": "스포츠",
+    "description": "관절에 무리가 적은 최고의 전신 운동. 사계절 내내 즐길 수 있습니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/수영.png",
+    "video_url": "https://youtu.be/DC8MYG6uzSs?si=FwreV7jXE1Ie-QP1",
+    "benefits": [
+      "전신 근력 강화",
+      "심폐 기능 향상",
+      "관절 보호",
+      "체중 조절"
+    ],
+    "requirements": [
+      "수영복",
+      "수경",
+      "수모",
+      "수건"
+    ]
+  },
+  {
+    "id": "6017e5ba-93f9-4b58-a3ca-ef5f50aa0213",
+    "name": "낚시",
+    "category": "여가",
+    "description": "자연 속에서 물고기를 잡는 여유로운 취미. 기다림의 미학을 배웁니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/낚시.png",
+    "video_url": "https://youtu.be/aY9rH4gZ0UQ?si=6V7AqcI-k20LQ1xN",
+    "benefits": [
+      "여유",
+      "인내심",
+      "자연 교감",
+      "신선한 먹거리"
+    ],
+    "requirements": [
+      "낚싯대",
+      "릴",
+      "미끼",
+      "의자"
+    ]
+  },
+  {
+    "id": "638ce6cb-b269-4fef-8de1-fc88ec5499c8",
+    "name": "춤",
+    "category": "건강",
+    "description": "음악에 맞춰 몸을 움직이는 즐거운 운동. 라인댄스, 사교댄스 등 다양합니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "social",
+    "budget": "low",
+    "image_url": "/춤.png",
+    "video_url": "https://youtu.be/cqkIJRxXPEE?si=xo70MS3wOLYev4pC",
+    "benefits": [
+      "전신 운동",
+      "리듬감 향상",
+      "사회적 교류",
+      "즐거움"
+    ],
+    "requirements": [
+      "운동화",
+      "편한 옷",
+      "물"
+    ]
+  },
+  {
+    "id": "65aaf4f5-497c-453d-9bd3-8c3a65e3866d",
+    "name": "중국어",
+    "category": "언어",
+    "description": "가까운 이웃 나라의 언어를 배웁니다. 중국 문화 이해에도 도움이 됩니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/중국어.png",
+    "video_url": "https://youtu.be/vorPfGrDzWA?si=QB6EZunI3rPuEho5",
+    "benefits": [
+      "새로운 언어",
+      "문화 이해",
+      "두뇌 활동",
+      "소통"
+    ],
+    "requirements": [
+      "교재",
+      "사전",
+      "음성 파일"
+    ]
+  },
+  {
+    "id": "68f202da-6f44-460f-8eac-e47ea393cd40",
+    "name": "노래교실",
+    "category": "음악",
+    "description": "발성법과 가창법을 배우는 수업. 좋아하는 노래를 멋지게 부를 수 있습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "social",
+    "budget": "medium",
+    "image_url": "/노래교실.png",
+    "video_url": "https://youtu.be/C67qarY7xzY?si=bQ6Rio3fCwFUkfj6",
+    "benefits": [
+      "호흡 개선",
+      "자신감 향상",
+      "스트레스 해소",
+      "사회적 교류"
+    ],
+    "requirements": [
+      "없음 (또는 개인 마이크)",
+      "악보",
+      "물"
+    ]
+  },
+  {
+    "id": "69d31235-1089-4a58-bab5-e693babc4e5e",
+    "name": "독서토론",
+    "category": "문화",
+    "description": "좋은 책을 함께 읽고 토론하는 모임. 다양한 관점을 나누며 사고를 확장합니다.",
+    "difficulty": 1,
+    "indoor_outdoor": "indoor",
+    "social_individual": "social",
+    "budget": "low",
+    "image_url": "/독서토론.png",
+    "video_url": "https://youtu.be/7hqDzvXf1FE?si=eyobGOQUhKQSYPQn",
+    "benefits": [
+      "지식 확장",
+      "사회적 교류",
+      "비판적 사고",
+      "소통 능력"
+    ],
+    "requirements": [
+      "선정 도서",
+      "노트",
+      "펜"
+    ]
+  },
+  {
+    "id": "71cdcf70-acf7-48fc-ac9a-726b2c4afd7a",
+    "name": "야생화 관찰",
+    "category": "자연",
+    "description": "계절마다 피는 야생화를 찾아다니며 관찰하고 기록합니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/야생화관찰.png",
+    "video_url": "https://youtu.be/xG4MRYHaV1s?si=JmIB56BNcxVZje_M",
+    "benefits": [
+      "자연 이해",
+      "건강한 외출",
+      "관찰력",
+      "계절 감각"
+    ],
+    "requirements": [
+      "야생화 도감",
+      "카메라",
+      "노트",
+      "등산화"
+    ]
+  },
+  {
+    "id": "75b2d3b3-b01a-4193-8bd0-50201544ebf7",
+    "name": "블로그 운영",
+    "category": "기술",
+    "description": "개인 블로그를 만들어 일상과 취미를 기록하고 공유합니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "individual",
+    "budget": "low",
+    "image_url": "/블로그운영.png",
+    "video_url": "https://youtu.be/nz_6Il-l4Rw?si=7FYbNQ76h01Mssrq",
+    "benefits": [
+      "기록 보존",
+      "소통",
+      "정보 공유",
+      "자기 표현"
+    ],
+    "requirements": [
+      "컴퓨터",
+      "인터넷",
+      "카메라"
+    ]
+  },
+  {
+    "id": "77457d42-ed98-4eed-aeff-df6ae5edab8e",
+    "name": "영화 감상",
+    "category": "문화",
+    "description": "다양한 장르의 영화를 보며 문화적 소양을 넓히고 감성을 풍부하게 합니다.",
+    "difficulty": 1,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/영화감상.png",
+    "video_url": "https://youtu.be/0pmUjkZr8mQ?si=qeV3WwCRZxhaCuBE",
+    "benefits": [
+      "문화 향유",
+      "정서 함양",
+      "사회적 교류",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "없음"
+    ]
+  },
+  {
+    "id": "78c6182d-6a93-4bc8-aaa8-c35db92d4059",
+    "name": "퍼즐",
+    "category": "여가",
+    "description": "직소 퍼즐이나 큐브 등 다양한 퍼즐을 맞추며 집중력을 기릅니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "individual",
+    "budget": "low",
+    "image_url": "/퍼즐.png",
+    "video_url": "https://youtu.be/1FzurKEYtS8?si=4iUtpRojnxAkFBNx",
+    "benefits": [
+      "집중력",
+      "인내심",
+      "성취감",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "퍼즐"
+    ]
+  },
+  {
+    "id": "795429d6-ae49-4069-92cf-ad095ce41971",
+    "name": "뜨개질",
+    "category": "공예",
+    "description": "털실로 옷이나 소품을 만드는 손뜨개. 실용적이고 창의적인 작품을 만들 수 있습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/뜨개질.png",
+    "video_url": "https://youtu.be/G17milU0gSI?si=baBSSpcJrYcud9oc",
+    "benefits": [
+      "손재주 향상",
+      "실용적 작품",
+      "집중력",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "뜨개바늘",
+      "털실",
+      "패턴북"
+    ]
+  },
+  {
+    "id": "80486f20-01be-4891-92f3-e478daa59280",
+    "name": "영어 회화",
+    "category": "언어",
+    "description": "실생활에서 사용하는 영어 회화를 배웁니다. 여행이나 외국인과의 소통에 유용합니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/영어회화.png",
+    "video_url": "https://youtu.be/TFnThlz9gaQ?si=0ga1u65bnP6avb6m",
+    "benefits": [
+      "의사소통",
+      "여행 편의",
+      "두뇌 활동",
+      "자신감"
+    ],
+    "requirements": [
+      "교재",
+      "노트",
+      "음성 파일"
+    ]
+  },
+  {
+    "id": "80aee870-95b1-4289-b286-0f51e5498540",
+    "name": "한지공예",
+    "category": "공예",
+    "description": "전통 한지로 소품과 작품을 만드는 공예. 한국의 미를 담습니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/한지공예.png",
+    "video_url": "https://youtu.be/MXCBe8obnUM?si=-cPiopOgisl6y_o4",
+    "benefits": [
+      "전통 문화",
+      "섬세함",
+      "예술 작품",
+      "집중력"
+    ],
+    "requirements": [
+      "한지",
+      "풀",
+      "가위",
+      "도구"
+    ]
+  },
+  {
+    "id": "83025b62-fee0-40c9-8b10-32248996ad58",
+    "name": "파크골프",
+    "category": "스포츠",
+    "description": "공원에서 즐기는 간편한 골프. 일반 골프보다 쉽고 부담 없이 즐길 수 있습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/파크골프.png",
+    "video_url": "https://youtu.be/bFhNCmapzcM?si=gLJ66h6kZiS3EQas",
+    "benefits": [
+      "야외 활동",
+      "적당한 운동",
+      "집중력 향상",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "파크골프 클럽",
+      "공",
+      "운동화",
+      "장갑"
+    ]
+  },
+  {
+    "id": "858f4805-6952-4c9c-a541-656288b284e4",
+    "name": "바둑",
+    "category": "여가",
+    "description": "흑과 백의 대결, 깊은 전략이 필요한 두뇌 게임입니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "social",
+    "budget": "low",
+    "image_url": "/바둑.png",
+    "video_url": "https://youtu.be/TEp_hxTHbV0?si=Uko6Rrq14hXhoMco",
+    "benefits": [
+      "전략적 사고",
+      "집중력",
+      "인내심",
+      "사회적 교류"
+    ],
+    "requirements": [
+      "바둑판",
+      "바둑돌"
+    ]
+  },
+  {
+    "id": "86a7448b-bff4-41ce-ba5d-53d597e16cd2",
+    "name": "영상 편집",
+    "category": "기술",
+    "description": "동영상을 촬영하고 편집하여 작품을 만듭니다. 유튜브 등에 활용 가능합니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/영상편집.png",
+    "video_url": "https://youtu.be/lxoKHcalhp4?si=mtzBK5U28_alXOlq",
+    "benefits": [
+      "창작 활동",
+      "추억 보존",
+      "소통",
+      "두뇌 활동"
+    ],
+    "requirements": [
+      "컴퓨터",
+      "편집 프로그램",
+      "카메라"
+    ]
+  },
+  {
+    "id": "88cbead5-f3cb-417e-a842-e27017e94248",
+    "name": "배드민턴",
+    "category": "스포츠",
+    "description": "가볍고 재미있는 라켓 스포츠. 관절에 무리가 적어 시니어에게 적합합니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "both",
+    "social_individual": "social",
+    "budget": "low",
+    "image_url": "/배드민턴.png",
+    "video_url": "https://youtu.be/JZOeAeIkrgY?si=2BHeHFdysZQNWKED",
+    "benefits": [
+      "전신 운동",
+      "유연성 향상",
+      "사교 활동",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "배드민턴 라켓",
+      "셔틀콕",
+      "운동화",
+      "운동복"
+    ]
+  },
+  {
+    "id": "8a1e2362-b184-4667-bd17-817e671e89a9",
+    "name": "드럼",
+    "category": "음악",
+    "description": "리듬의 중심이 되는 타악기. 스트레스 해소에 탁월합니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "high",
+    "image_url": "/드럼.png",
+    "video_url": "https://youtu.be/ipfa_NUdaNY?si=-Q7JviQ6jfiPo85i",
+    "benefits": [
+      "스트레스 해소",
+      "리듬감",
+      "전신 운동",
+      "집중력"
+    ],
+    "requirements": [
+      "드럼 세트",
+      "스틱",
+      "방음 시설"
+    ]
+  },
+  {
+    "id": "8a4d09d5-1e14-45ab-8ecf-43d74a86a0a4",
+    "name": "필라테스",
+    "category": "건강",
+    "description": "코어 근육을 강화하는 운동. 자세 교정과 통증 완화에 효과적입니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/필라테스.png",
+    "video_url": "https://youtu.be/ZRWSc-Uc7-c?si=d9u74ufjIuxI1aBl",
+    "benefits": [
+      "코어 강화",
+      "자세 교정",
+      "통증 완화",
+      "신체 인식"
+    ],
+    "requirements": [
+      "요가 매트",
+      "운동복",
+      "소도구"
+    ]
+  },
+  {
+    "id": "8c69086f-b6d2-4f61-9a84-0b33df821442",
+    "name": "종이접기",
+    "category": "공예",
+    "description": "종이 한 장으로 다양한 형태를 만드는 오리가미. 두뇌 활동에 좋습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/종이접기.png",
+    "video_url": "https://youtu.be/JacQYzrkp4A?si=_2ZDUNKo0CzcLhum",
+    "benefits": [
+      "두뇌 활동",
+      "집중력",
+      "손재주",
+      "창의력"
+    ],
+    "requirements": [
+      "종이",
+      "풀",
+      "가위"
+    ]
+  },
+  {
+    "id": "8cb1a7ff-94ed-4784-add4-40168d114d69",
+    "name": "퀼트",
+    "category": "공예",
+    "description": "천 조각을 이어 붙여 만드는 패치워크. 실용적이고 따뜻한 작품을 만듭니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/퀄트.png",
+    "video_url": "https://youtu.be/m2gZb7iHRCs?si=vS2Y8i9h0ZsYwF_u",
+    "benefits": [
+      "창의력",
+      "실용성",
+      "집중력",
+      "성취감"
+    ],
+    "requirements": [
+      "천",
+      "바늘",
+      "실",
+      "재봉틀"
+    ]
+  },
+  {
+    "id": "8cdc94e8-cbea-4d92-b178-811eb48def59",
+    "name": "국악",
+    "category": "문화",
+    "description": "전통 악기로 우리 음악을 배우는 취미. 가야금, 거문고, 대금 등 다양합니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "high",
+    "image_url": "/국악.png",
+    "video_url": "https://youtu.be/bJS8C5XLBy8?si=yPPQ_9hIrLvsr7Gc",
+    "benefits": [
+      "전통 문화 계승",
+      "음악적 소양",
+      "집중력",
+      "정서 함양"
+    ],
+    "requirements": [
+      "악기 (가야금 등)",
+      "교재",
+      "조율기"
+    ]
+  },
+  {
+    "id": "8d3c2574-f324-4bc8-8c1e-61dda3de6fc4",
+    "name": "걷기",
+    "category": "스포츠",
+    "description": "가장 쉽고 안전한 운동. 매일 꾸준히 하면 건강 증진에 탁월합니다.",
+    "difficulty": 1,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/걷기.png",
+    "video_url": "https://youtu.be/kghyht4dBys?si=sqgztWdcSNTW6Gwl",
+    "benefits": [
+      "심혈관 건강",
+      "뼈 건강",
+      "체중 조절",
+      "정신 건강"
+    ],
+    "requirements": [
+      "편한 신발",
+      "운동복",
+      "물통"
+    ]
+  },
+  {
+    "id": "93d37f3c-1ea4-41d7-bf7c-796f695418f3",
+    "name": "아크릴화",
+    "category": "미술",
+    "description": "빠르게 마르는 아크릴 물감으로 다양한 표현이 가능한 회화. 수채화와 유화의 중간 성격을 지닙니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/아크릴화.png",
+    "video_url": "https://youtu.be/xNRbp0rcRAA?si=viy6EbsNdOkAb198",
+    "benefits": [
+      "빠른 작업 가능",
+      "다양한 기법 활용",
+      "창의력 발달",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "아크릴 물감",
+      "캔버스 또는 종이",
+      "붓",
+      "팔레트"
+    ]
+  },
+  {
+    "id": "955a59ca-e552-42e1-9877-21cc6fbed469",
+    "name": "발효 음식",
+    "category": "요리",
+    "description": "김치, 장류 등 발효 음식을 만듭니다. 건강에 좋고 보관도 가능합니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/발표음식.png",
+    "video_url": "https://youtu.be/J-akDmUfCs8?si=YtaKBT0LSClHcuBx",
+    "benefits": [
+      "건강식",
+      "장기 보관",
+      "전통 계승",
+      "경제적"
+    ],
+    "requirements": [
+      "항아리",
+      "재료",
+      "레시피",
+      "보관 공간"
+    ]
+  },
+  {
+    "id": "9b980beb-3f7d-4fd2-a475-c64b027e55a1",
+    "name": "단전호흡",
+    "category": "건강",
+    "description": "복식 호흡으로 기를 단련하는 한국 전통 건강법. 체력과 정신력을 기릅니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "both",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/단전호흡.png",
+    "video_url": "https://youtu.be/WymrfA20VRk?si=NuguWRneYrlHol-1",
+    "benefits": [
+      "폐활량 증가",
+      "정신 집중",
+      "기력 회복",
+      "면역력 향상"
+    ],
+    "requirements": [
+      "편한 옷",
+      "조용한 공간"
+    ]
+  },
+  {
+    "id": "9df584bf-13c5-4214-887f-ecea5f27418b",
+    "name": "색연필화",
+    "category": "미술",
+    "description": "색연필로 섬세하고 부드러운 그림을 그리는 취미. 준비물이 간단하고 어디서나 즐길 수 있습니다.",
+    "difficulty": 1,
+    "indoor_outdoor": "both",
+    "social_individual": "individual",
+    "budget": "low",
+    "image_url": "/색연필화.png",
+    "video_url": "https://youtu.be/zGxghHW8IPA?si=piy0iERqrU6zcExZ",
+    "benefits": [
+      "손쉬운 시작",
+      "휴대성 좋음",
+      "섬세한 표현력",
+      "집중력 향상"
+    ],
+    "requirements": [
+      "색연필 세트",
+      "스케치북",
+      "지우개"
+    ]
+  },
+  {
+    "id": "9fd7b4b7-f8b0-4c83-9903-132b80250461",
+    "name": "조류 관찰",
+    "category": "여가",
+    "description": "쌍안경으로 새를 관찰하고 기록하는 버드워칭입니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/조류관찰.png",
+    "video_url": "https://youtu.be/aL960sxUJ0E?si=M6EcEXgJ6g6kvd5r",
+    "benefits": [
+      "자연 이해",
+      "관찰력",
+      "야외 활동",
+      "평화로움"
+    ],
+    "requirements": [
+      "쌍안경",
+      "조류 도감",
+      "노트",
+      "카메라"
+    ]
+  },
+  {
+    "id": "a14e57df-f4f2-483e-bfcb-5d88371bfbe6",
+    "name": "차 문화",
+    "category": "요리",
+    "description": "다양한 차를 우리고 음미하는 취미. 여유와 건강을 동시에 얻습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/차문화.png",
+    "video_url": "https://youtu.be/uow0kT-UJJY?si=v0B57zQOeQczqu9S",
+    "benefits": [
+      "정서 안정",
+      "건강 증진",
+      "문화 이해",
+      "여유"
+    ],
+    "requirements": [
+      "다기",
+      "차",
+      "주전자",
+      "잔"
+    ]
+  },
+  {
+    "id": "a1989151-4bbd-4ca0-adb6-f6cb04c68f8e",
+    "name": "커피 로스팅",
+    "category": "요리",
+    "description": "생두를 직접 볶아 나만의 커피를 만듭니다. 향과 맛을 조절할 수 있습니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/커피로스팅.png",
+    "video_url": "https://youtu.be/r2HKT-o5DE0?si=H-gNkBEKRjPsbU3M",
+    "benefits": [
+      "향미 체험",
+      "경제적",
+      "취향 저격",
+      "여유"
+    ],
+    "requirements": [
+      "로스터",
+      "생두",
+      "그라인더",
+      "드립 도구"
+    ]
+  },
+  {
+    "id": "a26ad616-5032-4364-8864-00bd73cdccf2",
+    "name": "등산",
+    "category": "스포츠",
+    "description": "자연 속에서 즐기는 건강한 운동. 심폐 기능 향상과 함께 아름다운 경치를 감상할 수 있습니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/등산.png",
+    "video_url": "https://youtu.be/Q-dcjX6xkeE?si=NSxrmJXwkq-4m9kw",
+    "benefits": [
+      "심폐 기능 향상",
+      "근력 강화",
+      "자연 치유",
+      "사회적 교류"
+    ],
+    "requirements": [
+      "등산화",
+      "등산복",
+      "배낭",
+      "등산 스틱"
+    ]
+  },
+  {
+    "id": "a393d11d-da8f-4939-b63c-585155604491",
+    "name": "스마트폰 활용",
+    "category": "기술",
+    "description": "스마트폰의 다양한 기능과 앱 사용법을 배웁니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/스마트폰활용.png",
+    "video_url": "https://youtu.be/V4hNBU2UEgc?si=8Rf-ViVEE9TQ0esv",
+    "benefits": [
+      "편리한 생활",
+      "소통",
+      "정보 활용",
+      "자립"
+    ],
+    "requirements": [
+      "스마트폰",
+      "충전기"
+    ]
+  },
+  {
+    "id": "a43307f4-22b7-4f1c-ba5f-77bb45cb9523",
+    "name": "한식 요리",
+    "category": "요리",
+    "description": "전통 한식을 배우고 만드는 취미. 건강하고 맛있는 음식을 직접 만듭니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/한식요리.png",
+    "video_url": "https://youtu.be/uzsqVvwHloA?si=1kF5YHw0_FB3wWvR",
+    "benefits": [
+      "건강한 식사",
+      "전통 계승",
+      "가족 만족",
+      "실용적"
+    ],
+    "requirements": [
+      "조리 도구",
+      "재료",
+      "레시피"
+    ]
+  },
+  {
+    "id": "a77a188f-3137-4b61-a360-8a40c370641c",
+    "name": "꽃꽂이",
+    "category": "자연",
+    "description": "꽃과 식물로 아름다운 작품을 만드는 예술. 한국 전통 꽃꽂이도 배울 수 있습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/꽃꽂이.png",
+    "video_url": "https://youtu.be/Rm4l8ld3AHI?si=uCk-UayrCLd47ipe",
+    "benefits": [
+      "미적 감각",
+      "창의력",
+      "집중력",
+      "계절 감각"
+    ],
+    "requirements": [
+      "꽃",
+      "화병",
+      "가위",
+      "꽃꽂이 도구"
+    ]
+  },
+  {
+    "id": "b0b07b4c-6b13-49d9-bffc-db2f13a7f9fc",
+    "name": "사진",
+    "category": "예술",
+    "description": "카메라로 순간을 포착하는 예술. 세상을 새로운 시각으로 바라보는 법을 배웁니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "both",
+    "social_individual": "individual",
+    "budget": "high",
+    "image_url": "/사진촬영.png",
+    "video_url": "https://youtu.be/khOBEmvGz3A?si=FQofBTGBT0cS-tjI",
+    "benefits": [
+      "관찰력 향상",
+      "창의력 개발",
+      "추억 기록",
+      "예술적 감각"
+    ],
+    "requirements": [
+      "카메라",
+      "렌즈",
+      "삼각대",
+      "메모리 카드"
+    ]
+  },
+  {
+    "id": "b6c126d8-fba1-43c9-97ee-47d101dc389a",
+    "name": "목공예",
+    "category": "공예",
+    "description": "나무를 깎고 다듬어 가구나 소품을 만듭니다. 남성에게 인기가 많습니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "high",
+    "image_url": "/목공예.png",
+    "video_url": "https://youtu.be/4YoASyLgKQM?si=dNsGokmI4JRSwptf",
+    "benefits": [
+      "실용적",
+      "성취감",
+      "신체 활동",
+      "창의력"
+    ],
+    "requirements": [
+      "목재",
+      "공구",
+      "작업대",
+      "안전 장비"
+    ]
+  },
+  {
+    "id": "b8074e6a-5931-4316-983b-9c31783ff83a",
+    "name": "역사 공부",
+    "category": "문화",
+    "description": "우리나라와 세계의 역사를 배우며 현재를 이해하는 통찰력을 기릅니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/역사공부.png",
+    "video_url": "https://youtu.be/CaG7fR0q-4A?si=QAlzoFFDR5Af0_Rn",
+    "benefits": [
+      "교양 함양",
+      "역사 의식",
+      "비판적 사고",
+      "문화 이해"
+    ],
+    "requirements": [
+      "역사책",
+      "노트",
+      "필기구"
+    ]
+  },
+  {
+    "id": "b826eddb-f668-44be-a298-ff50a3044aac",
+    "name": "도자기 공예",
+    "category": "미술",
+    "description": "흙을 빚어 도자기를 만드는 전통 공예. 물레를 돌리고 가마에서 굽는 전 과정을 체험합니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "high",
+    "image_url": "/도자기공예.png",
+    "video_url": "https://youtu.be/Dj3nIVP37Sw?si=euPldKBrIVXwya99",
+    "benefits": [
+      "손재주 향상",
+      "집중력 극대화",
+      "실용적인 작품",
+      "전통 공예 체험"
+    ],
+    "requirements": [
+      "도자기 물레",
+      "흙",
+      "가마 사용권",
+      "조각 도구"
+    ]
+  },
+  {
+    "id": "b8b141b2-4f08-4fad-8f91-61f2f656ff45",
+    "name": "하모니카",
+    "category": "음악",
+    "description": "주머니에 넣고 다니는 관악기. 언제 어디서나 연주할 수 있습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "both",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/하모니카.png",
+    "video_url": "https://youtu.be/_822V_i9FIQ?si=oowHfWCF24HVs9ov",
+    "benefits": [
+      "폐활량 증가",
+      "휴대성",
+      "쉬운 시작",
+      "다양한 장르"
+    ],
+    "requirements": [
+      "하모니카",
+      "교본",
+      "케이스"
+    ]
+  },
+  {
+    "id": "bead321e-8062-4495-9952-2981b13a92bd",
+    "name": "조경",
+    "category": "자연",
+    "description": "정원을 아름답게 꾸미는 활동. 공간을 디자인하고 식물을 배치합니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "both",
+    "budget": "high",
+    "image_url": "/조경.png",
+    "video_url": "https://youtu.be/l-I4YecXWV4?si=T2WgqmGnS8ZACP-X",
+    "benefits": [
+      "창의력",
+      "신체 활동",
+      "미적 감각",
+      "공간 디자인"
+    ],
+    "requirements": [
+      "정원 도구",
+      "식물",
+      "디자인 지식",
+      "자재"
+    ]
+  },
+  {
+    "id": "c658eef4-3d59-4d3c-b669-5aac2b133be1",
+    "name": "베이킹",
+    "category": "요리",
+    "description": "빵과 과자를 굽는 취미. 달콤한 향기와 맛있는 결과물이 기다립니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/베이킹.png",
+    "video_url": "https://youtu.be/vnfAmqrrppQ?si=srmPzKgDJZh2QLny",
+    "benefits": [
+      "창작의 즐거움",
+      "맛있는 결과",
+      "선물 가능",
+      "가족과 함께"
+    ],
+    "requirements": [
+      "오븐",
+      "재료",
+      "도구",
+      "레시피"
+    ]
+  },
+  {
+    "id": "c6db7f18-8248-423f-bd7a-c8c6c9ce1cdf",
+    "name": "민화",
+    "category": "미술",
+    "description": "조선시대부터 전해 내려오는 한국 전통 그림. 밝고 화려한 색채와 상징적 의미가 담겨 있습니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/민화.png",
+    "video_url": "https://youtu.be/HeVd1UvsFQM?si=0f4P0VhYHNLPeuoK",
+    "benefits": [
+      "전통 문화 계승",
+      "색채 감각 개발",
+      "문화재 이해",
+      "창작의 즐거움"
+    ],
+    "requirements": [
+      "민화 물감",
+      "한지",
+      "붓",
+      "밑그림"
+    ]
+  },
+  {
+    "id": "d40476a9-1a33-4ab6-8671-d309f08b4605",
+    "name": "여행",
+    "category": "여가",
+    "description": "국내외 여행을 다니며 새로운 경험을 쌓습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "both",
+    "budget": "high",
+    "image_url": "/여행.png",
+    "video_url": "https://youtu.be/tdXCTsDpzB8?si=n6ruzcQiHe8ij1mb",
+    "benefits": [
+      "새로운 경험",
+      "문화 이해",
+      "추억 쌓기",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "여행 가방",
+      "카메라",
+      "편한 신발"
+    ]
+  },
+  {
+    "id": "d55f331b-716b-4858-8186-7943f2f7de3a",
+    "name": "환경 보호",
+    "category": "봉사",
+    "description": "지역 청소, 분리수거 캠페인 등 환경을 지키는 활동입니다.",
+    "difficulty": 1,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "social",
+    "budget": "low",
+    "image_url": "/환경보호.png",
+    "video_url": "https://youtu.be/qRjbcRuEYBQ?si=Cxo2w9nEgrIGiTBq",
+    "benefits": [
+      "사회 공헌",
+      "운동 효과",
+      "보람",
+      "공동체 의식"
+    ],
+    "requirements": [
+      "장갑",
+      "집게",
+      "쓰레기봉투"
+    ]
+  },
+  {
+    "id": "dc4cef08-0482-427a-b065-3b8f2fbf641c",
+    "name": "비누 만들기",
+    "category": "공예",
+    "description": "천연 재료로 피부에 좋은 비누를 직접 만듭니다. 선물용으로도 좋습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/비누만들기.png",
+    "video_url": "https://youtu.be/eWGwM_rdHXM?si=4yQe7lyfkfXn4NGG",
+    "benefits": [
+      "실용적",
+      "창의력",
+      "천연 제품",
+      "선물 가능"
+    ],
+    "requirements": [
+      "비누 베이스",
+      "에센셜 오일",
+      "몰드",
+      "색소"
+    ]
+  },
+  {
+    "id": "dd693683-0770-4315-a282-3e15315efb4f",
+    "name": "게이트볼",
+    "category": "스포츠",
+    "description": "시니어들에게 인기 있는 구기 종목. 전략적 사고와 팀워크가 중요합니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "social",
+    "budget": "low",
+    "image_url": "/게이트볼.png",
+    "video_url": "https://youtu.be/sTBIxlfYAXU?si=m2iJ8rQeVUIN8KgI",
+    "benefits": [
+      "전략적 사고",
+      "팀워크 향상",
+      "적당한 운동량",
+      "사회적 교류"
+    ],
+    "requirements": [
+      "게이트볼 스틱",
+      "공",
+      "운동화",
+      "모자"
+    ]
+  },
+  {
+    "id": "dd79992e-7b88-46fe-8997-fba86b002141",
+    "name": "자전거",
+    "category": "스포츠",
+    "description": "페달을 밟으며 자연을 누비는 유산소 운동. 무릎에 부담이 적습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/자전거.png",
+    "video_url": "https://youtu.be/Zuveh98J9a8?si=ZEX3aqTCyb-GtJ-M",
+    "benefits": [
+      "유산소 운동",
+      "하체 근력",
+      "관절 부담 적음",
+      "여행과 결합"
+    ],
+    "requirements": [
+      "자전거",
+      "헬멧",
+      "장갑",
+      "안전 장비"
+    ]
+  },
+  {
+    "id": "dde8a66a-55fe-4449-9db8-66cfb169cb09",
+    "name": "천체 관측",
+    "category": "여가",
+    "description": "망원경으로 별과 달, 행성을 관찰하는 낭만적인 취미입니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "outdoor",
+    "social_individual": "both",
+    "budget": "high",
+    "image_url": "/천체관측.png",
+    "video_url": "https://youtu.be/KHFF6ql9qpE?si=eYNKUekPy5d9xANQ",
+    "benefits": [
+      "우주 이해",
+      "낭만",
+      "관찰력",
+      "지적 호기심"
+    ],
+    "requirements": [
+      "망원경",
+      "성도",
+      "의자",
+      "손전등"
+    ]
+  },
+  {
+    "id": "e28b42a7-ef66-414e-8387-869a674a1dd6",
+    "name": "볼링",
+    "category": "스포츠",
+    "description": "실내에서 즐기는 대표적인 레저 스포츠. 정확성과 집중력이 필요합니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "medium",
+    "image_url": "/볼링.png",
+    "video_url": "https://youtu.be/Aw7YX_fep-Y?si=XbCWbhkvxA6UJXA-",
+    "benefits": [
+      "집중력 향상",
+      "전신 운동",
+      "사교 활동",
+      "성취감"
+    ],
+    "requirements": [
+      "볼링화 (대여)",
+      "편한 옷",
+      "손목 보호대"
+    ]
+  },
+  {
+    "id": "e38d4440-eabc-4d3e-80f0-55d3a39b7ecc",
+    "name": "멘토링",
+    "category": "봉사",
+    "description": "자신의 경험과 지식을 젊은 세대와 나누는 활동입니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "both",
+    "social_individual": "social",
+    "budget": "low",
+    "image_url": "/멘토링.png",
+    "video_url": "https://youtu.be/ZqE-pbja0lc?si=CypYAZmqcJA4UyA-",
+    "benefits": [
+      "보람",
+      "경험 공유",
+      "세대 소통",
+      "자존감"
+    ],
+    "requirements": [
+      "경험",
+      "소통 능력"
+    ]
+  },
+  {
+    "id": "e43ecbe3-1de5-4088-b571-5d78289f65d8",
+    "name": "피아노",
+    "category": "음악",
+    "description": "건반 악기의 대표주자. 클래식부터 대중음악까지 다양한 장르를 연주할 수 있습니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "individual",
+    "budget": "high",
+    "image_url": "/피아노.png",
+    "video_url": "https://youtu.be/yHj_4mDUFq8?si=0YYFo9C6VsW23Grh",
+    "benefits": [
+      "두뇌 활동",
+      "손가락 운동",
+      "음악적 소양",
+      "정서 안정"
+    ],
+    "requirements": [
+      "피아노 또는 전자 피아노",
+      "악보",
+      "의자"
+    ]
+  },
+  {
+    "id": "e9cd68cb-4b35-484a-8069-2251b87307f6",
+    "name": "자수",
+    "category": "공예",
+    "description": "천에 바늘과 실로 그림을 그리는 전통 공예. 섬세하고 아름다운 작품이 탄생합니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/자수.png",
+    "video_url": "https://youtu.be/3brFkrxUFo4?si=8ldK1wHNW7VqbQ9Q",
+    "benefits": [
+      "집중력 극대화",
+      "섬세함",
+      "예술 작품",
+      "인내심"
+    ],
+    "requirements": [
+      "자수실",
+      "바늘",
+      "천",
+      "자수틀"
+    ]
+  },
+  {
+    "id": "ecd6f121-6f94-426d-8490-ed576e3a2dd0",
+    "name": "서예",
+    "category": "문화",
+    "description": "붓과 먹으로 아름다운 글씨를 쓰는 전통 예술. 마음의 평화와 집중력을 기를 수 있습니다.",
+    "difficulty": 3,
+    "indoor_outdoor": "indoor",
+    "social_individual": "individual",
+    "budget": "medium",
+    "image_url": "/서예(중복).png",
+    "video_url": "https://youtu.be/UCr0xxcTy9E?si=MViJtZM-3xj9WofO",
+    "benefits": [
+      "집중력 향상",
+      "마음의 평화",
+      "전통 문화 이해",
+      "손글씨 개선"
+    ],
+    "requirements": [
+      "붓",
+      "먹",
+      "벼루",
+      "한지"
+    ]
+  },
+  {
+    "id": "ed28d0bd-f923-4e75-850f-8d1d79f782a1",
+    "name": "우쿨렐레",
+    "category": "음악",
+    "description": "작고 귀여운 4현 악기. 배우기 쉬워 초보자에게 인기가 많습니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "both",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/우쿨렐레.png",
+    "video_url": "https://youtu.be/_KkD3Ivc1sA?si=adwk8gDxXyLUhlfO",
+    "benefits": [
+      "쉬운 학습",
+      "휴대성",
+      "밝은 음색",
+      "스트레스 해소"
+    ],
+    "requirements": [
+      "우쿨렐레",
+      "튜너",
+      "악보"
+    ]
+  },
+  {
+    "id": "f0e0f3b2-c19b-4a81-b71d-17abc4730263",
+    "name": "시 쓰기",
+    "category": "문화",
+    "description": "일상의 감동을 시로 표현하는 문학 창작. 내면의 감정을 승화시킵니다.",
+    "difficulty": 2,
+    "indoor_outdoor": "indoor",
+    "social_individual": "both",
+    "budget": "low",
+    "image_url": "/시쓰기.png",
+    "video_url": "https://youtu.be/1a4cSitXpUA?si=Lud2Va4W-ta_bx2h",
+    "benefits": [
+      "감성 표현",
+      "언어 능력",
+      "정서 안정",
+      "창작의 기쁨"
+    ],
+    "requirements": [
+      "노트",
+      "펜",
+      "시집"
+    ]
+  }
+]

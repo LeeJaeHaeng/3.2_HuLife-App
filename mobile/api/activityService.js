@@ -1,69 +1,36 @@
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API_CONFIG } from '../config/api.config';
-
-// API Base URL (환경에 따라 변경)
-const API_BASE_URL = __DEV__
-  ? API_CONFIG.WEB_URL  // 개발 환경
-  : 'https://your-production-url.com';  // 프로덕션 환경
-
-// Axios 인스턴스 생성
-const apiClient = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-// Request interceptor: 모든 요청에 인증 토큰 추가
-apiClient.interceptors.request.use(
-  async (config) => {
-    try {
-      const token = await AsyncStorage.getItem('authToken');
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-    } catch (error) {
-      console.error('[Activity Service] Failed to get auth token:', error);
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+// mobile/api/activityService.js
+import api from './apiClient'; // ✅ 중앙 api 클라이언트 재사용 (주소, 토큰 자동 처리)
 
 /**
  * Log user activity
- * @param {string} activityType - Type of activity (view_hobby, view_community, etc.)
- * @param {string} targetId - ID of the target resource (hobby id, community id, etc.)
- * @param {object} metadata - Additional metadata (searchQuery, duration, etc.)
  */
 export const logActivity = async (activityType, targetId = null, metadata = null) => {
   try {
-    const response = await apiClient.post('/api/activities', {
+    // apiClient에는 이미 base URL이 설정되어 있으므로 뒷부분만 적으면 됩니다.
+    // 서버 API 경로가 /activities 인지 /api/activities 인지 확인 필요
+    // 보통 apiClient가 /api 까지 포함한다면 여기서는 /activities 만 씀
+    const response = await api.post('/activities', {
       activityType,
       targetId,
       metadata,
     });
     return response.data;
   } catch (error) {
-    // Silently fail - activity logging shouldn't break user experience
+    // 활동 로그 실패는 사용자 경험을 방해하지 않도록 콘솔만 찍음
     console.warn('[Activity Service] Failed to log activity:', error.message);
     return { success: false };
   }
 };
 
 /**
- * Get user activities (for analytics/debugging)
- * @param {number} limit - Number of activities to fetch
- * @param {string} type - Filter by activity type (optional)
+ * Get user activities
  */
 export const getUserActivities = async (limit = 50, type = null) => {
   try {
     const params = { limit };
     if (type) params.type = type;
 
-    const response = await apiClient.get('/api/activities', { params });
+    const response = await api.get('/activities', { params });
     return response.data.activities || [];
   } catch (error) {
     console.error('[Activity Service] Failed to get activities:', error);
@@ -71,9 +38,6 @@ export const getUserActivities = async (limit = 50, type = null) => {
   }
 };
 
-/**
- * Activity type constants for consistency
- */
 export const ActivityTypes = {
   VIEW_HOBBY: 'view_hobby',
   VIEW_COMMUNITY: 'view_community',
@@ -87,9 +51,6 @@ export const ActivityTypes = {
   CREATE_SCHEDULE: 'create_schedule',
 };
 
-/**
- * Helper function to track page views with duration
- */
 export class ActivityTracker {
   constructor() {
     this.startTime = null;
@@ -97,31 +58,21 @@ export class ActivityTracker {
     this.targetId = null;
   }
 
-  /**
-   * Start tracking a page view
-   */
   startTracking(activityType, targetId) {
     this.startTime = Date.now();
     this.activityType = activityType;
     this.targetId = targetId;
   }
 
-  /**
-   * Stop tracking and log the activity with duration
-   */
   async stopTracking(additionalMetadata = {}) {
     if (!this.startTime || !this.activityType) {
       return;
     }
-
-    const duration = Math.floor((Date.now() - this.startTime) / 1000); // seconds
-
+    const duration = Math.floor((Date.now() - this.startTime) / 1000);
     await logActivity(this.activityType, this.targetId, {
       duration,
       ...additionalMetadata,
     });
-
-    // Reset tracker
     this.startTime = null;
     this.activityType = null;
     this.targetId = null;

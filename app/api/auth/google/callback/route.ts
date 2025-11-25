@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
         grant_type: 'authorization_code',
         client_id: process.env.GOOGLE_CLIENT_ID!,
         client_secret: process.env.GOOGLE_CLIENT_SECRET!,
-        redirect_uri: `${process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'}/api/auth/google/callback`,
+        redirect_uri: `https://hulife-psvjcyj3m-jaehaeng2001-2614s-projects.vercel.app/api/auth/google/callback`,
         code,
       }),
     })

@@ -1,18 +1,14 @@
-import { defineConfig } from "drizzle-kit"
-import * as dotenv from "dotenv"
+import { defineConfig } from "drizzle-kit";
+import * as dotenv from "dotenv";
 
-dotenv.config({
-  path: ".env",
-})
+dotenv.config();
 
 export default defineConfig({
-  schema: "./lib/db/schema.ts",
-  out: "./lib/db/migrations",
-  dialect: "mysql",
+  schema: "./lib/db/schema.ts", // 스키마 파일 경로가 맞는지 확인하세요
+  out: "./drizzle",
+  dialect: "turso", // 또는 "sqlite"
   dbCredentials: {
-    host: process.env.DB_HOST!,
-    user: process.env.DB_USER!,
-    password: process.env.DB_PASSWORD!,
-    database: process.env.DB_NAME!,
+    url: process.env.DATABASE_URL!,
+    authToken: process.env.DATABASE_AUTH_TOKEN,
   },
-})
+});

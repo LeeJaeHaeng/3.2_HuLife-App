@@ -1,10 +1,9 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-import { API_CONFIG } from '../config/api.config';
 import cacheService from './cacheService';
 
-// API URL - config 파일에서 자동으로 가져옴
-export const API_URL = API_CONFIG.API_URL;
+// API URL - 환경 변수에서 직접 가져옴
+export const API_URL = process.env.EXPO_PUBLIC_API_URL;
 export const TOKEN_KEY = 'userToken';
 
 // Axios 인스턴스 생성

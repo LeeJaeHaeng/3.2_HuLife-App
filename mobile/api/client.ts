@@ -1,12 +1,12 @@
+// mobile/api/client.ts
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-import { API_CONFIG } from '../config/api.config';
 
 export const TOKEN_KEY = 'auth_token';
 
-// API 클라이언트 인스턴스
 const client = axios.create({
-  baseURL: __DEV__ ? API_CONFIG.WEB_URL : 'https://hulife.example.com',
+  // ✅ baseURL은 EAS 빌드 환경 변수(EXPO_PUBLIC_API_URL)를 사용합니다.
+  baseURL: process.env.EXPO_PUBLIC_API_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ client.interceptors.request.use(async (config) => {
     console.log('[API 클라이언트] 요청 상세 정보:', {
       method: config.method?.toUpperCase(),
       originalUrl: config.url,
-      finalUrl: config.baseURL + config.url,
+      finalUrl: (config.baseURL ?? '') + (config.url ?? ''),
       headers: config.headers,
       data: config.data
     });

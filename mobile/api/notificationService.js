@@ -97,8 +97,7 @@ class NotificationService {
         name: '채팅 알림',
         importance: Notifications.AndroidImportance.HIGH,
         vibrationPattern: [0, 150, 150, 150],
-        lightColor: '#FF7A5C',
-        sound: 'notification-sound.wav',
+        lightColor: '#FF7A5C'
       });
 
       // 모임 알림 전용 채널

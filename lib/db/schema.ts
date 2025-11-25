@@ -1,130 +1,229 @@
-import { relations } from "drizzle-orm"
+import { relations, sql } from "drizzle-orm";
 import {
-  mysqlTable,
-  varchar,
+  sqliteTable,
   text,
-  int,
-  timestamp,
-  json,
-  mysqlEnum,
-  customType,
-} from "drizzle-orm/mysql-core"
+  integer,
+} from "drizzle-orm/sqlite-core";
 
-// Custom LONGTEXT type for large Base64 images (up to 4GB)
-const longtext = customType<{ data: string; notNull: false; default: false }>({
-  dataType() {
-    return "longtext"
-  },
-})
+// Users Table
+export const users = sqliteTable("users", {
+  id: text("id").primaryKey(),
+  email: text("email").notNull().unique(),
+  password: text("password").notNull(),
+  name: text("name").notNull(),
+  age: integer("age").notNull(),
+  location: text("location").notNull(),
+  phone: text("phone"),
+  profileImage: text("profile_image"), // SQLite TEXT는 최대 1GB+ 저장 가능하므로 별도 타입 불필요
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
 
-export const users = mysqlTable("users", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  email: varchar("email", { length: 255 }).notNull().unique(),
-  password: varchar("password", { length: 255 }).notNull(),
-  name: varchar("name", { length: 255 }).notNull(),
-  age: int("age").notNull(),
-  location: varchar("location", { length: 255 }).notNull(),
-  phone: varchar("phone", { length: 255 }),
-  profileImage: longtext("profile_image"), // ✅ LONGTEXT (최대 4GB, Base64 대용량 이미지 저장)
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-})
-
-export const hobbies = mysqlTable("hobbies", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  category: varchar("category", { length: 255 }).notNull(),
+// Hobbies Table
+export const hobbies = sqliteTable("hobbies", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  category: text("category").notNull(),
   description: text("description").notNull(),
-  difficulty: int("difficulty").notNull(),
-  indoorOutdoor: mysqlEnum("indoor_outdoor", ["indoor", "outdoor", "both"]).notNull(),
-  socialIndividual: mysqlEnum("social_individual", ["social", "individual", "both"]).notNull(),
-  budget: mysqlEnum("budget", ["low", "medium", "high"]).notNull(),
-  imageUrl: varchar("image_url", { length: 255 }).notNull(),
-  videoUrl: varchar("video_url", { length: 255 }),
-  benefits: json("benefits").$type<string[]>().notNull(),
-  requirements: json("requirements").$type<string[]>().notNull(),
-})
+  difficulty: integer("difficulty").notNull(),
+  indoorOutdoor: text("indoor_outdoor").notNull(), // enum 대신 text 사용
+  socialIndividual: text("social_individual").notNull(),
+  budget: text("budget").notNull(),
+  imageUrl: text("image_url").notNull(),
+  videoUrl: text("video_url"),
+  benefits: text("benefits", { mode: "json" }).$type<string[]>().notNull(), // JSON 모드 사용
+  requirements: text("requirements", { mode: "json" }).$type<string[]>().notNull(),
+});
 
-export const surveyResponses = mysqlTable("survey_responses", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  responses: json("responses").$type<{ [key: string]: number | string }>().notNull(),
-  completedAt: timestamp("completed_at").notNull().defaultNow(),
-})
+// Survey Responses
+export const surveyResponses = sqliteTable("survey_responses", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id),
+  responses: text("responses", { mode: "json" }).$type<{ [key: string]: number | string }>().notNull(),
+  completedAt: integer("completed_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
 
-export const reviews = mysqlTable("reviews", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  userName: varchar("user_name", { length: 255 }).notNull(),
-  hobbyId: varchar("hobby_id", { length: 255 }).notNull().references(() => hobbies.id),
-  rating: int("rating").notNull(),
+// Reviews
+export const reviews = sqliteTable("reviews", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id),
+  userName: text("user_name").notNull(),
+  hobbyId: text("hobby_id").notNull().references(() => hobbies.id),
+  rating: integer("rating").notNull(),
   comment: text("comment").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-})
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
 
-export const communities = mysqlTable("communities", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
-  hobbyId: varchar("hobby_id", { length: 255 }).notNull().references(() => hobbies.id),
-  hobbyName: varchar("hobby_name", { length: 255 }).notNull(), // 비정규화: 취미 이름 직접 저장 (이미지 매핑용)
+// Communities
+export const communities = sqliteTable("communities", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  hobbyId: text("hobby_id").notNull().references(() => hobbies.id),
+  hobbyName: text("hobby_name").notNull(),
   description: text("description").notNull(),
-  location: varchar("location", { length: 255 }).notNull(),
-  schedule: varchar("schedule", { length: 255 }).notNull(),
-  memberCount: int("member_count").notNull().default(1),
-  maxMembers: int("max_members").notNull(),
-  imageUrl: varchar("image_url", { length: 255 }).notNull(),
-  leaderId: varchar("leader_id", { length: 255 }).notNull().references(() => users.id),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-})
+  location: text("location").notNull(),
+  schedule: text("schedule").notNull(),
+  memberCount: integer("member_count").notNull().default(1),
+  maxMembers: integer("max_members").notNull(),
+  imageUrl: text("image_url").notNull(),
+  leaderId: text("leader_id").notNull().references(() => users.id),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
 
-export const posts = mysqlTable("posts", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  userName: varchar("user_name", { length: 255 }).notNull(),
-  userImage: longtext("user_image"), // ✅ LONGTEXT: Base64 프로필 이미지 저장 (최대 4GB)
-  title: varchar("title", { length: 255 }).notNull(),
+// Posts
+export const posts = sqliteTable("posts", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id),
+  userName: text("user_name").notNull(),
+  userImage: text("user_image"),
+  title: text("title").notNull(),
   content: text("content").notNull(),
-  category: varchar("category", { length: 255 }).notNull(),
-  images: longtext("images"), // ✅ LONGTEXT: JSON 배열로 Base64 이미지 저장 (최대 4GB)
-  likes: int("likes").notNull().default(0),
-  comments: int("comments").notNull().default(0),
-  views: int("views").notNull().default(0),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-})
-
-export const userHobbies = mysqlTable("user_hobbies", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  hobbyId: varchar("hobby_id", { length: 255 }).notNull().references(() => hobbies.id),
-  hobbyName: varchar("hobby_name", { length: 255 }).notNull(), // 비정규화: 취미 이름 직접 저장
-  hobbyCategory: varchar("hobby_category", { length: 255 }).notNull(), // 비정규화: 카테고리 직접 저장
-  hobbyDescription: text("hobby_description").notNull(), // 비정규화: 설명 직접 저장
-  hobbyImage: varchar("hobby_image", { length: 255 }).notNull(), // 비정규화: 이미지 URL 직접 저장
-  status: mysqlEnum("status", ["interested", "learning", "completed"]).notNull(),
-  progress: int("progress").notNull().default(0),
-  startedAt: timestamp("started_at").notNull().defaultNow(),
-  completedAt: timestamp("completed_at"),
-})
-
-export const schedules = mysqlTable("schedules", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  title: varchar("title", { length: 255 }).notNull(),
-  hobbyId: varchar("hobby_id", { length: 255 }).references(() => hobbies.id),
-  date: timestamp("date").notNull(),
-  time: varchar("time", { length: 255 }).notNull(),
-  location: varchar("location", { length: 255 }),
-  type: mysqlEnum("type", ["class", "practice", "meeting", "event"]).notNull(),
+  category: text("category").notNull(),
+  images: text("images", { mode: "json" }), // JSON 배열로 저장
+  likes: integer("likes").notNull().default(0),
+  comments: integer("comments").notNull().default(0),
+  views: integer("views").notNull().default(0),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
 });
 
-export const postLikes = mysqlTable("post_likes", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  postId: varchar("post_id", { length: 255 }).notNull().references(() => posts.id),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
+// User Hobbies
+export const userHobbies = sqliteTable("user_hobbies", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id),
+  hobbyId: text("hobby_id").notNull().references(() => hobbies.id),
+  hobbyName: text("hobby_name").notNull(),
+  hobbyCategory: text("hobby_category").notNull(),
+  hobbyDescription: text("hobby_description").notNull(),
+  hobbyImage: text("hobby_image").notNull(),
+  status: text("status").notNull(), // enum 대신 text
+  progress: integer("progress").notNull().default(0),
+  startedAt: integer("started_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+  completedAt: integer("completed_at", { mode: "timestamp" }),
+});
+
+// Schedules
+export const schedules = sqliteTable("schedules", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id),
+  title: text("title").notNull(),
+  hobbyId: text("hobby_id").references(() => hobbies.id),
+  date: integer("date", { mode: "timestamp" }).notNull(),
+  time: text("time").notNull(),
+  location: text("location"),
+  type: text("type").notNull(),
+});
+
+// Post Likes
+export const postLikes = sqliteTable("post_likes", {
+  id: text("id").primaryKey(),
+  postId: text("post_id").notNull().references(() => posts.id),
+  userId: text("user_id").notNull().references(() => users.id),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
+
+// Community Members
+export const communityMembers = sqliteTable("community_members", {
+  id: text("id").primaryKey(),
+  communityId: text("community_id").notNull().references(() => communities.id),
+  userId: text("user_id").notNull().references(() => users.id),
+  joinedAt: integer("joined_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+  role: text("role").notNull(),
+});
+
+// Join Requests
+export const joinRequests = sqliteTable("join_requests", {
+  id: text("id").primaryKey(),
+  communityId: text("community_id").notNull().references(() => communities.id),
+  userId: text("user_id").notNull().references(() => users.id),
+  status: text("status").notNull().default("pending"),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+  respondedAt: integer("responded_at", { mode: "timestamp" }),
+});
+
+// Chat Rooms
+export const chatRooms = sqliteTable("chat_rooms", {
+  id: text("id").primaryKey(),
+  communityId: text("community_id").notNull().unique().references(() => communities.id),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
+
+// Chat Messages
+export const chatMessages = sqliteTable("chat_messages", {
+  id: text("id").primaryKey(),
+  chatRoomId: text("chat_room_id").notNull().references(() => chatRooms.id),
+  userId: text("user_id").notNull().references(() => users.id),
+  userName: text("user_name").notNull(),
+  userImage: text("user_image"),
+  message: text("message").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
+
+// Post Comments
+export const postComments = sqliteTable("post_comments", {
+  id: text("id").primaryKey(),
+  postId: text("post_id").notNull().references(() => posts.id),
+  userId: text("user_id").notNull().references(() => users.id),
+  userName: text("user_name").notNull(),
+  userImage: text("user_image"),
+  content: text("content").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
+
+// Gallery Items
+export const galleryItems = sqliteTable("gallery_items", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id),
+  userName: text("user_name").notNull(),
+  userImage: text("user_image"),
+  hobbyId: text("hobby_id").notNull().references(() => hobbies.id),
+  hobbyName: text("hobby_name").notNull(),
+  title: text("title").notNull(),
+  description: text("description"),
+  image: text("image"),
+  videoUrl: text("video_url"),
+  videoThumbnail: text("video_thumbnail"),
+  likes: integer("likes").notNull().default(0),
+  views: integer("views").notNull().default(0),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
+
+// Gallery Likes
+export const galleryLikes = sqliteTable("gallery_likes", {
+  id: text("id").primaryKey(),
+  galleryItemId: text("gallery_item_id").notNull().references(() => galleryItems.id),
+  userId: text("user_id").notNull().references(() => users.id),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
+
+// Gallery Comments
+export const galleryComments = sqliteTable("gallery_comments", {
+  id: text("id").primaryKey(),
+  galleryItemId: text("gallery_item_id").notNull().references(() => galleryItems.id),
+  userId: text("user_id").notNull().references(() => users.id),
+  userName: text("user_name").notNull(),
+  userImage: text("user_image"),
+  content: text("content").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
+});
+
+// User Activities
+export const userActivities = sqliteTable("user_activities", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id),
+  activityType: text("activity_type").notNull(),
+  targetId: text("target_id"),
+  metadata: text("metadata", { mode: "json" }).$type<{
+    searchQuery?: string;
+    duration?: number;
+    scrollDepth?: number;
+    [key: string]: any;
+  }>(),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(sql`(unixepoch())`),
 });
 
 
-// --- RELATIONS ---
+// --- RELATIONS (변경 없음) ---
+// Relations 코드는 그대로 두셔도 되지만, 편의를 위해 여기에 포함합니다.
+// (테이블 참조 변수가 위에서 정의한 sqliteTable로 자동으로 연결됩니다)
 
 export const usersRelations = relations(users, ({ one, many }) => ({
   surveyResponse: one(surveyResponses, {
@@ -137,20 +236,20 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   userHobbies: many(userHobbies),
   schedules: many(schedules),
   activities: many(userActivities),
-}))
+}));
 
 export const hobbiesRelations = relations(hobbies, ({ many }) => ({
   reviews: many(reviews),
   communities: many(communities),
   userHobbies: many(userHobbies),
-}))
+}));
 
 export const surveyResponsesRelations = relations(surveyResponses, ({ one }) => ({
   user: one(users, {
     fields: [surveyResponses.userId],
     references: [users.id],
   }),
-}))
+}));
 
 export const reviewsRelations = relations(reviews, ({ one }) => ({
   user: one(users, {
@@ -161,7 +260,7 @@ export const reviewsRelations = relations(reviews, ({ one }) => ({
     fields: [reviews.hobbyId],
     references: [hobbies.id],
   }),
-}))
+}));
 
 export const communitiesRelations = relations(communities, ({ one, many }) => ({
   hobby: one(hobbies, {
@@ -173,92 +272,7 @@ export const communitiesRelations = relations(communities, ({ one, many }) => ({
     references: [users.id],
   }),
   members: many(communityMembers),
-}))
-
-// Join table for community members
-export const communityMembers = mysqlTable("community_members", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  communityId: varchar("community_id", { length: 255 }).notNull().references(() => communities.id),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  joinedAt: timestamp("joined_at").notNull().defaultNow(),
-  role: mysqlEnum("role", ["member", "leader"]).notNull(),
-})
-
-// Join requests table
-export const joinRequests = mysqlTable("join_requests", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  communityId: varchar("community_id", { length: 255 }).notNull().references(() => communities.id),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  status: mysqlEnum("status", ["pending", "approved", "rejected"]).notNull().default("pending"),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  respondedAt: timestamp("responded_at"),
-})
-
-// Chat rooms table
-export const chatRooms = mysqlTable("chat_rooms", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  communityId: varchar("community_id", { length: 255 }).notNull().unique().references(() => communities.id),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-})
-
-// Chat messages table
-export const chatMessages = mysqlTable("chat_messages", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  chatRoomId: varchar("chat_room_id", { length: 255 }).notNull().references(() => chatRooms.id),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  userName: varchar("user_name", { length: 255 }).notNull(),
-  userImage: longtext("user_image"), // Base64 profile image
-  message: text("message").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-})
-
-// Post comments table
-export const postComments = mysqlTable("post_comments", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  postId: varchar("post_id", { length: 255 }).notNull().references(() => posts.id),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  userName: varchar("user_name", { length: 255 }).notNull(),
-  userImage: longtext("user_image"), // Base64 profile image
-  content: text("content").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-})
-
-// Gallery table - User's hobby artworks (images and videos)
-export const galleryItems = mysqlTable("gallery_items", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  userName: varchar("user_name", { length: 255 }).notNull(),
-  userImage: longtext("user_image"), // Base64 profile image
-  hobbyId: varchar("hobby_id", { length: 255 }).notNull().references(() => hobbies.id),
-  hobbyName: varchar("hobby_name", { length: 255 }).notNull(),
-  title: varchar("title", { length: 255 }).notNull(),
-  description: text("description"),
-  image: longtext("image"), // Base64 artwork image (nullable for videos)
-  videoUrl: varchar("video_url", { length: 500 }), // Video URL (for video uploads)
-  videoThumbnail: longtext("video_thumbnail"), // Base64 video thumbnail
-  likes: int("likes").notNull().default(0),
-  views: int("views").notNull().default(0),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-})
-
-// Gallery likes table
-export const galleryLikes = mysqlTable("gallery_likes", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  galleryItemId: varchar("gallery_item_id", { length: 255 }).notNull().references(() => galleryItems.id),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-})
-
-// Gallery comments table
-export const galleryComments = mysqlTable("gallery_comments", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  galleryItemId: varchar("gallery_item_id", { length: 255 }).notNull().references(() => galleryItems.id),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  userName: varchar("user_name", { length: 255 }).notNull(),
-  userImage: longtext("user_image"), // Base64 profile image
-  content: text("content").notNull(),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-})
+}));
 
 export const communityMembersRelations = relations(communityMembers, ({ one }) => ({
   community: one(communities, {
@@ -269,74 +283,7 @@ export const communityMembersRelations = relations(communityMembers, ({ one }) =
     fields: [communityMembers.userId],
     references: [users.id],
   }),
-}))
-
-export const postsRelations = relations(posts, ({ one, many }) => ({
-  user: one(users, {
-    fields: [posts.userId],
-    references: [users.id],
-  }),
-  comments: many(postComments),
-}))
-
-export const postCommentsRelations = relations(postComments, ({ one }) => ({
-  post: one(posts, {
-    fields: [postComments.postId],
-    references: [posts.id],
-  }),
-  user: one(users, {
-    fields: [postComments.userId],
-    references: [users.id],
-  }),
-}))
-
-export const userHobbiesRelations = relations(userHobbies, ({ one }) => ({
-  user: one(users, {
-    fields: [userHobbies.userId],
-    references: [users.id],
-  }),
-  hobby: one(hobbies, {
-    fields: [userHobbies.hobbyId],
-    references: [hobbies.id],
-  }),
-}))
-
-export const schedulesRelations = relations(schedules, ({ one }) => ({
-  user: one(users, {
-    fields: [schedules.userId],
-    references: [users.id],
-  }),
-  hobby: one(hobbies, {
-    fields: [schedules.hobbyId],
-    references: [hobbies.id],
-  }),
 }));
-
-// User activity logs table for tracking user behavior and improving recommendations
-export const userActivities = mysqlTable("user_activities", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  userId: varchar("user_id", { length: 255 }).notNull().references(() => users.id),
-  activityType: mysqlEnum("activity_type", [
-    "view_hobby",
-    "view_community",
-    "view_post",
-    "search",
-    "join_community",
-    "add_hobby_interest",
-    "remove_hobby_interest",
-    "complete_survey",
-    "create_post",
-    "create_schedule"
-  ]).notNull(),
-  targetId: varchar("target_id", { length: 255 }), // ID of the hobby/community/post being interacted with
-  metadata: json("metadata").$type<{
-    searchQuery?: string;
-    duration?: number; // seconds spent on page
-    scrollDepth?: number; // percentage scrolled
-    [key: string]: any;
-  }>(), // Additional contextual data
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-});
 
 export const joinRequestsRelations = relations(joinRequests, ({ one }) => ({
   community: one(communities, {
@@ -365,6 +312,47 @@ export const chatMessagesRelations = relations(chatMessages, ({ one }) => ({
   user: one(users, {
     fields: [chatMessages.userId],
     references: [users.id],
+  }),
+}));
+
+export const postsRelations = relations(posts, ({ one, many }) => ({
+  user: one(users, {
+    fields: [posts.userId],
+    references: [users.id],
+  }),
+  comments: many(postComments),
+}));
+
+export const postCommentsRelations = relations(postComments, ({ one }) => ({
+  post: one(posts, {
+    fields: [postComments.postId],
+    references: [posts.id],
+  }),
+  user: one(users, {
+    fields: [postComments.userId],
+    references: [users.id],
+  }),
+}));
+
+export const userHobbiesRelations = relations(userHobbies, ({ one }) => ({
+  user: one(users, {
+    fields: [userHobbies.userId],
+    references: [users.id],
+  }),
+  hobby: one(hobbies, {
+    fields: [userHobbies.hobbyId],
+    references: [hobbies.id],
+  }),
+}));
+
+export const schedulesRelations = relations(schedules, ({ one }) => ({
+  user: one(users, {
+    fields: [schedules.userId],
+    references: [users.id],
+  }),
+  hobby: one(hobbies, {
+    fields: [schedules.hobbyId],
+    references: [hobbies.id],
   }),
 }));
 

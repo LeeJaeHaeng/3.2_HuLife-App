@@ -1,0 +1,322 @@
+[
+  {
+    "id": "081d082d-0f07-4f29-93ac-51f27704c575",
+    "user_id": "b7b0d456-a706-48d0-a061-bd8020665b6d",
+    "title": "가죽공예 class",
+    "hobby_id": "015fa22d-83b8-4b19-8421-c44cce2c2a67",
+    "date": "2025-12-01T04:29:13.000Z",
+    "time": "10:00",
+    "location": "세종",
+    "type": "class"
+  },
+  {
+    "id": "0f6f849d-fa13-4e70-879b-80e1048d167b",
+    "user_id": "edb773b4-92a6-4696-b345-5a6cbd677515",
+    "title": "가죽공예 class",
+    "hobby_id": "015fa22d-83b8-4b19-8421-c44cce2c2a67",
+    "date": "2025-11-06T04:29:13.000Z",
+    "time": "13:00",
+    "location": "제주",
+    "type": "class"
+  },
+  {
+    "id": "12beffde-1202-4292-b11f-2c285f1e2b26",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "title": "명상 meeting",
+    "hobby_id": "1221fd09-eba5-4168-92ce-59b79c73c1e8",
+    "date": "2025-11-24T04:29:13.000Z",
+    "time": "17:00",
+    "location": "서울",
+    "type": "meeting"
+  },
+  {
+    "id": "145ab7e4-fdec-46e8-8358-5a2b069cc4b3",
+    "user_id": "e4eb5e17-06eb-4088-ac80-949723090cb7",
+    "title": "수경 재배 practice",
+    "hobby_id": "02cb204e-bd68-46b5-a08a-f7a5b57f25e1",
+    "date": "2025-11-13T04:29:13.000Z",
+    "time": "16:00",
+    "location": "대구",
+    "type": "practice"
+  },
+  {
+    "id": "1704f7fe-a74c-4b1e-a816-258e43494745",
+    "user_id": "e4eb5e17-06eb-4088-ac80-949723090cb7",
+    "title": "가죽공예 class",
+    "hobby_id": "015fa22d-83b8-4b19-8421-c44cce2c2a67",
+    "date": "2025-11-09T04:29:13.000Z",
+    "time": "13:00",
+    "location": "대구",
+    "type": "class"
+  },
+  {
+    "id": "18cee03f-5a2b-4dcc-afe6-9e779ec4198a",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "title": "가죽공예 class",
+    "hobby_id": "015fa22d-83b8-4b19-8421-c44cce2c2a67",
+    "date": "2025-11-25T04:29:13.000Z",
+    "time": "16:00",
+    "location": "서울",
+    "type": "class"
+  },
+  {
+    "id": "1e1fba05-c3ae-49b5-9967-a0618808c5d1",
+    "user_id": "27e65fbf-a4db-4e1f-98fe-0b4ab99f534d",
+    "title": "수경 재배 practice",
+    "hobby_id": "02cb204e-bd68-46b5-a08a-f7a5b57f25e1",
+    "date": "2025-11-10T04:29:13.000Z",
+    "time": "10:00",
+    "location": "광주",
+    "type": "practice"
+  },
+  {
+    "id": "316b90ba-7c51-41b2-9896-089a4e424c06",
+    "user_id": "768de103-9e74-4f82-8670-6a647c2ffd28",
+    "title": "스트레칭 event",
+    "hobby_id": "13d230c8-43f6-45fa-b5f3-0fa3a1acf318",
+    "date": "2025-11-15T04:29:13.000Z",
+    "time": "12:00",
+    "location": "대전",
+    "type": "event"
+  },
+  {
+    "id": "4c301b45-28a4-4e38-97ca-a32fde1dbd28",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "title": "수경 재배 practice",
+    "hobby_id": "02cb204e-bd68-46b5-a08a-f7a5b57f25e1",
+    "date": "2025-11-10T04:29:13.000Z",
+    "time": "15:00",
+    "location": "서울",
+    "type": "practice"
+  },
+  {
+    "id": "51787370-d343-4a7f-961f-68b8be98857a",
+    "user_id": "c3b5f8b4-8550-4066-bd0b-a82e7bd66e4f",
+    "title": "명상 meeting",
+    "hobby_id": "1221fd09-eba5-4168-92ce-59b79c73c1e8",
+    "date": "2025-12-04T04:29:13.000Z",
+    "time": "11:00",
+    "location": "울산",
+    "type": "meeting"
+  },
+  {
+    "id": "537e81c9-209c-4511-b1c4-a628ac31b995",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "title": "수경 재배 practice",
+    "hobby_id": "02cb204e-bd68-46b5-a08a-f7a5b57f25e1",
+    "date": "2025-11-24T04:29:13.000Z",
+    "time": "14:00",
+    "location": "부산",
+    "type": "practice"
+  },
+  {
+    "id": "539041fe-1e5c-48f1-aa7f-ef9b4de5ff2e",
+    "user_id": "1fe369f6-7e7b-418b-adc6-0c8737d60964",
+    "title": "가죽공예 class",
+    "hobby_id": "015fa22d-83b8-4b19-8421-c44cce2c2a67",
+    "date": "2025-12-02T04:29:13.000Z",
+    "time": "15:00",
+    "location": "수원",
+    "type": "class"
+  },
+  {
+    "id": "55088756-8796-4a37-8ab4-ae11947dca61",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "title": "수경 재배 practice",
+    "hobby_id": "02cb204e-bd68-46b5-a08a-f7a5b57f25e1",
+    "date": "2025-12-01T04:29:13.000Z",
+    "time": "14:00",
+    "location": "인천",
+    "type": "practice"
+  },
+  {
+    "id": "5af4507c-f55c-43c8-9e3f-9687d30670b2",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "title": "가죽공예 class",
+    "hobby_id": "015fa22d-83b8-4b19-8421-c44cce2c2a67",
+    "date": "2025-11-08T04:29:13.000Z",
+    "time": "13:00",
+    "location": "부산",
+    "type": "class"
+  },
+  {
+    "id": "68506262-17a7-4e73-a6f7-1263beef8d52",
+    "user_id": "edb773b4-92a6-4696-b345-5a6cbd677515",
+    "title": "수경 재배 practice",
+    "hobby_id": "02cb204e-bd68-46b5-a08a-f7a5b57f25e1",
+    "date": "2025-11-18T04:29:13.000Z",
+    "time": "13:00",
+    "location": "제주",
+    "type": "practice"
+  },
+  {
+    "id": "69fe032f-d963-410b-9029-73ea16216ca7",
+    "user_id": "e4eb5e17-06eb-4088-ac80-949723090cb7",
+    "title": "명상 meeting",
+    "hobby_id": "1221fd09-eba5-4168-92ce-59b79c73c1e8",
+    "date": "2025-11-30T04:29:13.000Z",
+    "time": "16:00",
+    "location": "대구",
+    "type": "meeting"
+  },
+  {
+    "id": "6a287989-330e-4319-b07a-53f5b8669fdc",
+    "user_id": "1fe369f6-7e7b-418b-adc6-0c8737d60964",
+    "title": "수경 재배 practice",
+    "hobby_id": "02cb204e-bd68-46b5-a08a-f7a5b57f25e1",
+    "date": "2025-11-14T04:29:13.000Z",
+    "time": "11:00",
+    "location": "수원",
+    "type": "practice"
+  },
+  {
+    "id": "6e348bc6-dba8-4159-b140-4e7eb1f7ba63",
+    "user_id": "768de103-9e74-4f82-8670-6a647c2ffd28",
+    "title": "가죽공예 class",
+    "hobby_id": "015fa22d-83b8-4b19-8421-c44cce2c2a67",
+    "date": "2025-11-17T04:29:13.000Z",
+    "time": "12:00",
+    "location": "대전",
+    "type": "class"
+  },
+  {
+    "id": "72816c28-2128-43fd-953e-989672dc3504",
+    "user_id": "c3b5f8b4-8550-4066-bd0b-a82e7bd66e4f",
+    "title": "수경 재배 practice",
+    "hobby_id": "02cb204e-bd68-46b5-a08a-f7a5b57f25e1",
+    "date": "2025-11-13T04:29:13.000Z",
+    "time": "11:00",
+    "location": "울산",
+    "type": "practice"
+  },
+  {
+    "id": "7abc2994-8112-455f-bd18-a66bec08adcf",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "title": "스트레칭 event",
+    "hobby_id": "13d230c8-43f6-45fa-b5f3-0fa3a1acf318",
+    "date": "2025-11-12T04:29:13.000Z",
+    "time": "16:00",
+    "location": "부산",
+    "type": "event"
+  },
+  {
+    "id": "8644bd18-09b4-4911-90c3-a3a779c60be8",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "title": "가죽공예 class",
+    "hobby_id": "015fa22d-83b8-4b19-8421-c44cce2c2a67",
+    "date": "2025-11-24T04:29:13.000Z",
+    "time": "12:00",
+    "location": "인천",
+    "type": "class"
+  },
+  {
+    "id": "9bc90245-fab4-4d3e-b842-82ba6454d7fb",
+    "user_id": "c3b5f8b4-8550-4066-bd0b-a82e7bd66e4f",
+    "title": "가죽공예 class",
+    "hobby_id": "015fa22d-83b8-4b19-8421-c44cce2c2a67",
+    "date": "2025-11-21T04:29:13.000Z",
+    "time": "11:00",
+    "location": "울산",
+    "type": "class"
+  },
+  {
+    "id": "9d9769b4-36d4-45ce-a5e3-390494ef7535",
+    "user_id": "768de103-9e74-4f82-8670-6a647c2ffd28",
+    "title": "수경 재배 practice",
+    "hobby_id": "02cb204e-bd68-46b5-a08a-f7a5b57f25e1",
+    "date": "2025-11-18T04:29:13.000Z",
+    "time": "17:00",
+    "location": "대전",
+    "type": "practice"
+  },
+  {
+    "id": "a793b8e9-63b0-4853-a670-4485e70a3229",
+    "user_id": "1fe369f6-7e7b-418b-adc6-0c8737d60964",
+    "title": "명상 meeting",
+    "hobby_id": "1221fd09-eba5-4168-92ce-59b79c73c1e8",
+    "date": "2025-11-09T04:29:13.000Z",
+    "time": "12:00",
+    "location": "수원",
+    "type": "meeting"
+  },
+  {
+    "id": "ba6c3f7c-1187-4744-8727-f4ed68695e95",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "title": "명상 meeting",
+    "hobby_id": "1221fd09-eba5-4168-92ce-59b79c73c1e8",
+    "date": "2025-11-30T04:29:13.000Z",
+    "time": "17:00",
+    "location": "부산",
+    "type": "meeting"
+  },
+  {
+    "id": "bf272820-fa4d-432e-b424-46b76bee6b31",
+    "user_id": "1fe369f6-7e7b-418b-adc6-0c8737d60964",
+    "title": "스트레칭 event",
+    "hobby_id": "13d230c8-43f6-45fa-b5f3-0fa3a1acf318",
+    "date": "2025-11-07T04:29:13.000Z",
+    "time": "13:00",
+    "location": "수원",
+    "type": "event"
+  },
+  {
+    "id": "c1d817eb-2263-4391-8a07-2d1f41a45e41",
+    "user_id": "edb773b4-92a6-4696-b345-5a6cbd677515",
+    "title": "명상 meeting",
+    "hobby_id": "1221fd09-eba5-4168-92ce-59b79c73c1e8",
+    "date": "2025-11-13T04:29:13.000Z",
+    "time": "13:00",
+    "location": "제주",
+    "type": "meeting"
+  },
+  {
+    "id": "c1f07b37-3e19-4d70-b41a-db3ec27e6bf6",
+    "user_id": "27e65fbf-a4db-4e1f-98fe-0b4ab99f534d",
+    "title": "가죽공예 class",
+    "hobby_id": "015fa22d-83b8-4b19-8421-c44cce2c2a67",
+    "date": "2025-11-15T04:29:13.000Z",
+    "time": "15:00",
+    "location": "광주",
+    "type": "class"
+  },
+  {
+    "id": "c8d2ed37-cbe9-4590-b10c-608ce0229485",
+    "user_id": "27e65fbf-a4db-4e1f-98fe-0b4ab99f534d",
+    "title": "명상 meeting",
+    "hobby_id": "1221fd09-eba5-4168-92ce-59b79c73c1e8",
+    "date": "2025-11-10T04:29:13.000Z",
+    "time": "13:00",
+    "location": "광주",
+    "type": "meeting"
+  },
+  {
+    "id": "cace220c-092f-4031-b55c-0c81076165bf",
+    "user_id": "b7b0d456-a706-48d0-a061-bd8020665b6d",
+    "title": "수경 재배 practice",
+    "hobby_id": "02cb204e-bd68-46b5-a08a-f7a5b57f25e1",
+    "date": "2025-11-08T04:29:13.000Z",
+    "time": "10:00",
+    "location": "세종",
+    "type": "practice"
+  },
+  {
+    "id": "d5db3d60-c2fc-4541-8eaa-eaf7bcba66af",
+    "user_id": "768de103-9e74-4f82-8670-6a647c2ffd28",
+    "title": "명상 meeting",
+    "hobby_id": "1221fd09-eba5-4168-92ce-59b79c73c1e8",
+    "date": "2025-11-17T04:29:13.000Z",
+    "time": "16:00",
+    "location": "대전",
+    "type": "meeting"
+  },
+  {
+    "id": "f1eeed44-b4a3-4b73-a51f-e57f7fd26637",
+    "user_id": "e4eb5e17-06eb-4088-ac80-949723090cb7",
+    "title": "스트레칭 event",
+    "hobby_id": "13d230c8-43f6-45fa-b5f3-0fa3a1acf318",
+    "date": "2025-11-09T04:29:13.000Z",
+    "time": "14:00",
+    "location": "대구",
+    "type": "event"
+  }
+]

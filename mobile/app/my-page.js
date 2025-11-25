@@ -21,7 +21,7 @@ import { getAllPostsAPI } from '../api/communityService';
 import AddScheduleModal from '../components/AddScheduleModal';
 import EditProfileModal from '../components/EditProfileModal';
 import hobbyImages from '../assets/hobbyImages';
-import { API_CONFIG } from '../config/api.config';
+import { API_URL } from '../api/apiClient';
 
 // 한국어 설정
 LocaleConfig.locales['ko'] = {
@@ -470,8 +470,8 @@ export default function MyPageScreen() {
                     // 2. 서버 업로드 이미지인지 확인
                     if (community.imageUrl?.includes('uploads') || community.imageUrl?.includes('public')) {
                       const absoluteUrl = community.imageUrl.startsWith('/')
-                        ? `${API_CONFIG.API_URL}${community.imageUrl}`
-                        : `${API_CONFIG.API_URL}/${community.imageUrl}`;
+                        ? `${API_URL}${community.imageUrl}`
+                        : `${API_URL}/${community.imageUrl}`;
                       return { uri: absoluteUrl };
                     }
 

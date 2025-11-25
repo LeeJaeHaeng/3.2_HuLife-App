@@ -1,8 +1,7 @@
 import { io } from 'socket.io-client';
-import { API_CONFIG } from '../config/api.config';
 
 // Socket.IO configuration
-const SOCKET_URL = API_CONFIG.SOCKET_URL;
+const SOCKET_URL = process.env.EXPO_PUBLIC_API_URL;
 
 class SocketService {
   constructor() {

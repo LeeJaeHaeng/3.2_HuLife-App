@@ -1,0 +1,425 @@
+[
+  {
+    "id": "05c33bfb-f3ce-4e4a-b708-d3d5e27088a0",
+    "chat_room_id": "361685ec-e6f7-4ef4-9ec2-4a8049472bb1",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "user_name": "테스트 유저",
+    "user_image": null,
+    "message": "안녕하세요! 처음 참여합니다.",
+    "created_at": "2025-11-16T10:28:20.000Z"
+  },
+  {
+    "id": "0c32acd6-4453-4972-b577-f21d871996c6",
+    "chat_room_id": "25cff4e2-95bd-47d3-bed8-bb8b606169e4",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "user_name": "김영희",
+    "user_image": null,
+    "message": "다음 모임 언제인가요?",
+    "created_at": "2025-11-16T06:46:36.000Z"
+  },
+  {
+    "id": "19a3a9e4-2876-46a4-93e4-ee400e2fdf7a",
+    "chat_room_id": "87f63634-cfb6-4fc3-8849-f49bfd3eaf5d",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "user_name": "이철수",
+    "user_image": null,
+    "message": "오늘 너무 즐거웠어요!",
+    "created_at": "2025-11-18T08:06:59.000Z"
+  },
+  {
+    "id": "23059b40-d169-4add-86c9-3dd7cbb6637f",
+    "chat_room_id": "9931f7f7-dd92-45d2-a472-351fb35c8e20",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "user_name": "김영희",
+    "user_image": null,
+    "message": "다음 모임 언제인가요?",
+    "created_at": "2025-11-16T11:08:58.000Z"
+  },
+  {
+    "id": "2429cb09-30fa-40af-89d0-2c43cdf52b1b",
+    "chat_room_id": "9931f7f7-dd92-45d2-a472-351fb35c8e20",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "user_name": "이철수",
+    "user_image": null,
+    "message": "오늘 너무 즐거웠어요!",
+    "created_at": "2025-11-15T04:45:32.000Z"
+  },
+  {
+    "id": "28b939f1-ac15-429e-9afe-88e8974c1003",
+    "chat_room_id": "3e925709-2891-4351-8c17-f9a800d85f92",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "user_name": "테스트 유저",
+    "user_image": null,
+    "message": "안녕하세요! 처음 참여합니다.",
+    "created_at": "2025-11-15T02:51:14.000Z"
+  },
+  {
+    "id": "2950929c-c891-4cf8-8a55-dad5fbcafb05",
+    "chat_room_id": "06c8de7c-8b02-480f-bb6f-d4256d6fa574",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "user_name": "김영희",
+    "user_image": null,
+    "message": "다음 모임 언제인가요?",
+    "created_at": "2025-11-14T14:59:46.000Z"
+  },
+  {
+    "id": "29e1a438-d725-4e1f-b709-60b164558472",
+    "chat_room_id": "3e925709-2891-4351-8c17-f9a800d85f92",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "user_name": "이철수",
+    "user_image": null,
+    "message": "오늘 너무 즐거웠어요!",
+    "created_at": "2025-11-14T03:44:14.000Z"
+  },
+  {
+    "id": "33e709f0-b4db-4d9c-8cd6-d9e3b65fcd3f",
+    "chat_room_id": "361685ec-e6f7-4ef4-9ec2-4a8049472bb1",
+    "user_id": "e4eb5e17-06eb-4088-ac80-949723090cb7",
+    "user_name": "박민수",
+    "user_image": null,
+    "message": "질문있는데 도와주실 수 있나요?",
+    "created_at": "2025-11-19T21:17:39.000Z"
+  },
+  {
+    "id": "3d8ab178-a17b-4bb8-815b-1f0adb788641",
+    "chat_room_id": "e38a3df8-4898-4a64-9d38-9e0df2070883",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "user_name": "이철수",
+    "user_image": null,
+    "message": "오늘 너무 즐거웠어요!",
+    "created_at": "2025-11-20T02:51:11.000Z"
+  },
+  {
+    "id": "41d52b3e-f1a9-4e58-af0b-caced14846e5",
+    "chat_room_id": "5bd7672e-0f69-4edb-9177-e2039480b945",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "user_name": "이철수",
+    "user_image": null,
+    "message": "오늘 너무 즐거웠어요!",
+    "created_at": "2025-11-18T01:33:26.000Z"
+  },
+  {
+    "id": "49e7f4b6-1f1b-4442-88d9-36a58195da78",
+    "chat_room_id": "1e643cbf-6714-4a32-9912-5d75adf72e08",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "user_name": "이철수",
+    "user_image": null,
+    "message": "오늘 너무 즐거웠어요!",
+    "created_at": "2025-11-14T09:41:00.000Z"
+  },
+  {
+    "id": "4d2d229b-0b87-452c-b0ca-3a0f6f5d7f43",
+    "chat_room_id": "a0474993-83be-439b-b972-af308ae90c6b",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "user_name": "이철수",
+    "user_image": null,
+    "message": "오늘 너무 즐거웠어요!",
+    "created_at": "2025-11-19T09:34:26.000Z"
+  },
+  {
+    "id": "4f200e0e-de32-4b40-8e29-5d0872f94d4f",
+    "chat_room_id": "87f63634-cfb6-4fc3-8849-f49bfd3eaf5d",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "user_name": "테스트 유저",
+    "user_image": null,
+    "message": "안녕하세요! 처음 참여합니다.",
+    "created_at": "2025-11-14T21:08:49.000Z"
+  },
+  {
+    "id": "658e92b1-07f5-4944-9d73-0878ae711b81",
+    "chat_room_id": "25cff4e2-95bd-47d3-bed8-bb8b606169e4",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "user_name": "이철수",
+    "user_image": null,
+    "message": "오늘 너무 즐거웠어요!",
+    "created_at": "2025-11-20T03:23:57.000Z"
+  },
+  {
+    "id": "6a51c5d9-2b54-4f02-aa1e-f81610952852",
+    "chat_room_id": "06c8de7c-8b02-480f-bb6f-d4256d6fa574",
+    "user_id": "e4eb5e17-06eb-4088-ac80-949723090cb7",
+    "user_name": "박민수",
+    "user_image": null,
+    "message": "질문있는데 도와주실 수 있나요?",
+    "created_at": "2025-11-14T18:16:24.000Z"
+  },
+  {
+    "id": "752df499-c544-4949-8835-557875b9506f",
+    "chat_room_id": "95b29a36-2448-4553-ad5a-78ffc425435c",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "user_name": "이철수",
+    "user_image": null,
+    "message": "오늘 너무 즐거웠어요!",
+    "created_at": "2025-11-13T07:05:42.000Z"
+  },
+  {
+    "id": "958e1be9-a3cf-480a-92e4-4c6f77231cd9",
+    "chat_room_id": "a0474993-83be-439b-b972-af308ae90c6b",
+    "user_id": "768de103-9e74-4f82-8670-6a647c2ffd28",
+    "user_name": "정다은",
+    "user_image": null,
+    "message": "날씨가 좋네요. 야외 활동하기 딱이에요!",
+    "created_at": "2025-11-18T00:24:01.000Z"
+  },
+  {
+    "id": "99bcd4e6-e57a-42db-94e5-72353e7ebb3e",
+    "chat_room_id": "95b29a36-2448-4553-ad5a-78ffc425435c",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "user_name": "테스트 유저",
+    "user_image": null,
+    "message": "안녕하세요! 처음 참여합니다.",
+    "created_at": "2025-11-17T00:50:41.000Z"
+  },
+  {
+    "id": "9bc7060b-2abb-493a-a3f5-a8bce5e9f8e7",
+    "chat_room_id": "361685ec-e6f7-4ef4-9ec2-4a8049472bb1",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "user_name": "이철수",
+    "user_image": null,
+    "message": "오늘 너무 즐거웠어요!",
+    "created_at": "2025-11-18T09:20:26.000Z"
+  },
+  {
+    "id": "a24f89bf-d70b-450c-b393-38beaa39356c",
+    "chat_room_id": "a0474993-83be-439b-b972-af308ae90c6b",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "user_name": "김영희",
+    "user_image": null,
+    "message": "다음 모임 언제인가요?",
+    "created_at": "2025-11-15T11:01:13.000Z"
+  },
+  {
+    "id": "a3c094c5-75aa-4d21-9457-2f804081ec65",
+    "chat_room_id": "3e925709-2891-4351-8c17-f9a800d85f92",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "user_name": "김영희",
+    "user_image": null,
+    "message": "다음 모임 언제인가요?",
+    "created_at": "2025-11-17T01:26:11.000Z"
+  },
+  {
+    "id": "a4bc23d3-cdbf-4d6b-b969-7e219dff2a5e",
+    "chat_room_id": "5bd7672e-0f69-4edb-9177-e2039480b945",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "user_name": "김영희",
+    "user_image": null,
+    "message": "다음 모임 언제인가요?",
+    "created_at": "2025-11-17T12:04:31.000Z"
+  },
+  {
+    "id": "a7f43319-222d-497b-a42b-d7e89f855000",
+    "chat_room_id": "9931f7f7-dd92-45d2-a472-351fb35c8e20",
+    "user_id": "e4eb5e17-06eb-4088-ac80-949723090cb7",
+    "user_name": "박민수",
+    "user_image": null,
+    "message": "질문있는데 도와주실 수 있나요?",
+    "created_at": "2025-11-18T12:46:44.000Z"
+  },
+  {
+    "id": "a80a69d6-fee2-4992-9754-0f11ca78e82b",
+    "chat_room_id": "361685ec-e6f7-4ef4-9ec2-4a8049472bb1",
+    "user_id": "27e65fbf-a4db-4e1f-98fe-0b4ab99f534d",
+    "user_name": "최수진",
+    "user_image": null,
+    "message": "다음 주에도 참석할게요!",
+    "created_at": "2025-11-19T09:01:51.000Z"
+  },
+  {
+    "id": "abb49560-9764-469f-9d95-2a53fdb4d8ce",
+    "chat_room_id": "a0474993-83be-439b-b972-af308ae90c6b",
+    "user_id": "27e65fbf-a4db-4e1f-98fe-0b4ab99f534d",
+    "user_name": "최수진",
+    "user_image": null,
+    "message": "다음 주에도 참석할게요!",
+    "created_at": "2025-11-14T14:44:15.000Z"
+  },
+  {
+    "id": "ac5955d3-0e5d-47cb-a0f2-6060a17c5da3",
+    "chat_room_id": "5bd7672e-0f69-4edb-9177-e2039480b945",
+    "user_id": "e4eb5e17-06eb-4088-ac80-949723090cb7",
+    "user_name": "박민수",
+    "user_image": null,
+    "message": "질문있는데 도와주실 수 있나요?",
+    "created_at": "2025-11-13T17:59:50.000Z"
+  },
+  {
+    "id": "b08b8343-fcde-45fe-9bbe-f2a16cffd823",
+    "chat_room_id": "06c8de7c-8b02-480f-bb6f-d4256d6fa574",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "user_name": "테스트 유저",
+    "user_image": null,
+    "message": "안녕하세요! 처음 참여합니다.",
+    "created_at": "2025-11-17T21:22:39.000Z"
+  },
+  {
+    "id": "b2d4888a-c15a-48fb-b411-423a390c4a99",
+    "chat_room_id": "1e643cbf-6714-4a32-9912-5d75adf72e08",
+    "user_id": "e4eb5e17-06eb-4088-ac80-949723090cb7",
+    "user_name": "박민수",
+    "user_image": null,
+    "message": "질문있는데 도와주실 수 있나요?",
+    "created_at": "2025-11-19T02:35:50.000Z"
+  },
+  {
+    "id": "b3dd9d1b-adb0-41c0-a31e-196660772b7f",
+    "chat_room_id": "e38a3df8-4898-4a64-9d38-9e0df2070883",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "user_name": "김영희",
+    "user_image": null,
+    "message": "다음 모임 언제인가요?",
+    "created_at": "2025-11-17T10:23:45.000Z"
+  },
+  {
+    "id": "b5589ddb-61e7-48cd-a9e2-12f127d89571",
+    "chat_room_id": "25cff4e2-95bd-47d3-bed8-bb8b606169e4",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "user_name": "테스트 유저",
+    "user_image": null,
+    "message": "안녕하세요! 처음 참여합니다.",
+    "created_at": "2025-11-18T19:30:58.000Z"
+  },
+  {
+    "id": "b77c4b3d-67db-45b3-a1f8-ca0d71ca940c",
+    "chat_room_id": "a0474993-83be-439b-b972-af308ae90c6b",
+    "user_id": "e4eb5e17-06eb-4088-ac80-949723090cb7",
+    "user_name": "박민수",
+    "user_image": null,
+    "message": "질문있는데 도와주실 수 있나요?",
+    "created_at": "2025-11-19T00:39:46.000Z"
+  },
+  {
+    "id": "b7fdd20a-6fad-4beb-ba64-89175456f701",
+    "chat_room_id": "87f63634-cfb6-4fc3-8849-f49bfd3eaf5d",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "user_name": "김영희",
+    "user_image": null,
+    "message": "다음 모임 언제인가요?",
+    "created_at": "2025-11-17T05:13:38.000Z"
+  },
+  {
+    "id": "b8ce3d1b-416b-424f-b2bd-ee3abd190d56",
+    "chat_room_id": "3e925709-2891-4351-8c17-f9a800d85f92",
+    "user_id": "e4eb5e17-06eb-4088-ac80-949723090cb7",
+    "user_name": "박민수",
+    "user_image": null,
+    "message": "질문있는데 도와주실 수 있나요?",
+    "created_at": "2025-11-16T23:36:08.000Z"
+  },
+  {
+    "id": "bb0baec8-4ed3-43ca-826a-aa9c22ca329b",
+    "chat_room_id": "1e643cbf-6714-4a32-9912-5d75adf72e08",
+    "user_id": "27e65fbf-a4db-4e1f-98fe-0b4ab99f534d",
+    "user_name": "최수진",
+    "user_image": null,
+    "message": "다음 주에도 참석할게요!",
+    "created_at": "2025-11-17T22:33:13.000Z"
+  },
+  {
+    "id": "bf8b88c1-98e3-4f73-b00e-ea621966db82",
+    "chat_room_id": "1e643cbf-6714-4a32-9912-5d75adf72e08",
+    "user_id": "768de103-9e74-4f82-8670-6a647c2ffd28",
+    "user_name": "정다은",
+    "user_image": null,
+    "message": "날씨가 좋네요. 야외 활동하기 딱이에요!",
+    "created_at": "2025-11-19T00:01:15.000Z"
+  },
+  {
+    "id": "c639c0ed-0b1e-49b1-afd0-dbe88b420b57",
+    "chat_room_id": "1e643cbf-6714-4a32-9912-5d75adf72e08",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "user_name": "김영희",
+    "user_image": null,
+    "message": "다음 모임 언제인가요?",
+    "created_at": "2025-11-19T09:08:54.000Z"
+  },
+  {
+    "id": "c90ff966-a5e8-42be-9dbd-5e246ff025cd",
+    "chat_room_id": "e38a3df8-4898-4a64-9d38-9e0df2070883",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "user_name": "테스트 유저",
+    "user_image": null,
+    "message": "안녕하세요",
+    "created_at": "2025-11-20T14:09:00.000Z"
+  },
+  {
+    "id": "d0bfdfef-5ab5-45a4-9e21-1fc144a5672b",
+    "chat_room_id": "06c8de7c-8b02-480f-bb6f-d4256d6fa574",
+    "user_id": "2415d960-8c7e-457e-b0cc-185451292c11",
+    "user_name": "이철수",
+    "user_image": null,
+    "message": "오늘 너무 즐거웠어요!",
+    "created_at": "2025-11-15T16:22:59.000Z"
+  },
+  {
+    "id": "d55d1c08-67c5-4272-9141-f31fb66e0541",
+    "chat_room_id": "361685ec-e6f7-4ef4-9ec2-4a8049472bb1",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "user_name": "김영희",
+    "user_image": null,
+    "message": "다음 모임 언제인가요?",
+    "created_at": "2025-11-19T15:55:30.000Z"
+  },
+  {
+    "id": "d91540e6-a72c-4b51-bebb-f7f5fe62c11c",
+    "chat_room_id": "e38a3df8-4898-4a64-9d38-9e0df2070883",
+    "user_id": "e4eb5e17-06eb-4088-ac80-949723090cb7",
+    "user_name": "박민수",
+    "user_image": null,
+    "message": "질문있는데 도와주실 수 있나요?",
+    "created_at": "2025-11-14T22:10:18.000Z"
+  },
+  {
+    "id": "de69e290-b441-4c8d-9462-cd5b5dae07c2",
+    "chat_room_id": "9931f7f7-dd92-45d2-a472-351fb35c8e20",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "user_name": "테스트 유저",
+    "user_image": null,
+    "message": "안녕하세요! 처음 참여합니다.",
+    "created_at": "2025-11-18T13:12:07.000Z"
+  },
+  {
+    "id": "ec6fec5c-7deb-4ed2-8a7e-607f6c97ac14",
+    "chat_room_id": "e38a3df8-4898-4a64-9d38-9e0df2070883",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "user_name": "테스트 유저",
+    "user_image": null,
+    "message": "안녕하세요! 처음 참여합니다.",
+    "created_at": "2025-11-14T23:38:12.000Z"
+  },
+  {
+    "id": "eed37f0f-f0ae-4348-8e80-d33fcbee1cad",
+    "chat_room_id": "1e643cbf-6714-4a32-9912-5d75adf72e08",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "user_name": "테스트 유저",
+    "user_image": null,
+    "message": "안녕하세요! 처음 참여합니다.",
+    "created_at": "2025-11-17T16:28:15.000Z"
+  },
+  {
+    "id": "f047579e-05b7-4b9a-9fe2-e6e9bb11f487",
+    "chat_room_id": "5bd7672e-0f69-4edb-9177-e2039480b945",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "user_name": "테스트 유저",
+    "user_image": null,
+    "message": "안녕하세요! 처음 참여합니다.",
+    "created_at": "2025-11-13T06:14:10.000Z"
+  },
+  {
+    "id": "f368fecc-a81b-4871-8d28-27635b488244",
+    "chat_room_id": "a0474993-83be-439b-b972-af308ae90c6b",
+    "user_id": "81369650-944d-4647-a3a0-530d5efb8614",
+    "user_name": "테스트 유저",
+    "user_image": null,
+    "message": "안녕하세요! 처음 참여합니다.",
+    "created_at": "2025-11-17T07:06:14.000Z"
+  },
+  {
+    "id": "fca44740-0020-4ffe-abc6-a951ea616e15",
+    "chat_room_id": "95b29a36-2448-4553-ad5a-78ffc425435c",
+    "user_id": "10feec5f-9156-4e3e-8f54-a96c87ef6dff",
+    "user_name": "김영희",
+    "user_image": null,
+    "message": "다음 모임 언제인가요?",
+    "created_at": "2025-11-20T00:41:16.000Z"
+  }
+]
