@@ -1,5 +1,5 @@
-import { drizzle } from 'drizzle-orm/mysql2';
-import mysql from 'mysql2/promise';
+import { drizzle } from 'drizzle-orm/libsql';
+import { createClient } from '@libsql/client';
 import * as dotenv from 'dotenv';
 import * as schema from './schema';
 
@@ -7,7 +7,7 @@ dotenv.config({
   path: ".env",
 });
 
-const requiredEnvVars = ['DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME'] as const;
+const requiredEnvVars = ['DATABASE_URL', 'TURSO_AUTH_TOKEN'] as const;
 
 for (const envVar of requiredEnvVars) {
   if (!process.env[envVar]) {
@@ -17,11 +17,9 @@ for (const envVar of requiredEnvVars) {
   }
 }
 
-export const connection = mysql.createPool({
-  host: process.env.DB_HOST!,
-  user: process.env.DB_USER!,
-  password: process.env.DB_PASSWORD!,
-  database: process.env.DB_NAME!,
+export const connection = createClient({
+  url: process.env.DATABASE_URL!,
+  authToken: process.env.TURSO_AUTH_TOKEN!,
 });
 
-export const db = drizzle(connection, { schema, mode: 'default' });
+export const db = drizzle(connection, { schema });

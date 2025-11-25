@@ -3,6 +3,8 @@ import { db } from "@/lib/db"
 import { communities, chatMessages } from "@/lib/db/schema"
 import { desc, sql } from "drizzle-orm"
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)

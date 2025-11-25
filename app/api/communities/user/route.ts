@@ -4,6 +4,8 @@ import { communityMembers, communities } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { verifyToken } from '@/lib/auth/session';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     // Get token from Authorization header
