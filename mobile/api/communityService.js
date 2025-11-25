@@ -1,56 +1,11 @@
-import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
-import { API_CONFIG } from '../config/api.config';
-
-const API_URL = API_CONFIG.API_URL;
-const TOKEN_KEY = 'userToken';
-
-// Axios 인스턴스 생성
-const api = axios.create({
-  baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-// 요청 인터셉터 - 토큰 추가
-api.interceptors.request.use(async (config) => {
-  const token = await SecureStore.getItemAsync(TOKEN_KEY);
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-// 응답 인터셉터 - 오류 처리
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    console.error('[API 서비스] 상세 오류 정보:', {
-      status: error.response?.status,
-      statusText: error.response?.statusText,
-      data: error.response?.data,
-      config: {
-        url: error.config?.url,
-        method: error.config?.method,
-        data: error.config?.data,
-        headers: error.config?.headers,
-      },
-    });
-    return Promise.reject(error);
-  }
-);
+import api from './apiClient';
 
 // Get all communities (optionally filter by hobbyId)
 export const getAllCommunitiesAPI = async (hobbyId = null) => {
-  const requestUrl = hobbyId
-    ? `${API_URL}/communities?hobbyId=${hobbyId}`
-    : `${API_URL}/communities`;
-
+  const requestUrl = hobbyId ? `/communities?hobbyId=${hobbyId}` : '/communities';
   console.log(`[API 서비스] 📞 커뮤니티 목록 요청: ${requestUrl}`);
-
   try {
-    const response = await axios.get(requestUrl);
+    const response = await api.get(requestUrl);
     console.log(`[API 서비스] ✅ 커뮤니티 목록 응답 받음`);
     return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
@@ -62,11 +17,10 @@ export const getAllCommunitiesAPI = async (hobbyId = null) => {
 
 // Get community by ID
 export const getCommunityByIdAPI = async (id) => {
-  const requestUrl = `${API_URL}/communities/${id}`;
+  const requestUrl = `/communities/${id}`;
   console.log(`[API 서비스] 📞 커뮤니티 상세 정보 요청: ${requestUrl}`);
-
   try {
-    const response = await axios.get(requestUrl);
+    const response = await api.get(requestUrl);
     console.log(`[API 서비스] ✅ 커뮤니티 상세 정보 응답 받음`);
     return response.data;
   } catch (error) {
@@ -77,17 +31,10 @@ export const getCommunityByIdAPI = async (id) => {
 
 // Request to join a community
 export const requestJoinCommunityAPI = async (communityId) => {
-  const requestUrl = `${API_URL}/communities/join`;
+  const requestUrl = `/communities/join`;
   console.log(`[API 서비스] 📞 커뮤니티 가입 신청: ${requestUrl}`, { communityId });
-
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
-
-    const response = await axios.post(requestUrl, { communityId }, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-
+    const response = await api.post(requestUrl, { communityId });
     console.log(`[API 서비스] ✅ 커뮤니티 가입 신청 성공!`);
     return response.data;
   } catch (error) {
@@ -98,14 +45,10 @@ export const requestJoinCommunityAPI = async (communityId) => {
 
 // Get all posts (optionally filter by category)
 export const getAllPostsAPI = async (category = null) => {
-  const requestUrl = category && category !== '전체'
-    ? `${API_URL}/posts?category=${category}`
-    : `${API_URL}/posts`;
-
+  const requestUrl = category && category !== '전체' ? `/posts?category=${category}` : '/posts';
   console.log(`[API 서비스] 📞 게시글 목록 요청: ${requestUrl}`);
-
   try {
-    const response = await axios.get(requestUrl);
+    const response = await api.get(requestUrl);
     console.log(`[API 서비스] ✅ 게시글 목록 응답 받음`);
     return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
@@ -117,11 +60,10 @@ export const getAllPostsAPI = async (category = null) => {
 
 // Get post by ID
 export const getPostByIdAPI = async (id) => {
-  const requestUrl = `${API_URL}/posts/${id}`;
+  const requestUrl = `/posts/${id}`;
   console.log(`[API 서비스] 📞 게시글 상세 정보 요청: ${requestUrl}`);
-
   try {
-    const response = await axios.get(requestUrl);
+    const response = await api.get(requestUrl);
     console.log(`[API 서비스] ✅ 게시글 상세 정보 응답 받음`);
     return response.data;
   } catch (error) {
@@ -133,38 +75,22 @@ export const getPostByIdAPI = async (id) => {
 // Create a new post
 export const createPostAPI = async (postData) => {
   console.log(`[API 서비스] 📞 게시글 작성 시작`);
-
-  // 기본적인 데이터 검증
   if (!postData.title?.trim()) {
     throw new Error('제목을 입력해주세요.');
   }
-
   if (!postData.content?.trim()) {
     throw new Error('내용을 입력해주세요.');
   }
-
   try {
-    // 서버가 기대하는 형식으로만 데이터 전송 (title, content, category, images)
     const sanitizedData = {
       title: postData.title.trim(),
       content: postData.content.trim(),
       category: postData.category || '자유',
     };
-
-    // images 필드는 배열 형식으로만 추가 (서버가 기대하는 형식)
     if (postData.images && Array.isArray(postData.images) && postData.images.length > 0) {
       sanitizedData.images = postData.images;
     }
-
-    console.log('[API 서비스] 정제된 요청 데이터:', {
-      title: sanitizedData.title,
-      content: sanitizedData.content.substring(0, 50) + '...',
-      category: sanitizedData.category,
-      imagesCount: sanitizedData.images?.length || 0
-    });
-
     const response = await api.post('/posts', sanitizedData);
-
     console.log(`[API 서비스] ✅ 게시글 작성 성공! ID: ${response.data?.post?.id || 'unknown'}`);
     return response.data;
   } catch (error) {
@@ -179,17 +105,10 @@ export const createPostAPI = async (postData) => {
 
 // Create a new community
 export const createCommunityAPI = async (communityData) => {
-  const requestUrl = `${API_URL}/communities`;
+  const requestUrl = `/communities`;
   console.log(`[API 서비스] 📞 커뮤니티 생성 요청: ${requestUrl}`, communityData);
-
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
-
-    const response = await axios.post(requestUrl, communityData, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-
+    const response = await api.post(requestUrl, communityData);
     console.log(`[API 서비스] ✅ 커뮤니티 생성 성공!`);
     return response.data;
   } catch (error) {
@@ -200,11 +119,10 @@ export const createCommunityAPI = async (communityData) => {
 
 // Get comments for a post
 export const getPostCommentsAPI = async (postId) => {
-  const requestUrl = `${API_URL}/posts/${postId}/comments`;
+  const requestUrl = `/posts/${postId}/comments`;
   console.log(`[API 서비스] 📞 댓글 목록 요청: ${requestUrl}`);
-
   try {
-    const response = await axios.get(requestUrl);
+    const response = await api.get(requestUrl);
     console.log(`[API 서비스] ✅ 댓글 목록 응답 받음:`, response.data.length, '개');
     return response.data;
   } catch (error) {
@@ -215,17 +133,10 @@ export const getPostCommentsAPI = async (postId) => {
 
 // Create a new comment
 export const createCommentAPI = async (postId, content) => {
-  const requestUrl = `${API_URL}/posts/${postId}/comments`;
+  const requestUrl = `/posts/${postId}/comments`;
   console.log(`[API 서비스] 📞 댓글 작성 요청: ${requestUrl}`);
-
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
-
-    const response = await axios.post(requestUrl, { content }, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-
+    const response = await api.post(requestUrl, { content });
     console.log(`[API 서비스] ✅ 댓글 작성 성공!`);
     return response.data;
   } catch (error) {
@@ -237,7 +148,6 @@ export const createCommentAPI = async (postId, content) => {
 // Toggle like on a post
 export const togglePostLikeAPI = async (postId) => {
   console.log(`[API 서비스] 📞 게시글 좋아요 토글 요청: ${postId}`);
-
   try {
     const response = await api.post(`/posts/${postId}/like`);
     console.log(`[API 서비스] ✅ 좋아요 토글 성공! liked: ${response.data.liked}`);
@@ -262,7 +172,6 @@ export const checkPostLikeAPI = async (postId) => {
 // Get or create chat room for a community
 export const getCommunityChatRoomAPI = async (communityId) => {
   console.log(`[API 서비스] 📞 채팅방 조회/생성 요청: communityId=${communityId}`);
-
   try {
     const response = await api.get(`/communities/${communityId}/chat-room`);
     console.log(`[API 서비스] ✅ 채팅방 조회 성공! chatRoomId: ${response.data.id}`);
@@ -278,18 +187,15 @@ export const getCommunityChatRoomAPI = async (communityId) => {
 // Update post
 export const updatePostAPI = async (postId, postData) => {
   console.log(`[API 서비스] 📞 게시글 수정 요청: ${postId}`);
-
   try {
     const sanitizedData = {
       title: postData.title.trim(),
       content: postData.content.trim(),
       category: postData.category || '자유',
     };
-
     if (postData.images && Array.isArray(postData.images)) {
       sanitizedData.images = postData.images;
     }
-
     const response = await api.put(`/posts/${postId}`, sanitizedData);
     console.log(`[API 서비스] ✅ 게시글 수정 성공!`);
     return response.data;
@@ -302,7 +208,6 @@ export const updatePostAPI = async (postId, postData) => {
 // Delete post
 export const deletePostAPI = async (postId) => {
   console.log(`[API 서비스] 📞 게시글 삭제 요청: ${postId}`);
-
   try {
     const response = await api.delete(`/posts/${postId}`);
     console.log(`[API 서비스] ✅ 게시글 삭제 성공!`);
@@ -316,7 +221,6 @@ export const deletePostAPI = async (postId) => {
 // Update comment
 export const updateCommentAPI = async (commentId, content) => {
   console.log(`[API 서비스] 📞 댓글 수정 요청: ${commentId}`);
-
   try {
     const response = await api.put(`/posts/comments/${commentId}`, { content });
     console.log(`[API 서비스] ✅ 댓글 수정 성공!`);
@@ -330,7 +234,6 @@ export const updateCommentAPI = async (commentId, content) => {
 // Delete comment
 export const deleteCommentAPI = async (commentId) => {
   console.log(`[API 서비스] 📞 댓글 삭제 요청: ${commentId}`);
-
   try {
     const response = await api.delete(`/posts/comments/${commentId}`);
     console.log(`[API 서비스] ✅ 댓글 삭제 성공!`);
@@ -344,7 +247,6 @@ export const deleteCommentAPI = async (commentId) => {
 // Update community
 export const updateCommunityAPI = async (communityId, communityData) => {
   console.log(`[API 서비스] 📞 모임 수정 요청: ${communityId}`);
-
   try {
     const response = await api.put(`/communities/${communityId}`, communityData);
     console.log(`[API 서비스] ✅ 모임 수정 성공!`);
@@ -358,7 +260,6 @@ export const updateCommunityAPI = async (communityId, communityData) => {
 // Delete community
 export const deleteCommunityAPI = async (communityId) => {
   console.log(`[API 서비스] 📞 모임 삭제 요청: ${communityId}`);
-
   try {
     const response = await api.delete(`/communities/${communityId}`);
     console.log(`[API 서비스] ✅ 모임 삭제 성공!`);
