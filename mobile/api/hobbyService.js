@@ -1,15 +1,13 @@
-import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
-import { API_CONFIG } from '../config/api.config';
-
-const API_URL = API_CONFIG.API_URL;
-const TOKEN_KEY = 'userToken';
+import api, { API_URL } from './apiClient';
 
 export const getAllHobbies = async () => {
   try {
-    const response = await axios.get(`${API_URL}/hobbies`);
-    return response.data;
+    // 캐시된 데이터를 먼저 보여주고, 백그라운드에서 최신 데이터 가져오기
+    // ✅ api.getStale()은 이미 data를 반환하므로 바로 사용
+    const data = await api.getStale('/hobbies');
+    return data;
   } catch (error) {
+    // 캐시된 데이터가 있으면 오류 대신 캐시 반환
     console.error("Error fetching hobbies:", error);
     throw error;
   }
@@ -17,10 +15,10 @@ export const getAllHobbies = async () => {
 
 export const getHobbyById = async (id) => {
   const requestUrl = `${API_URL}/hobbies/${id}`;
-  console.log(`[API 서비스] 📞 이 주소로 데이터를 요청합니다: ${requestUrl}`);
+  console.log(`[API 서비스] 📞 취미 상세 정보 요청: ${requestUrl}`);
 
   try {
-    const response = await axios.get(requestUrl);
+    const response = await api.get(`/hobbies/${id}`);
     console.log(`[API 서비스] ✅ 요청 성공! 서버 상태: ${response.status}`);
     return response.data;
   } catch (error) {
@@ -46,7 +44,7 @@ export const getHobbyReviews = async (hobbyId) => {
   const requestUrl = `${API_URL}/hobbies/${hobbyId}/reviews`;
   console.log(`[API 서비스] 📞 리뷰 목록 요청: ${requestUrl}`);
   try {
-    const response = await axios.get(requestUrl);
+    const response = await api.get(`/hobbies/${hobbyId}/reviews`);
     console.log(`[API 서비스] ✅ 리뷰 목록 응답 받음: ${response.data.length}개`);
     return response.data;
   } catch (error) {
@@ -60,12 +58,7 @@ export const createHobbyReview = async (hobbyId, reviewData) => {
   const requestUrl = `${API_URL}/hobbies/${hobbyId}/reviews`;
   console.log(`[API 서비스] 📞 리뷰 작성 요청: ${requestUrl}`, reviewData);
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
-
-    const response = await axios.post(requestUrl, reviewData, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const response = await api.post(`/hobbies/${hobbyId}/reviews`, reviewData);
 
     console.log(`[API 서비스] ✅ 리뷰 작성 성공`);
     return response.data;
@@ -82,12 +75,7 @@ export const updateHobbyReview = async (reviewId, reviewData) => {
   const requestUrl = `${API_URL}/hobbies/reviews/${reviewId}`;
   console.log(`[API 서비스] 📞 리뷰 수정 요청: ${requestUrl}`, reviewData);
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
-
-    const response = await axios.put(requestUrl, reviewData, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const response = await api.put(`/hobbies/reviews/${reviewId}`, reviewData);
 
     console.log(`[API 서비스] ✅ 리뷰 수정 성공`);
     return response.data;
@@ -102,12 +90,7 @@ export const deleteHobbyReview = async (reviewId) => {
   const requestUrl = `${API_URL}/hobbies/reviews/${reviewId}`;
   console.log(`[API 서비스] 📞 리뷰 삭제 요청: ${requestUrl}`);
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
-
-    const response = await axios.delete(requestUrl, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const response = await api.delete(`/hobbies/reviews/${reviewId}`);
 
     console.log(`[API 서비스] ✅ 리뷰 삭제 성공`);
     return response.data;

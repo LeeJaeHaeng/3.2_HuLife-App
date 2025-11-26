@@ -1,4 +1,4 @@
-import api from './apiClient'; // ✅ axios 대신 api 사용 (SecureStore 제거)
+import api from './apiClient';
 
 // 설문 답변 제출 API 호출 함수
 export const submitSurveyAnswers = async (responses) => {

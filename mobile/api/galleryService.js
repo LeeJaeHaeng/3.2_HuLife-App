@@ -1,9 +1,4 @@
-import axios from 'axios';
-import * as SecureStore from 'expo-secure-store';
-import { API_CONFIG } from '../config/api.config';
-
-const API_URL = API_CONFIG.API_URL;
-const TOKEN_KEY = 'userToken';
+import api, { API_URL } from './apiClient';
 
 // ========== 갤러리 목록 조회 ==========
 
@@ -13,14 +8,11 @@ const TOKEN_KEY = 'userToken';
  * @returns {Promise<Array>} 갤러리 아이템 배열
  */
 export const getAllGalleryItems = async (hobbyId = null) => {
-  const url = hobbyId
-    ? `${API_URL}/gallery?hobbyId=${hobbyId}`
-    : `${API_URL}/gallery`;
-
+  const url = hobbyId ? `/gallery?hobbyId=${hobbyId}` : '/gallery';
   console.log(`[갤러리 서비스] 📞 갤러리 목록 요청: ${url}`);
 
   try {
-    const response = await axios.get(url);
+    const response = await api.get(url);
     console.log(`[갤러리 서비스] ✅ 갤러리 목록 응답: ${response.data.galleryItems?.length || 0}개`);
     return response.data.galleryItems || [];
   } catch (error) {
@@ -37,11 +29,11 @@ export const getAllGalleryItems = async (hobbyId = null) => {
  * @returns {Promise<Object>} 갤러리 아이템
  */
 export const getGalleryItemById = async (id) => {
-  const url = `${API_URL}/gallery/${id}`;
+  const url = `/gallery/${id}`;
   console.log(`[갤러리 서비스] 📞 작품 상세 요청: ${url}`);
 
   try {
-    const response = await axios.get(url);
+    const response = await api.get(url);
     console.log(`[갤러리 서비스] ✅ 작품 상세 응답 받음`);
     return response.data.galleryItem;
   } catch (error) {
@@ -58,7 +50,7 @@ export const getGalleryItemById = async (id) => {
  * @returns {Promise<Object>} 생성된 갤러리 아이템
  */
 export const createGalleryItem = async (galleryData) => {
-  const url = `${API_URL}/gallery`;
+  const url = '/gallery';
   console.log(`[갤러리 서비스] 📞 작품 업로드 요청:`, {
     hobbyId: galleryData.hobbyId,
     title: galleryData.title,
@@ -68,16 +60,7 @@ export const createGalleryItem = async (galleryData) => {
   });
 
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
-
-    const response = await axios.post(url, galleryData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-
+    const response = await api.post(url, galleryData);
     console.log(`[갤러리 서비스] ✅ 작품 업로드 성공`);
     return response.data.galleryItem;
   } catch (error) {
@@ -95,20 +78,11 @@ export const createGalleryItem = async (galleryData) => {
  * @returns {Promise<Object>} 수정된 갤러리 아이템
  */
 export const updateGalleryItem = async (id, updateData) => {
-  const url = `${API_URL}/gallery/${id}`;
+  const url = `/gallery/${id}`;
   console.log(`[갤러리 서비스] 📞 작품 수정 요청: ${url}`, updateData);
 
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
-
-    const response = await axios.put(url, updateData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-
+    const response = await api.put(url, updateData);
     console.log(`[갤러리 서비스] ✅ 작품 수정 성공`);
     return response.data.galleryItem;
   } catch (error) {
@@ -125,17 +99,11 @@ export const updateGalleryItem = async (id, updateData) => {
  * @returns {Promise<Object>} 성공 메시지
  */
 export const deleteGalleryItem = async (id) => {
-  const url = `${API_URL}/gallery/${id}`;
+  const url = `/gallery/${id}`;
   console.log(`[갤러리 서비스] 📞 작품 삭제 요청: ${url}`);
 
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
-
-    const response = await axios.delete(url, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-
+    const response = await api.delete(url);
     console.log(`[갤러리 서비스] ✅ 작품 삭제 성공`);
     return response.data;
   } catch (error) {
@@ -152,17 +120,11 @@ export const deleteGalleryItem = async (id) => {
  * @returns {Promise<Object>} { isLiked, likes, message }
  */
 export const toggleGalleryLike = async (id) => {
-  const url = `${API_URL}/gallery/${id}/like`;
+  const url = `/gallery/${id}/like`;
   console.log(`[갤러리 서비스] 📞 좋아요 토글 요청: ${url}`);
 
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
-
-    const response = await axios.post(url, {}, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-
+    const response = await api.post(url, {});
     console.log(`[갤러리 서비스] ✅ 좋아요 토글 성공: ${response.data.isLiked ? '추가' : '취소'}`);
     return response.data;
   } catch (error) {
@@ -179,11 +141,11 @@ export const toggleGalleryLike = async (id) => {
  * @returns {Promise<Array>} 댓글 배열
  */
 export const getGalleryComments = async (galleryItemId) => {
-  const url = `${API_URL}/gallery/${galleryItemId}/comments`;
+  const url = `/gallery/${galleryItemId}/comments`;
   console.log(`[갤러리 서비스] 📞 댓글 목록 요청: ${url}`);
 
   try {
-    const response = await axios.get(url);
+    const response = await api.get(url);
     console.log(`[갤러리 서비스] ✅ 댓글 목록 응답: ${response.data.length}개`);
     return response.data;
   } catch (error) {
@@ -199,20 +161,11 @@ export const getGalleryComments = async (galleryItemId) => {
  * @returns {Promise<Object>} 생성된 댓글
  */
 export const createGalleryComment = async (galleryItemId, content) => {
-  const url = `${API_URL}/gallery/${galleryItemId}/comments`;
+  const url = `/gallery/${galleryItemId}/comments`;
   console.log(`[갤러리 서비스] 📞 댓글 작성 요청: ${url}`);
 
   try {
-    const token = await SecureStore.getItemAsync(TOKEN_KEY);
-    if (!token) throw new Error("로그인이 필요합니다.");
-
-    const response = await axios.post(url, { content }, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-
+    const response = await api.post(url, { content });
     console.log(`[갤러리 서비스] ✅ 댓글 작성 성공`);
     return response.data.comment;
   } catch (error) {

@@ -1,7 +1,8 @@
 import { io } from 'socket.io-client';
+import { API_URL } from './apiClient';
 
-// Socket.IO configuration
-const SOCKET_URL = process.env.EXPO_PUBLIC_API_URL;
+// Socket.IO configuration - apiClient의 API_URL 재사용
+const SOCKET_URL = API_URL;
 
 class SocketService {
   constructor() {

@@ -3,19 +3,22 @@ import { db } from "@/lib/db";
 import { userActivities } from "@/lib/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { v4 as uuidv4 } from "uuid";
+import { getSession } from "@/lib/auth/session";
 
 // POST /api/activities - Log user activity
 export async function POST(request: NextRequest) {
   try {
-    // Get user ID from session/auth (you'll need to implement this based on your auth system)
-    const userId = request.headers.get("x-user-id"); // Temporary - replace with actual auth
+    // 세션 기반 인증으로 변경
+    const session = await getSession();
 
-    if (!userId) {
+    if (!session) {
       return NextResponse.json(
         { error: "인증이 필요합니다." },
         { status: 401 }
       );
     }
+
+    const userId = session.userId;
 
     const body = await request.json();
     const { activityType, targetId, metadata } = body;
@@ -71,14 +74,17 @@ export async function POST(request: NextRequest) {
 // GET /api/activities - Get user activities (for analytics/debugging)
 export async function GET(request: NextRequest) {
   try {
-    const userId = request.headers.get("x-user-id");
+    // 세션 기반 인증으로 변경
+    const session = await getSession();
 
-    if (!userId) {
+    if (!session) {
       return NextResponse.json(
         { error: "인증이 필요합니다." },
         { status: 401 }
       );
     }
+
+    const userId = session.userId;
 
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get("limit") || "50");

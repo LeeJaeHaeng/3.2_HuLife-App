@@ -1,14 +1,58 @@
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import cacheService from './cacheService';
+import Constants from 'expo-constants';
 
-// API URL - 환경 변수에서 직접 가져옴
-export const API_URL = process.env.EXPO_PUBLIC_API_URL;
+// API URL - 환경별 자동 전환 (개발/프로덕션)
+const getApiUrl = () => {
+  // __DEV__ 플래그로 개발/프로덕션 환경 자동 감지
+  const isDevelopment = __DEV__;
+
+  console.log('[API Client] 🔍 환경 감지:', isDevelopment ? '개발 모드' : '프로덕션 모드');
+
+  // 방법 1: 환경별 process.env 변수 사용
+  if (isDevelopment) {
+    // 로컬 개발 환경
+    if (process.env.EXPO_PUBLIC_API_URL_DEV) {
+      console.log('[API Client] ✅ 개발 URL:', process.env.EXPO_PUBLIC_API_URL_DEV);
+      return process.env.EXPO_PUBLIC_API_URL_DEV;
+    }
+  } else {
+    // 프로덕션 환경
+    if (process.env.EXPO_PUBLIC_API_URL_PROD) {
+      console.log('[API Client] ✅ 프로덕션 URL:', process.env.EXPO_PUBLIC_API_URL_PROD);
+      return process.env.EXPO_PUBLIC_API_URL_PROD;
+    }
+  }
+
+  // 방법 2: Constants.expoConfig.extra (환경별)
+  const extraConfig = Constants.expoConfig?.extra;
+  if (extraConfig) {
+    const url = isDevelopment ? extraConfig.apiUrlDev : extraConfig.apiUrlProd;
+    if (url) {
+      console.log('[API Client] ✅ Constants에서 가져옴:', url);
+      return url;
+    }
+  }
+
+  // 방법 3: 하드코딩된 폴백
+  const fallbackUrl = isDevelopment
+    ? 'http://10.20.35.24:3000'  // 개발 폴백 (변경됨: 192.168.0.40 → 10.20.35.24)
+    : 'https://hulife-app-jaehaeng2001-2614-jaehaeng2001-2614s-projects.vercel.app';  // 프로덕션 폴백
+
+  console.warn('[API Client] ⚠️ 환경 변수 없음. 폴백 사용:', fallbackUrl);
+  return fallbackUrl;
+};
+
+export const API_URL = getApiUrl();
 export const TOKEN_KEY = 'userToken';
+
+console.log('[API Client] 🌐 최종 API_URL:', API_URL);
+console.log('[API Client] 📍 환경:', __DEV__ ? '개발' : '프로덕션');
 
 // Axios 인스턴스 생성
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: `${API_URL}/api`,  // ✅ /api 접두사 추가
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

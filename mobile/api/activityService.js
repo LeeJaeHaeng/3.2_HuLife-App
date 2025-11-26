@@ -1,5 +1,5 @@
 // mobile/api/activityService.js
-import api from './apiClient'; // ✅ 중앙 api 클라이언트 재사용 (주소, 토큰 자동 처리)
+import api from './apiClient';
 
 /**
  * Log user activity
