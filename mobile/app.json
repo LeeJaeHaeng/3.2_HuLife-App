@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "HuLifeExpoApp",
+    "name": "HuLife",
     "slug": "HuLifeExpoApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/hobbies/hulife_logo.png",
     "scheme": "hulifeexpoapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -70,7 +70,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/icon.png",
+          "icon": "./assets/hobbies/hulife_logo.png",
           "color": "#FF7A5C",
           "mode": "production"
         }
