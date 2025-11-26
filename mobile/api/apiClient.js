@@ -5,42 +5,46 @@ import Constants from 'expo-constants';
 
 // API URL - 환경별 자동 전환 (개발/프로덕션)
 const getApiUrl = () => {
-  // __DEV__ 플래그로 개발/프로덕션 환경 자동 감지
-  const isDevelopment = __DEV__;
+  // 🔍 빌드 환경 감지 (더 안정적인 방법)
+  const isStandaloneBuild = Constants.executionEnvironment === 'standalone' ||
+                             Constants.executionEnvironment === 'storeClient';
+  const isDevelopment = __DEV__ && !isStandaloneBuild;
 
-  console.log('[API Client] 🔍 환경 감지:', isDevelopment ? '개발 모드' : '프로덕션 모드');
+  console.log('[API Client] 🔍 환경 감지:', {
+    __DEV__,
+    executionEnvironment: Constants.executionEnvironment,
+    isStandaloneBuild,
+    isDevelopment
+  });
 
-  // 방법 1: 환경별 process.env 변수 사용
-  if (isDevelopment) {
-    // 로컬 개발 환경
-    if (process.env.EXPO_PUBLIC_API_URL_DEV) {
-      console.log('[API Client] ✅ 개발 URL:', process.env.EXPO_PUBLIC_API_URL_DEV);
-      return process.env.EXPO_PUBLIC_API_URL_DEV;
-    }
-  } else {
-    // 프로덕션 환경
+  // 🎯 우선순위 1: APK/AAB 빌드는 무조건 PROD URL 사용
+  if (isStandaloneBuild) {
     if (process.env.EXPO_PUBLIC_API_URL_PROD) {
-      console.log('[API Client] ✅ 프로덕션 URL:', process.env.EXPO_PUBLIC_API_URL_PROD);
+      console.log('[API Client] ✅ [APK] 프로덕션 URL:', process.env.EXPO_PUBLIC_API_URL_PROD);
       return process.env.EXPO_PUBLIC_API_URL_PROD;
     }
+    // APK 빌드인데 PROD URL이 없으면 에러!
+    const prodUrl = 'https://hulife-app-jaehaeng2001-2614-jaehaeng2001-2614s-projects.vercel.app';
+    console.error('[API Client] ❌ EXPO_PUBLIC_API_URL_PROD 없음! 하드코딩된 PROD URL 사용:', prodUrl);
+    return prodUrl;
   }
 
-  // 방법 2: Constants.expoConfig.extra (환경별)
-  const extraConfig = Constants.expoConfig?.extra;
-  if (extraConfig) {
-    const url = isDevelopment ? extraConfig.apiUrlDev : extraConfig.apiUrlProd;
-    if (url) {
-      console.log('[API Client] ✅ Constants에서 가져옴:', url);
-      return url;
+  // 🎯 우선순위 2: 개발 환경 (Expo Go, npx expo start)
+  if (isDevelopment) {
+    if (process.env.EXPO_PUBLIC_API_URL_DEV) {
+      console.log('[API Client] ✅ [DEV] 개발 URL:', process.env.EXPO_PUBLIC_API_URL_DEV);
+      return process.env.EXPO_PUBLIC_API_URL_DEV;
     }
+    // 개발 환경인데 DEV URL이 없으면 경고
+    const devUrl = 'http://10.20.35.24:3000';
+    console.warn('[API Client] ⚠️ EXPO_PUBLIC_API_URL_DEV 없음! 폴백 DEV URL 사용:', devUrl);
+    return devUrl;
   }
 
-  // 방법 3: 하드코딩된 폴백
-  const fallbackUrl = isDevelopment
-    ? 'http://10.20.35.24:3000'  // 개발 폴백 (변경됨: 192.168.0.40 → 10.20.35.24)
-    : 'https://hulife-app-jaehaeng2001-2614-jaehaeng2001-2614s-projects.vercel.app';  // 프로덕션 폴백
-
-  console.warn('[API Client] ⚠️ 환경 변수 없음. 폴백 사용:', fallbackUrl);
+  // 🎯 우선순위 3: 알 수 없는 환경 (PROD URL 사용)
+  const fallbackUrl = process.env.EXPO_PUBLIC_API_URL_PROD ||
+                      'https://hulife-app-jaehaeng2001-2614-jaehaeng2001-2614s-projects.vercel.app';
+  console.warn('[API Client] ⚠️ 알 수 없는 환경. PROD URL 사용:', fallbackUrl);
   return fallbackUrl;
 };
 

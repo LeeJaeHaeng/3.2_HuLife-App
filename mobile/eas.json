@@ -10,12 +10,18 @@
     },
     "preview": {
       "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://hulife-project.vercel.app" 
+        "EXPO_PUBLIC_API_URL_PROD": "https://hulife-app-jaehaeng2001-2614-jaehaeng2001-2614s-projects.vercel.app"
       }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_API_URL_PROD": "https://hulife-app-jaehaeng2001-2614-jaehaeng2001-2614s-projects.vercel.app"
+      }
     }
   },
   "submit": {

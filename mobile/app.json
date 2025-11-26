@@ -26,6 +26,8 @@
       "predictiveBackGestureEnabled": false,
       "package": "com.hulife.app",
       "permissions": [
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE",
         "android.permission.POST_NOTIFICATIONS"
       ],
       "intentFilters": [
