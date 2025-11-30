@@ -315,6 +315,19 @@ export default function CommunityDetailPage() {
             <Ionicons name="chatbubbles" size={20} color="#FF7A5C" style={{ marginRight: 8 }} />
             <Text style={styles.secondaryActionButtonText}>멤버 전용 채팅</Text>
           </TouchableOpacity>
+        ) : community.hasPendingRequest ? (
+          <TouchableOpacity
+            style={[styles.actionButton, styles.pendingActionButton]}
+            disabled={true}
+          >
+            <Ionicons
+              name="hourglass-outline"
+              size={20}
+              color="#666"
+              style={{ marginRight: 8 }}
+            />
+            <Text style={styles.pendingActionButtonText}>신청 완료 (승인 대기 중)</Text>
+          </TouchableOpacity>
         ) : (
           <TouchableOpacity
             style={[
@@ -581,6 +594,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   secondaryActionButtonText: {
+    color: '#666',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  pendingActionButton: {
+    backgroundColor: '#f9fafb',
+    borderWidth: 1,
+    borderColor: '#d1d5db',
+  },
+  pendingActionButtonText: {
     color: '#666',
     fontSize: 16,
     fontWeight: 'bold',

@@ -9,7 +9,7 @@
  */
 
 // ⚠️ IP 주소 변경 시 여기만 수정하세요!
-const BASE_IP = '192.168.0.92';
+const BASE_IP = '10.81.207.63';
 const BASE_PORT = 3000;
 
 // 자동으로 모든 URL 생성 

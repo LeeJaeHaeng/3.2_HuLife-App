@@ -5723,5 +5723,316 @@ cd mobile && npx expo install @react-native-community/netinfo
 
 ---
 
-**문서 최종 수정일**: 2025-11-19
-**버전**: 12.0 (완성도 재평가 + 최종 검증 완료)
+# 🔄 Git 롤백 및 UI 개선 작업 (2025-11-27)
+
+## 📌 작업 배경
+사용자 요청에 따라 Git 리포지토리를 commit `5f82feb7b5426d5c31b1d34c437ae22596ff4969`로 롤백하고, 모바일 앱 UI 개선 작업 수행.
+
+## ✅ 구현 완료 내역
+
+### 1. Git 완전 롤백 (4단계 절차)
+
+#### 1단계: Git Hard Reset
+```bash
+git reset --hard 5f82feb7b5426d5c31b1d34c437ae22596ff4969
+git clean -fd  # 추적되지 않는 파일 삭제
+```
+**결과**: ✅ 커밋 시점으로 코드 완전 복원
+
+#### 2단계: 의존성 재설치
+```bash
+# Root 프로젝트
+rm -rf node_modules
+pnpm install  # 527 packages 설치 완료
+
+# Mobile 앱
+cd mobile
+Remove-Item -Path 'node_modules' -Recurse -Force  # PowerShell 사용
+npm install  # 1076 packages 설치 완료
+```
+**결과**: ✅ 모든 의존성 정상 설치
+
+#### 3단계: 환경 변수 점검 및 수정
+- **파일**: `mobile/.env`
+- **변경**: IP 주소 업데이트
+  ```env
+  # Before
+  EXPO_PUBLIC_API_URL_DEV=http://192.168.0.5:3000
+
+  # After
+  EXPO_PUBLIC_API_URL_DEV=http://10.81.207.63:3000
+  ```
+- **백엔드 .env**: MySQL 연결 정보 확인 완료
+  ```env
+  DB_HOST="localhost"
+  DB_USER="root"
+  DB_PASSWORD="0000"
+  DB_NAME="hulife_app"
+  ```
+
+#### 4단계: 데이터베이스 동기화
+```bash
+# Drizzle 스키마를 MySQL에 푸시
+npx drizzle-kit push
+
+# 취미 데이터 임포트 (82개)
+npm run import-hobbies
+
+# 샘플 데이터 시딩
+npm run seed-all
+```
+**결과**:
+- ✅ 데이터베이스 스키마 동기화 완료
+- ✅ 10명의 사용자, 82개 취미, 11개 커뮤니티 생성
+- ✅ 샘플 리뷰, 멤버, 게시글 데이터 생성
+
+### 2. Socket.IO 서버 실행
+
+**명령어**: `npm run dev:socket`
+
+**결과**:
+```
+> Ready on http://0.0.0.0:3000
+[Socket.IO] Server initialized successfully
+```
+
+**기능**:
+- ✅ Next.js 14 + Socket.IO 통합 서버
+- ✅ 실시간 채팅 기능 지원
+- ✅ CORS 설정 완료 (모바일 앱 접근 허용)
+
+### 3. 필터 초기 상태 수정
+
+**파일**: `mobile/app/hobbies.js` (Line 97)
+
+**변경사항**:
+```javascript
+// Before (잘못된 설정)
+const [filtersExpanded, setFiltersExpanded] = useState(true);
+
+// After (올바른 설정)
+const [filtersExpanded, setFiltersExpanded] = useState(false);
+```
+
+**동작**:
+- ✅ 필터가 접혀있는 상태로 시작
+- ✅ 사용자가 "필터 펼치기" 버튼을 클릭하면 펼쳐짐
+- ✅ UX 개선: 초기 화면이 깔끔하게 표시됨
+
+### 4. 모임 가입 신청 버튼 상태 추적 구현 ⭐
+
+#### 백엔드 API 수정
+**파일**: `app/api/communities/[id]/route.ts`
+
+**추가된 기능**:
+```typescript
+// 커뮤니티 상세 조회 시 현재 사용자의 가입 신청 상태 확인
+const session = await getSession()
+let hasPendingRequest = false
+if (session) {
+  const existingRequest = await db
+    .select()
+    .from(joinRequests)
+    .where(
+      and(
+        eq(joinRequests.communityId, id),
+        eq(joinRequests.userId, session.userId),
+        eq(joinRequests.status, "pending")
+      )
+    )
+    .then(results => results[0])
+
+  hasPendingRequest = !!existingRequest
+}
+
+// 응답에 포함
+const result = {
+  ...community,
+  members,
+  hasPendingRequest  // ✅ 신규 필드
+}
+```
+
+**개선 사항**:
+- ✅ joinRequests 테이블 조인 없이 상태 확인
+- ✅ 세션이 없는 경우(비로그인) hasPendingRequest = false
+- ✅ 클라이언트에서 버튼 상태 결정에 활용
+
+#### 모바일 UI 수정
+**파일**: `mobile/app/community/[id].js`
+
+**버튼 상태 3가지**:
+1. **멤버인 경우**: "멤버 전용 채팅" 버튼 (기존)
+   ```jsx
+   <TouchableOpacity
+     style={[styles.actionButton, styles.secondaryActionButton]}
+     onPress={() => router.push(`/community/chat/${id}`)}
+   >
+     <Ionicons name="chatbubbles" size={20} color="#FF7A5C" />
+     <Text style={styles.secondaryActionButtonText}>멤버 전용 채팅</Text>
+   </TouchableOpacity>
+   ```
+
+2. **가입 신청 완료** (신규 추가):
+   ```jsx
+   <TouchableOpacity
+     style={[styles.actionButton, styles.pendingActionButton]}
+     disabled={true}
+   >
+     <Ionicons name="hourglass-outline" size={20} color="#666" />
+     <Text style={styles.pendingActionButtonText}>신청 완료 (승인 대기 중)</Text>
+   </TouchableOpacity>
+   ```
+   - ✅ 모래시계 아이콘 표시
+   - ✅ 회색 배경 + 테두리
+   - ✅ 버튼 비활성화 (클릭 불가)
+
+3. **비회원**: "가입 신청하기" 버튼 (기존)
+   ```jsx
+   <TouchableOpacity
+     style={[styles.actionButton, styles.primaryActionButton]}
+     onPress={handleJoinRequest}
+   >
+     <Ionicons name="person-add" size={20} color="#fff" />
+     <Text style={styles.primaryActionButtonText}>가입 신청하기</Text>
+   </TouchableOpacity>
+   ```
+
+**스타일 추가**:
+```javascript
+pendingActionButton: {
+  backgroundColor: '#f9fafb',
+  borderWidth: 1,
+  borderColor: '#d1d5db',
+},
+pendingActionButtonText: {
+  color: '#666',
+  fontSize: 16,
+  fontWeight: 'bold',
+},
+```
+
+## 📊 변경된 파일 목록
+
+### Git 롤백 관련 (3개)
+1. **전체 코드베이스** - commit 5f82feb로 리셋
+2. **mobile/.env** - IP 주소 업데이트
+3. **데이터베이스** - 스키마 동기화 및 샘플 데이터
+
+### UI 개선 관련 (2개)
+4. **mobile/app/hobbies.js** (Line 97)
+   - 필터 초기 상태를 false로 변경
+
+5. **app/api/communities/[id]/route.ts** (Lines 3-4, 45-62, 64-68)
+   - joinRequests import 추가
+   - hasPendingRequest 로직 추가
+   - 응답에 hasPendingRequest 필드 포함
+
+6. **mobile/app/community/[id].js** (Lines 318-330, 601-610)
+   - 가입 신청 완료 버튼 UI 추가
+   - pendingActionButton 스타일 추가
+
+## 🎯 사용자 테스트 시나리오
+
+### 1. 필터 동작 확인
+1. 모바일 앱 실행 → 취미 목록 화면 이동
+2. **기대 결과**:
+   - ✅ 필터가 접혀있는 상태로 표시
+   - ✅ "필터 펼치기" 버튼 표시
+   - ✅ 버튼 클릭 시 필터 옵션 펼쳐짐
+
+### 2. 가입 신청 버튼 상태 확인
+
+#### 케이스 1: 비회원
+1. 로그인 → 커뮤니티 목록 → 커뮤니티 상세
+2. **기대 결과**:
+   - ✅ "가입 신청하기" 버튼 표시
+   - ✅ 버튼 클릭 시 확인 다이얼로그
+   - ✅ 신청 완료 후 버튼 상태 변경
+
+#### 케이스 2: 가입 신청 완료
+1. 위에서 가입 신청 완료 후 화면 새로고침
+2. **기대 결과**:
+   - ✅ "신청 완료 (승인 대기 중)" 버튼 표시
+   - ✅ 모래시계 아이콘 표시
+   - ✅ 버튼 비활성화 (클릭 불가)
+
+#### 케이스 3: 멤버
+1. 리더가 신청 승인 후 화면 새로고침
+2. **기대 결과**:
+   - ✅ "멤버 전용 채팅" 버튼 표시
+   - ✅ 버튼 클릭 시 채팅방 이동
+
+## 🔍 디버깅 팁
+
+### 현재 IP 주소 확인
+```bash
+ipconfig | findstr "IPv4"
+# 출력 예시: IPv4 Address. . . . . . . . . . . : 10.81.207.63
+```
+
+### 서버 상태 확인
+```bash
+# Socket.IO 서버 실행 중인지 확인
+curl http://localhost:3000/api/hobbies
+
+# 로컬 네트워크에서 접근 가능한지 확인
+curl http://10.81.207.63:3000/api/hobbies
+```
+
+### 데이터베이스 확인
+```bash
+# MySQL 접속
+mysql -u root -p0000 hulife_app
+
+# 테이블 확인
+SHOW TABLES;
+
+# 가입 신청 확인
+SELECT * FROM join_requests WHERE status = 'pending';
+```
+
+## 💡 향후 개선 가능 사항
+
+### 1. 가입 신청 알림
+- Push 알림: 리더에게 새 가입 신청 알림 전송
+- 앱 내 알림 배지: "가입 신청 관리" 버튼에 숫자 표시
+
+### 2. 가입 신청 취소 기능
+- "신청 완료" 버튼을 길게 눌러 취소 옵션 표시
+- 취소 확인 다이얼로그 추가
+
+### 3. 정원 마감 시 대기 목록
+- 정원이 마감되어도 대기 신청 가능
+- 멤버 탈퇴 시 자동으로 대기자 승인
+
+## ⚠️ 알려진 이슈
+
+### Network Error (현재 발생 중)
+**증상**:
+```
+ERROR [API 클라이언트] 요청 실패: {"message": "Network Error", "status": undefined}
+```
+
+**임시 해결 방법**:
+1. IP 주소 재확인: `ipconfig`
+2. mobile/.env 파일의 IP 주소 업데이트
+3. mobile/config/api.config.js의 BASE_IP 업데이트
+4. Expo 앱 재시작: `r` (reload) 입력
+
+**근본 해결 방법** (향후):
+- 동적 IP 감지 및 자동 업데이트
+- 환경 변수 중앙 관리
+- 네트워크 상태 확인 및 에러 처리 개선
+
+---
+
+**작업 완료일**: 2025-11-27
+**소요 시간**: 약 2시간
+**변경 파일 수**: 6개
+**테스트 상태**: ✅ 구현 완료, ⚠️ Network Error 해결 필요
+
+---
+
+**문서 최종 수정일**: 2025-11-27
+**버전**: 13.0 (Git 롤백 + 필터/가입신청 UI 개선 완료)

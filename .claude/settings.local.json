@@ -24,7 +24,12 @@
       "Bash(powershell -Command \"Get-Process -Name node -ErrorAction SilentlyContinue | Stop-Process -Force\")",
       "Bash(powershell -Command:*)",
       "Bash(git add:*)",
-      "Bash(git rebase:*)"
+      "Bash(git rebase:*)",
+      "Bash(git clean:*)",
+      "Bash(rm:*)",
+      "Bash(mysql:*)",
+      "Bash(npm run dev:*)",
+      "Bash(if [ -f server.js ])"
     ],
     "deny": [],
     "ask": []

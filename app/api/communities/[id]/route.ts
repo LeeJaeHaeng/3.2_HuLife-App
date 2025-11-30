@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { db } from "@/lib/db"
-import { communities, communityMembers, users } from "@/lib/db/schema"
-import { eq } from "drizzle-orm"
+import { communities, communityMembers, users, joinRequests } from "@/lib/db/schema"
+import { eq, and } from "drizzle-orm"
 import { getSession } from "@/lib/auth/session"
 
 export async function GET(
@@ -42,9 +42,29 @@ export async function GET(
       .innerJoin(users, eq(communityMembers.userId, users.id))
       .where(eq(communityMembers.communityId, id))
 
+    // Check if current user has a pending join request
+    const session = await getSession()
+    let hasPendingRequest = false
+    if (session) {
+      const existingRequest = await db
+        .select()
+        .from(joinRequests)
+        .where(
+          and(
+            eq(joinRequests.communityId, id),
+            eq(joinRequests.userId, session.userId),
+            eq(joinRequests.status, "pending")
+          )
+        )
+        .then(results => results[0])
+
+      hasPendingRequest = !!existingRequest
+    }
+
     const result = {
       ...community,
-      members
+      members,
+      hasPendingRequest
     }
 
     return NextResponse.json(result)
