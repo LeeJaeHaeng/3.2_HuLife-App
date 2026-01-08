@@ -562,6 +562,14 @@ cd mobile && npx expo start --no-dev --minify
 
 ---
 
+## 🎬 시연 영상
+
+[![HuLife 앱 시연 영상](https://img.youtube.com/vi/lC-TkHRQ6R0/0.jpg)](https://youtu.be/lC-TkHRQ6R0)
+
+👉 클릭 시 YouTube에서 전체 시연 영상을 확인할 수 있습니다.
+
+---
+
 ## 📄 라이선스
 
 This project is licensed under the MIT License.
@@ -617,14 +625,6 @@ New-NetFirewallRule -DisplayName "Next.js Dev Server" -Direction Inbound -LocalP
 **마지막 업데이트**: 2025-11-24
 **현재 상태**: ✅ **프로덕션 준비 완료 (Production Ready)**
 **문서 버전**: 13.0
-
----
-
-## 🎬 시연 영상
-
-[![HuLife 앱 시연 영상](https://img.youtube.com/vi/lC-TkHRQ6R0/0.jpg)](https://youtu.be/lC-TkHRQ6R0)
-
-👉 클릭 시 YouTube에서 전체 시연 영상을 확인할 수 있습니다.
 
 ---
 
