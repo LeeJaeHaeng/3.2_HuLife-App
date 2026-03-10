@@ -19,6 +19,14 @@
 
 ---
 
+## 🎬 시연 영상
+
+[![HuLife 앱 시연 영상](https://img.youtube.com/vi/lC-TkHRQ6R0/0.jpg)](https://youtu.be/lC-TkHRQ6R0)
+
+👉 클릭 시 YouTube에서 전체 시연 영상을 확인할 수 있습니다.
+
+---
+
 ## 📱 프로젝트 구성
 
 ### 🌐 웹 애플리케이션 (Next.js 14)
@@ -559,14 +567,6 @@ cd mobile && npx expo start --no-dev --minify
 - ✅ **Push 알림**: Expo Notifications 통합
 - ✅ **딥링크**: 커뮤니티/갤러리 공유 링크
 - ✅ **프로덕션 준비 완료**: 배포 가능한 상태
-
----
-
-## 🎬 시연 영상
-
-[![HuLife 앱 시연 영상](https://img.youtube.com/vi/lC-TkHRQ6R0/0.jpg)](https://youtu.be/lC-TkHRQ6R0)
-
-👉 클릭 시 YouTube에서 전체 시연 영상을 확인할 수 있습니다.
 
 ---
 
