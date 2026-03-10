@@ -1,5 +1,5 @@
 # HuLife - 은퇴자를 위한 취미 추천 및 커뮤니티 플랫폼
-### [3-2] 모바일SW프로젝트 A+
+### [3-2] 모바일SW프로젝트 A+‼️
 ![완성도](https://img.shields.io/badge/완성도-98%25-brightgreen)
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 ![Expo](https://img.shields.io/badge/Expo-SDK%2054-blue)
